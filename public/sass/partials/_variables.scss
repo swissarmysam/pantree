@@ -1,0 +1,35 @@
+/* SETUP CUSTOM VARIABLES */
+
+$size-1: 2.5rem;
+$size-2: 2.25rem;
+$size-3: 2.125rem;
+$size-4: 2rem;
+$size-5: 1.75rem;
+$size-6: 1.5rem;
+$size-7: 1.25rem;
+$size-8: 1rem;
+$weight-light: 300;
+$weight-normal: 400;
+$weight-medium: 500;
+$weight-semibold: 600;
+$weight-bold: 700;
+
+$family-primary: 'Poppins',
+sans-serif;
+$family-sans-serif: 'Lato',
+sans-serif;
+
+$title-family: $family-primary;
+$title-size: $size-1;
+$title-weight: $weight-bold;
+// $title-color:; // TODO
+
+$subtitle-family: $family-primary;
+$subtitle-size: $size-2;
+$subtitle-weight: $weight-semibold;
+// $subtitle-color:; // TODO
+
+// $content-heading-color:; // TODO
+$content-heading-weight: $weight-normal;
+
+$button-family: $family-sans-serif;

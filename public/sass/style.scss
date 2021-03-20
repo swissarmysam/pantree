@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:wght@300;600;700&display=swap');
+
+
+/* Theme style (colors & sizes) */
+@import "partials/_theme-default";
+
+/* Import our custom variables */
+@import 'partials/_variables';
+
+/* Core Libs & Lib configs */
+@import 'partials/_framework';
+
+/* Mixins */
+@import "partials/_mixins";
+
+/* Components */
+@import '../../node_modules/bulma-o-steps/bulma-steps.sass';
+
+/* Theme components */
+@import "partials/_nav-bar";
+@import "partials/_aside";
+@import "partials/_title-bar";
+@import "partials/_hero-bar";
+@import "partials/_card";
+@import "partials/_table";
+@import "partials/_tiles";
+@import "partials/_form";
+@import "partials/_main-section";
+@import "partials/_modal";
+@import "partials/_footer";
+@import "partials/_misc";
+
+/* Own partials */
+@import 'partials/_flashes';
+
+/* GLOBAL STYLES */
+
+.form-section {
+  display: none;
+}
+
+.inner {
+  max-width:900px;
+  margin: 0 auto;
+  @media all and (max-width: 900px) {
+    padding: 2rem;
+  }
+  &--flashes {
+    padding:0;
+  }
+}

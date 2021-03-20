@@ -1,0 +1,51 @@
+doctype html
+html
+  head
+    title= `${title} | ${h.siteName}`
+    link(rel='stylesheet', href='/dist/css/style.css')
+    //- link(rel="shortcut icon" type="image/png" href="/images/icons/favicon.png")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+  body
+    block header
+      nav.navbar(role='navigation', aria-label='main navigation')
+        .navbar-brand
+          .navbar-item(href='/')
+            a.nav__link.nav__link--logo(href="/") pantree
+              //- img(src=h.icon('logo'))
+        .navbar-menu
+          .navbar-end 
+            each item in h.menu
+              .navbar-item
+                a.nav__link(href=item.slug ) #{item.title}
+            .navbar-item 
+              .buttons 
+                if account
+                  a.button.is-primary(href="/logout" )
+                    //- != h.icon('logout')
+                    span Logout
+                  a.button.is-light(href="/account" )
+                    p avatar todo
+                else
+                  a.button.is-primary(href="/register" ) Sign Up
+                  a.button.is-light(href="/login" ) Log In
+
+    block messages
+      if locals.flashes
+        .inner.inner--flashes
+          .flash-messages
+            - const categories = Object.keys(locals.flashes)
+            each category in categories
+              each message in flashes[category]
+                .flash(class=`flash--${category}`)
+                  p.flash__text!= message
+                  button.flash__remove(onClick="this.parentElement.remove()") &times;
+      
+    block content
+      p This is the default!
+
+    block footer 
+      .footer
+
+    block scripts
+      script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places`)
+      script(src="/javascripts/pantree-app.js")
