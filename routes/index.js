@@ -9,7 +9,7 @@ const dashboardController = require('../controllers/dashboardController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
 /* GENERAL ROUTES */
-router.get('/', catchErrors(sharedController.homePage));
+router.get('/', sharedController.homePage);
 
 /* ACCOUNT AND AUTH ROUTES */
 router.get('/login', authController.loginForm);
