@@ -31,14 +31,16 @@ html
 
     block messages
       if locals.flashes
-        .inner.inner--flashes
-          .flash-messages
+        article.message.is-danger
+          .message-header
+            p Danger
+            button.delete(aria-label='delete')   
+          .message-body
             - const categories = Object.keys(locals.flashes)
             each category in categories
               each message in flashes[category]
-                .flash(class=`flash--${category}`)
-                  p.flash__text!= message
-                  button.flash__remove(onClick="this.parentElement.remove()") &times;
+                strong.error-title= category
+                p.error-message= message
       
     block content
       p This is the default!
