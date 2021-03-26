@@ -4,9 +4,6 @@
   "main": "start.js",
   "scripts": {
     "start": "node start.js",
-    "build:parcel": "parcel build start.js --public-url ./",
-    "build": "npm run clean && npm run build:parcel",
-    "clean": "rm -rf /public/dist/*",
     "css-build": "node-sass public/sass/style.scss public/dist/css/style.css"
   },
   "author": "2BY2",

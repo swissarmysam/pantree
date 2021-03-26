@@ -60,6 +60,7 @@ app.use(flash());
 // make variables available to all templates and requests
 app.use((req, res, next) => {
   res.locals.h = helpers;
+  res.locals.flashes = req.flash();
   res.locals.user = req.user || null;
   res.locals.currentPath = req.path;
   next();
@@ -79,7 +80,7 @@ app.use('/', routes);
 app.use(errorHandlers.notFound);
 
 // One of our error handlers will see if these errors are just validation errors
-// app.use(errorHandlers.flashValidationErrors);
+app.use(errorHandlers.flashValidationErrors);
 
 // Otherwise this was a really bad error we didn't expect! Shoot eh
 if (app.get('env') === 'development') {

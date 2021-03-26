@@ -14,7 +14,7 @@
 @import "partials/_mixins";
 
 /* Components */
-@import '../../node_modules/bulma-o-steps/bulma-steps.sass';
+
 
 /* Theme components */
 @import "partials/_nav-bar";
@@ -29,6 +29,7 @@
 @import "partials/_modal";
 @import "partials/_footer";
 @import "partials/_misc";
+@import "partials/steps";
 
 /* Own partials */
 @import 'partials/_flashes';
