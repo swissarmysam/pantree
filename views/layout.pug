@@ -1,33 +1,33 @@
-doctype html
-html
-  head
-    title= `${title} | ${h.siteName}`
-    link(rel='stylesheet', href='/dist/css/style.css')
-    //- link(rel="shortcut icon" type="image/png" href="/images/icons/favicon.png")
-    meta(name="viewport" content="width=device-width, initial-scale=1")
-  body
-    block header
-      nav.navbar(role='navigation', aria-label='main navigation')
-        .navbar-brand
-          .navbar-item(href='/')
-            a.nav__link.nav__link--logo(href="/") pantree
-              //- img(src=h.icon('logo'))
-        .navbar-menu
-          .navbar-end 
-            each item in h.menu
-              .navbar-item
-                a.nav__link(href=item.slug ) #{item.title}
-            .navbar-item 
-              .buttons 
-                if account
-                  a.button.is-primary(href="/logout" )
-                    //- != h.icon('logout')
-                    span Logout
-                  a.button.is-light(href="/account" )
-                    p avatar todo
-                else
-                  a.button.is-primary(href="/register" ) Sign Up
-                  a.button.is-light(href="/login" ) Log In
+block doc-header
+  doctype html
+  html
+    include mixins/_logo.pug
+    head
+      title= `${title} | ${h.siteName}`
+      link(rel='stylesheet', href='/dist/css/style.css')
+      //- link(rel="shortcut icon" type="image/png" href="/images/icons/favicon.png")
+      meta(name="viewport" content="width=device-width, initial-scale=1")
+    body
+      block header
+        nav.navbar.is-fixed-top(role='navigation', aria-label='main navigation')
+          .navbar-brand
+              a.nav__link.nav__link--logo.navbar-item(href="/")
+                +logo(151, 32) 
+          .navbar-menu
+            .navbar-end 
+              each item in h.menu
+                  a.nav__link.navbar-item(href=item.slug ) #{item.title}
+              .navbar-item 
+                .buttons 
+                  if account
+                    a.button.is-primary(href="/logout" )
+                      //- != h.icon('logout')
+                      span Logout
+                    a.button.is-light(href="/account" )
+                      p avatar todo
+                  else
+                    a.button.is-primary(href="/register" ) Sign Up
+                    a.button.is-primary.is-light(href="/login" ) Log In
 
     block messages
       if locals.flashes

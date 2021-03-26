@@ -1,5 +1,60 @@
-extends layout 
+extends layout
+
+block prepend doc-header
+  html(class= "has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded")
 
 block content 
-  .container 
+  aside.aside.is-placed-left.is-expanded
+    .menu.is-menu-main
+      p.menu-label General
+      ul.menu-list
+        li
+          a.is-active.router-link-active.has-icon(href='index.html')
+            span.icon
+              i.mdi.mdi-desktop-mac
+            span.menu-item-label Dashboard
+      p.menu-label Examples
+      ul.menu-list
+        li
+          a.has-icon(href='tables.html')
+            span.icon.has-update-mark
+              i.mdi.mdi-table
+            span.menu-item-label Tables
+        li
+          a.has-icon(href='forms.html')
+            span.icon
+              i.mdi.mdi-square-edit-outline
+            span.menu-item-label Forms
+        li
+          a.has-icon(href='profile.html')
+            span.icon
+              i.mdi.mdi-account-circle
+            span.menu-item-label Profile
+        li
+          a.has-icon.has-dropdown-icon
+            span.icon
+              i.mdi.mdi-view-list
+            span.menu-item-label Submenus
+            .dropdown-icon
+              span.icon
+                i.mdi.mdi-plus
+          ul
+            li
+              a(href='#void')
+                span Sub-item One
+            li
+              a(href='#void')
+                span Sub-item Two
+      p.menu-label About
+      ul.menu-list
+        li
+          a.has-icon(href='https://admin-one-html.justboil.me/' target='_blank')
+            span.icon
+              i.mdi.mdi-credit-card-outline
+            span.menu-item-label Premium Demo
+        li
+          a.has-icon(href='https://justboil.me/bulma-admin-template/one-html')
+            span.icon
+              i.mdi.mdi-help-circle
+            span.menu-item-label About
     

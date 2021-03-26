@@ -1,12 +1,8 @@
 @include desktop {
   html {
     &.has-aside-left {
-      &.has-aside-expanded {
-        nav.navbar, body {
-          padding-left: $aside-width;
-        }
-      }
-      nav.navbar, body {
+      nav.navbar,
+      body {
         @include transition(padding-left);
       }
       aside.is-placed-left {
@@ -37,29 +33,12 @@
 aside.aside {
   display: none;
   position: fixed;
-  top: 0;
   left: 0;
   z-index: 40;
   height: 100vh;
   padding: 0;
   box-shadow: $aside-box-shadow;
   background: $aside-background-color;
-
-  .aside-tools {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    background-color: $aside-tools-background-color;
-    color: $aside-tools-color;
-    line-height: $navbar-height;
-    height: $navbar-height;
-    padding-left: $default-padding * .5;
-    flex: 1;
-
-    .icon {
-      margin-right: $default-padding * .5;
-    }
-  }
 
   .menu-list {
     li {
@@ -70,7 +49,7 @@ aside.aside {
 
           .dropdown-icon {
             position: absolute;
-            top: $size-base * .5;
+            top: $size-base * 0.5;
             right: 0;
           }
         }
@@ -80,11 +59,11 @@ aside.aside {
         border-left: 0;
         background-color: darken($base-color, 2.5%);
         padding-left: 0;
-        margin: 0 0 $default-padding * .5;
+        margin: 0 0 $default-padding * 0.5;
 
         li {
           a {
-            padding: $default-padding * .5 0 $default-padding * .5 $default-padding * .5;
+            padding: $default-padding * 0.5 0 $default-padding * 0.5 $default-padding * 0.5;
             font-size: $aside-submenu-font-size;
 
             &.has-icon {
@@ -102,15 +81,15 @@ aside.aside {
   }
 
   .menu-label {
-    padding: 0 $default-padding * .5;
-    margin-top: $default-padding * .5;
-    margin-bottom: $default-padding * .5;
+    padding: 0 $default-padding * 0.5;
+    margin-top: $default-padding * 0.5;
+    margin-bottom: $default-padding * 0.5;
   }
-
 }
 
 @include touch {
-  #app, nav.navbar {
+  #app,
+  nav.navbar {
     @include transition(margin-left);
   }
   aside.aside {
@@ -120,7 +99,9 @@ aside.aside {
     body {
       overflow-x: hidden;
     }
-    body, #app, nav.navbar {
+    body,
+    #app,
+    nav.navbar {
       width: 100vw;
     }
     aside.aside {
@@ -130,7 +111,7 @@ aside.aside {
 
       .image {
         img {
-          max-width: $aside-mobile-width * .33;
+          max-width: $aside-mobile-width * 0.33;
         }
       }
 
@@ -151,7 +132,8 @@ aside.aside {
     }
   }
   html.has-aside-mobile-expanded {
-    #app, nav.navbar {
+    #app,
+    nav.navbar {
       margin-left: $aside-mobile-width;
     }
     aside.aside {
