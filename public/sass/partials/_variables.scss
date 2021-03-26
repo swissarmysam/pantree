@@ -1,9 +1,28 @@
 /* SETUP CUSTOM VARIABLES */
+
+// Typography variables
 $weight-light: 300;
 $weight-normal: 400;
 $weight-medium: 500;
 $weight-semibold: 600;
 $weight-bold: 700;
+
+// Color variables
+// Brand colors
+$medium-purple: #9882E4;
+$dark-slate-blue: #463A82;
+$jonquil: #FFD33F;
+$paradise-pink: #F04770;
+$ghost-white: #F5F5F9;
+$jet: #38373A;
+//Bulma colors overwrite
+$primary: $medium-purple;
+$warning: $jonquil;
+$danger: $paradise-pink;
+$light: $ghost-white;
+$grey: $jet;
+$body-background: $light;
+$text: $grey-dark;
 
 $family-primary: "Poppins", sans-serif;
 $family-sans-serif: "Lato", sans-serif;

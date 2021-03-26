@@ -1,8 +1,12 @@
 @include desktop {
   html {
     &.has-aside-left {
-      nav.navbar,
-      body {
+      &.has-aside-expanded {
+        nav.navbar, body {
+          padding-left: $aside-width;
+        }
+      }
+      nav.navbar, body {
         @include transition(padding-left);
       }
       aside.is-placed-left {
@@ -33,12 +37,31 @@
 aside.aside {
   display: none;
   position: fixed;
+  top: 0;
   left: 0;
   z-index: 40;
   height: 100vh;
   padding: 0;
   box-shadow: $aside-box-shadow;
   background: $aside-background-color;
+
+  .aside-tools {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: $aside-tools-color;
+    line-height: $navbar-height;
+    height: $navbar-height;
+    padding-left: $default-padding * .5;
+    background: $aside-tools-background-color;
+    flex: 1;
+
+    .icon {
+      margin-right: $default-padding * .5;
+    }
+  }
 
   .menu-list {
     li {

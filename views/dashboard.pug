@@ -3,58 +3,31 @@ extends layout
 block prepend doc-header
   html(class= "has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded")
 
-block content 
+block content
   aside.aside.is-placed-left.is-expanded
+    .aside-tools
+      .aside-tools-label
+          +logo(151, 32)
     .menu.is-menu-main
       p.menu-label General
       ul.menu-list
+      each item, index in h.sidemenuType1[0]
         li
-          a.is-active.router-link-active.has-icon(href='index.html')
+          a.has-icon(href=item.slug )
             span.icon
-              i.mdi.mdi-desktop-mac
-            span.menu-item-label Dashboard
-      p.menu-label Examples
+              //- icon
+            span.menu-item-label #{item.title}
+      p.menu-label Quick actions
       ul.menu-list
+      each item in h.sidemenuType1[1]
         li
-          a.has-icon(href='tables.html')
-            span.icon.has-update-mark
-              i.mdi.mdi-table
-            span.menu-item-label Tables
-        li
-          a.has-icon(href='forms.html')
+          a.has-icon(href=item.slug )
             span.icon
-              i.mdi.mdi-square-edit-outline
-            span.menu-item-label Forms
-        li
-          a.has-icon(href='profile.html')
-            span.icon
-              i.mdi.mdi-account-circle
-            span.menu-item-label Profile
-        li
-          a.has-icon.has-dropdown-icon
-            span.icon
-              i.mdi.mdi-view-list
-            span.menu-item-label Submenus
-            .dropdown-icon
-              span.icon
-                i.mdi.mdi-plus
+              //- icon
+            span.menu-item-label #{item.title}
+  section.section.is-title-bar
+    .level
+      .level-left
+        .level-item
           ul
-            li
-              a(href='#void')
-                span Sub-item One
-            li
-              a(href='#void')
-                span Sub-item Two
-      p.menu-label About
-      ul.menu-list
-        li
-          a.has-icon(href='https://admin-one-html.justboil.me/' target='_blank')
-            span.icon
-              i.mdi.mdi-credit-card-outline
-            span.menu-item-label Premium Demo
-        li
-          a.has-icon(href='https://justboil.me/bulma-admin-template/one-html')
-            span.icon
-              i.mdi.mdi-help-circle
-            span.menu-item-label About
-    
+            li Food donations

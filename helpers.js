@@ -24,3 +24,16 @@ exports.menu = [
   { slug: '/about', title: 'About', icon: 'info' },
   { slug: '/map', title: 'Map', icon: 'pin' },
 ];
+// TO-DO render sidemenu links based on user type
+exports.sidemenuType1 = [
+  [
+    { slug: '/donations', title: 'Food donations', icon: 'Apple' },
+    { slug: '/noticeboard', title: 'Noticeboard', icon: 'Clipboard' },
+    { slug: '/presskit', title: 'Presskit', icon: 'TBD' }
+  ],
+  [
+    { slug: '/add-activity', title: 'Add activity', icon: 'plus' },
+    { slug: '/add-notice', title: 'Add notice', icon: 'plus' },
+    { slug: '/edit-info', title: 'Edit info', icon: 'edit' }
+  ]
+];
