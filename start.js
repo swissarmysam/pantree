@@ -5,9 +5,6 @@ require('dotenv').config({ path: 'variables.env' });
 
 // create connection to database - display error if any issues
 mongoose.connect(process.env.DATABASE, {
-  // useNewUrlParser: true,
-  // useCreateIndex: true,
-  // useUnifiedTopology: true,
   useMongoClient: true,
 });
 mongoose.Promise = global.Promise; // set Mongoose to use ES6 promises
@@ -17,6 +14,7 @@ mongoose.connection.on('error', err => {
 
 // Import all database Models
 require('./models/Account');
+require('./models/Donation');
 
 // start the server
 const app = require('./app');

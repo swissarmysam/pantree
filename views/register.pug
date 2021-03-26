@@ -3,8 +3,11 @@ include mixins/_registerForm
 include mixins/_formSteps
 
 block content
-    +formSteps()
-    +registerForm()
+    .columns.is-centered.is-vcentered.is-full-height 
+        +sideMessage()
+        .column.is-three-quarters
+            +formSteps()
+            +registerForm()
 
 block scripts 
     script(src="/dist/js/formHandler.js")
