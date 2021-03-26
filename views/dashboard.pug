@@ -1,5 +1,33 @@
-extends layout 
+extends layout
 
-block content 
-  .container 
-    
+block prepend doc-header
+  html(class= "has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded")
+
+block content
+  aside.aside.is-placed-left.is-expanded
+    .aside-tools
+      .aside-tools-label
+          +logo(151, 32)
+    .menu.is-menu-main
+      p.menu-label General
+      ul.menu-list
+      each item, index in h.sidemenuType1[0]
+        li
+          a.has-icon(href=item.slug )
+            span.icon
+              //- icon
+            span.menu-item-label #{item.title}
+      p.menu-label Quick actions
+      ul.menu-list
+      each item in h.sidemenuType1[1]
+        li
+          a.has-icon(href=item.slug )
+            span.icon
+              //- icon
+            span.menu-item-label #{item.title}
+  section.section.is-title-bar
+    .level
+      .level-left
+        .level-item
+          ul
+            li Food donations
