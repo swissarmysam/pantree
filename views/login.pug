@@ -1,5 +1,9 @@
 extends layout
 include mixins/_loginForm.pug
+include mixins/_sideMessage.pug
 
 block content
-    +loginForm()
+    .columns.is-centered.is-vcentered.is-full-height 
+        +sideMessage()
+        .column.is-three-quarters
+            +loginForm()

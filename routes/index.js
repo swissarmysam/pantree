@@ -42,7 +42,7 @@ router.post(
 // router.get(
 //   '/dashboard/:id',
 //   authController.isLoggedIn,
-//   catchErrors(sharedController.showDashboard)
+//   catchErrors(dashboardController.showDashboard)
 // );
 router.get('/dashboard', dashboardController.showDashboard); // TEMP
 

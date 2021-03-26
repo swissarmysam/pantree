@@ -1,0 +1,8 @@
+mixin sideMessage(msg)
+  .column.is-one-quarter
+    if msg 
+      h2.title.is-size-2= msg 
+    else
+      - let i = Math.floor(Math.random()* (3 - 0) + 0)
+      h2.title.is-size-2 #{ h.foodFacts[i].fact }
+      span.subtitle.is-size-6 #{ h.foodFacts[i].source }

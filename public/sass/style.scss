@@ -50,3 +50,8 @@
     padding:0;
   }
 }
+
+.is-full-height {
+  min-height: 100vh !important;
+  overflow-y: auto;
+}

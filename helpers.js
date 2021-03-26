@@ -15,7 +15,7 @@ exports.staticMap = ([lng, lat]) =>
   }&markers=${lat},${lng}&scale=2`;
 
 // inserting an SVG
-exports.icon = name => fs.readFileSync(`./lib/images/icons/${name}.svg`);
+exports.icon = name => fs.readFileSync(`./public/images/icons/${name}.svg`);
 
 // Some details about the site
 exports.siteName = `pantree #reducingfoodwaste`;
@@ -23,4 +23,21 @@ exports.siteName = `pantree #reducingfoodwaste`;
 exports.menu = [
   { slug: '/about', title: 'About', icon: 'info' },
   { slug: '/map', title: 'Map', icon: 'pin' },
+];
+
+exports.foodFacts = [
+  {
+    fact: '13% of edible food and drink purchased by households are wasted',
+    source: 'Biffa',
+  },
+  {
+    fact:
+      '3.6 million tonnes of food is wasted by the food industry every year in the UK',
+    source: 'FareShare UK',
+  },
+  {
+    fact:
+      'Over 2 million tonnes of the food that goes to waste each year is still edible',
+    source: 'WRAP UK',
+  },
 ];
