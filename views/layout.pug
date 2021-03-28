@@ -31,17 +31,17 @@ block doc-header
 
     block messages
       if locals.flashes
-        article.message.is-danger
-          .message-header
-            p Danger
-            button.delete(aria-label='delete')   
-          .message-body
-            - const categories = Object.keys(locals.flashes)
-            each category in categories
-              each message in flashes[category]
-                strong.error-title= category
-                p.error-message= message
-      
+        .inner
+          - const categories = Object.keys(locals.flashes)
+          each category in categories
+            each message in flashes[category]
+              article.message
+                .message-header(class=`is-${category}`)
+                  p #{ category.toUpperCase() }
+                  button.delete(onClick="this.parentElement.parentElement.remove()")
+                .message-body
+                  p!= message
+                  
     block content
       p This is the default!
 
