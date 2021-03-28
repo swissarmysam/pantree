@@ -1,41 +1,45 @@
 /* SETUP CUSTOM VARIABLES */
 
+// Color variables
+// Brand colors
+$medium-purple: #9882e4;
+$lavender-blue: #dbd3f6;
+$dark-slate-blue: #463a82;
+$jonquil: #ffd33f;
+$paradise-pink: #f04770;
+$ghost-white: #f5f5f9;
+$jet: #38373a;
+//Bulma colors overwrite
+$primary: $medium-purple;
+$primary-light: $lavender-blue;
+$primary-dark: $dark-slate-blue;
+$warning: $jonquil;
+$danger: $paradise-pink;
+$light: $ghost-white;
+$grey: $jet;
+$dark: $jet;
+$body-background-color: $light;
+$text: $grey;
+
 // Typography variables
+$family-primary: "Poppins", sans-serif;
+$family-sans-serif: "Lato", sans-serif;
+
 $weight-light: 300;
 $weight-normal: 400;
 $weight-medium: 500;
 $weight-semibold: 600;
 $weight-bold: 700;
 
-// Color variables
-// Brand colors
-$medium-purple: #9882E4;
-$dark-slate-blue: #463A82;
-$jonquil: #FFD33F;
-$paradise-pink: #F04770;
-$ghost-white: #F5F5F9;
-$jet: #38373A;
-//Bulma colors overwrite
-$primary: $medium-purple;
-$warning: $jonquil;
-$danger: $paradise-pink;
-$light: $ghost-white;
-$grey: $jet;
-$body-background: $light;
-$text: $grey-dark;
-
-$family-primary: "Poppins", sans-serif;
-$family-sans-serif: "Lato", sans-serif;
-
 $title-family: $family-primary;
 $title-size: $size-1;
-$title-weight: $weight-semibold;
-// $title-color:; // TODO
+$title-weight: $weight-bold;
+$title-color: $primary-dark;
 
 $subtitle-family: $family-primary;
 $subtitle-size: $size-2;
 $subtitle-weight: $weight-medium;
-// $subtitle-color:; // TODO
+$subtitle-color: $primary-dark;
 
 // $content-heading-color:; // TODO
 $content-heading-weight: $weight-normal;

@@ -2,11 +2,13 @@
   html {
     &.has-aside-left {
       &.has-aside-expanded {
-        nav.navbar, body {
+        nav.navbar,
+        body {
           padding-left: $aside-width;
         }
       }
-      nav.navbar, body {
+      nav.navbar,
+      body {
         @include transition(padding-left);
       }
       aside.is-placed-left {
@@ -54,12 +56,11 @@ aside.aside {
     color: $aside-tools-color;
     line-height: $navbar-height;
     height: $navbar-height;
-    padding-left: $default-padding * .5;
     background: $aside-tools-background-color;
     flex: 1;
 
     .icon {
-      margin-right: $default-padding * .5;
+      margin-right: $default-padding * 0.5;
     }
   }
 

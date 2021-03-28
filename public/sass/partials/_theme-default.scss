@@ -23,7 +23,7 @@ $hr-height: 1px;
 /* NavBar: specifics */
 $navbar-input-color: $grey-darker;
 $navbar-input-placeholder-color: $grey-lighter;
-$navbar-box-shadow: 0 1px 0 rgba(24, 28, 33, 0.04);
+$navbar-box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.06);
 $navbar-divider-border: 1px solid rgba($grey-lighter, 0.25);
 $navbar-item-h-padding: $default-padding * 0.75;
 $navbar-avatar-size: 1.75rem;
@@ -74,7 +74,6 @@ $table-avatar-size-mobile: 25vw;
 $checkbox-border: 1px solid $base-color;
 
 /* Navbar: Bulma override */
-$navbar-box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.06);
 
 /* Modal card: Bulma override */
 $modal-card-head-background-color: $white-ter;
