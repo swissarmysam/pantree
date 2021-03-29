@@ -19,7 +19,7 @@ block doc-header
                   a.nav__link.navbar-item(href=item.slug ) #{item.title}
               .navbar-item 
                 .buttons 
-                  if account
+                  if user
                     a.button.is-primary(href="/logout" )
                       //- != h.icon('logout')
                       span Logout
@@ -31,7 +31,7 @@ block doc-header
 
     block messages
       if locals.flashes
-        .inner
+        .container
           - const categories = Object.keys(locals.flashes)
           each category in categories
             each message in flashes[category]

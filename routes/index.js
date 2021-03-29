@@ -26,7 +26,7 @@ router.post(
   authController.login
 );
 
-// router.get('/logout', authController.logout);
+router.get('/logout', authController.logout);
 
 // router.get('/account', authController.isLoggedIn, accountController.account);
 // router.post('/account', catchErrors(accountController.updateAccount));
@@ -39,12 +39,11 @@ router.post(
 // );
 
 /* DASHBOARD ROUTE */
-// router.get(
-//   '/dashboard/:id',
-//   authController.isLoggedIn,
-//   catchErrors(dashboardController.showDashboard)
-// );
-router.get('/dashboard', dashboardController.showDashboard); // TEMP
+router.get(
+  '/dashboard',
+  authController.isLoggedIn,
+  dashboardController.showDashboard
+);
 
 /* FRIDGE ROUTES */
 // router.get('/fridge', catchErrors(fridgeController.getFridges));
