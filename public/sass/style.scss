@@ -39,17 +39,6 @@
   display: none;
 }
 
-.inner {
-  max-width:900px;
-  margin: 0 auto;
-  @media all and (max-width: 900px) {
-    padding: 2rem;
-  }
-  &--flashes {
-    padding:0;
-  }
-}
-
 .is-full-height {
   min-height: 100vh !important;
   overflow-y: auto;
