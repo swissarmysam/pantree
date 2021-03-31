@@ -56,7 +56,7 @@ aside.aside {
     color: $aside-tools-color;
     line-height: $navbar-height;
     height: $navbar-height;
-    background: $aside-tools-background-color;
+    background: $primary;
     flex: 1;
 
     .icon {
@@ -64,42 +64,14 @@ aside.aside {
     }
   }
 
+  .menu {
+    padding-right: $default-padding * 0.7;
+  }
+
   .menu-list {
     li {
       a {
-        &.has-dropdown-icon {
-          position: relative;
-          padding-right: $aside-icon-width;
-
-          .dropdown-icon {
-            position: absolute;
-            top: $size-base * 0.5;
-            right: 0;
-          }
-        }
-      }
-      ul {
-        display: none;
-        border-left: 0;
-        background-color: darken($base-color, 2.5%);
-        padding-left: 0;
-        margin: 0 0 $default-padding * 0.5;
-
-        li {
-          a {
-            padding: $default-padding * 0.5 0 $default-padding * 0.5 $default-padding * 0.5;
-            font-size: $aside-submenu-font-size;
-
-            &.has-icon {
-              padding-left: 0;
-            }
-            &.is-active {
-              &:not(:hover) {
-                background: transparent;
-              }
-            }
-          }
-        }
+        border-radius: 0 20px 20px 0;
       }
     }
   }

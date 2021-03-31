@@ -1,30 +1,34 @@
 extends layout
+include mixins/_navbar-dashboard.pug
 
 block prepend doc-header
   html(class= "has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded")
 
+block  header
+  +navbar-dashboard()
+
 block content
   aside.aside.is-placed-left.is-expanded
     .aside-tools
-      .aside-tools-label
-          +logo(151, 32)
+      a.aside-tools-label(href="/")
+          +logo(151, 32, '#ffffff')
     .menu.is-menu-main
       p.menu-label General
       ul.menu-list
-      each item, index in h.sidemenuType1[0]
-        li
-          a.has-icon(href=item.slug )
-            span.icon
-              //- icon
-            span.menu-item-label #{item.title}
+        each item, index in h.sidemenuType1[0]
+          li
+            a.has-icon(href=item.slug )
+              span.icon O
+                //- icon
+              span.menu-item-label.has-text-weight-semibold #{item.title}
       p.menu-label Quick actions
       ul.menu-list
-      each item in h.sidemenuType1[1]
-        li
-          a.has-icon(href=item.slug )
-            span.icon
-              //- icon
-            span.menu-item-label #{item.title}
+        each item in h.sidemenuType1[1]
+          li
+            a.has-icon(href=item.slug )
+              span.icon O
+                //- icon
+              span.menu-item-label.has-text-weight-semibold #{item.title}
   section.section.is-title-bar
     .level
       .level-left
