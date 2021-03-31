@@ -1,5 +1,6 @@
 /* We'll need some initial vars to use here */
 @import "node_modules/bulma/sass/utilities/initial-variables";
+@import "./variables";
 
 /* Base: Size  */
 $size-base: 1rem;
@@ -13,10 +14,6 @@ $base-color: #2e323a;
 $base-color-light: rgba(24, 28, 33, 0.06);
 
 /* General overrides */
-$primary: $turquoise;
-$body-background-color: #f8f8f8;
-$link: $blue;
-$link-visited: $purple;
 $light-border: 1px solid $base-color-light;
 $hr-height: 1px;
 
@@ -31,12 +28,12 @@ $navbar-avatar-size: 1.75rem;
 /* Aside: Bulma override */
 $menu-item-radius: 0;
 $menu-list-link-padding: $size-base * 0.5 0;
-$menu-label-color: lighten($base-color, 25%);
-$menu-item-color: lighten($base-color, 30%);
-$menu-item-hover-color: $white;
-$menu-item-hover-background-color: darken($base-color, 3.5%);
-$menu-item-active-color: $white;
-$menu-item-active-background-color: darken($base-color, 2.5%);
+$menu-label-color: $text;
+$menu-item-color: $text;
+$menu-item-hover-color: $text;
+$menu-item-hover-background-color: $light;
+$menu-item-active-color: $primary-dark;
+$menu-item-active-background-color: $primary-light;
 
 /* Aside: specifics */
 $aside-width: $size-base * 14;

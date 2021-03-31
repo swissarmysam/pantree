@@ -1,0 +1,18 @@
+mixin user-dropdown() 
+    .navbar-item.has-dropdown.has-dropdown-with-icons.has-divider.has-user-avatar.is-hoverable.has-text-dark
+        a.navbar-link
+            .is-user-avatar
+                img(src='https://avatars.dicebear.com/v2/initials/john-doe.svg' alt='John Doe')
+            .is-user-name
+            span= user.name
+            span.icon
+        .navbar-dropdown
+            a.navbar-item(href="/account" )
+                span.icon
+                    i
+                span My Profile
+            hr.navbar-divider
+            a.navbar-item(href="/logout" )
+                span.icon
+                    i
+                span Log Out

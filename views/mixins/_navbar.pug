@@ -1,0 +1,14 @@
+include _logo.pug
+mixin navbar ()
+    nav.navbar.is-fixed-top(role='navigation', aria-label='main navigation')
+        .navbar-brand
+            a.nav__link.nav__link--logo.navbar-item(href="/")
+                +logo(151, 32, '#9882e4') 
+        .navbar-menu
+            .navbar-end 
+                each item in h.menu
+                    a.nav__link.navbar-item(href=item.slug ) #{item.title}
+                .navbar-item 
+                    .buttons
+                        a.button.is-primary(href="/register" ) Sign Up
+                        a.button.is-primary.is-light(href="/login" ) Sign in
