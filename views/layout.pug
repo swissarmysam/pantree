@@ -2,7 +2,7 @@ block doc-header
   doctype html
   html
     include mixins/_navbar.pug
-    include mixins/_navbar-user-logged.pug
+    include mixins/_navbarUserLogged.pug
     head
       title= `${title} | ${h.siteName}`
       link(rel='stylesheet', href='/dist/css/style.css')
@@ -10,9 +10,9 @@ block doc-header
       meta(name="viewport" content="width=device-width, initial-scale=1")
     body
       block header
-        if user 
-          +navbar-user-logged()
-        else 
+        if user
+          +navbarUserLogged()
+        else
           +navbar()
 
     block messages
@@ -27,11 +27,11 @@ block doc-header
                   button.delete(onClick="this.parentElement.parentElement.remove()")
                 .message-body
                   p!= message
-                  
+
     block content
       p This is the default!
 
-    block footer 
+    block footer
       .footer
 
     block scripts

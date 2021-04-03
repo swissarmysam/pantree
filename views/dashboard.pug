@@ -1,11 +1,12 @@
 extends layout
-include mixins/_navbar-dashboard.pug
+include mixins/_navbarDashboard.pug
+include mixins/_overviewTile.pug
 
 block prepend doc-header
   html(class= "has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded")
 
 block  header
-  +navbar-dashboard()
+  +navbarDashboard()
 
 block content
   aside.aside.is-placed-left.is-expanded
@@ -35,35 +36,78 @@ block content
         .level-item
           ul
             li.title.is-size-2 Food donations
-  article.message.is-primary
-    .message-header
-      p Hello World
-      button.delete(aria-label='delete')
-    .message-body
-      | Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-      strong Pellentesque risus mi
-      | , tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum.
-  article.message.is-danger
-    .message-header
-      p Hello World
-      button.delete(aria-label='delete')
-    .message-body
-      | Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-      strong Pellentesque risus mi
-      | , tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum.
-  article.message.is-warning
-    .message-header
-      p Hello World
-      button.delete(aria-label='delete')
-    .message-body
-      | Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-      strong Pellentesque risus mi
-      | , tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum.
-  article.message
-    .message-header
-      p Hello World
-      button.delete(aria-label='delete')
-    .message-body
-      | Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-      strong Pellentesque risus mi
-      | , tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum.
+  block primary
+    // p is default
+    // TO-DO move to donations route
+    section.section.is-main-section
+      .tile.is-ancestor
+        +overviewTile('Claimed', '5.2 kg', 'placeholder')
+        +overviewTile('Available', '6.9 kg', 'placeholder')
+        +overviewTile('Collected', '2 of 6', 'placeholder')
+      .card.has-table.has-mobile-sort-spaced
+        .card-header
+          p.card-header-title Donations
+        .card-content
+          .b-table.has-pagination
+            .table-wrapper.has-mobile-cards
+              table.table.is-fullwidth.is-striped.is-hoverable.is-sortable.is-fullwidth
+                thead
+                  tr
+                    th
+                    th Name
+                    th Donation contents
+                    th Weight (kg)
+                    th Distance
+                    th Expiry date
+                    th
+                tbody
+                  tr
+                    td.is-image-cell
+                      .image
+                        img.is-rounded(src='https://avatars.dicebear.com/v2/initials/rebecca-bauch.svg')
+                    td(data-label='Name') Rebecca Bauch
+                    td(data-label='Company') Daugherty-Daniel
+                    td(data-label='City') South Cory
+                    td.is-progress-cell(data-label='Progress')
+                      progress.progress.is-small.is-primary(max='100' value='79') 79
+                    td(data-label='Created')
+                      small.has-text-grey.is-abbr-like(title='Oct 25, 2020') Oct 25, 2020
+                    td.is-actions-cell
+                      .buttons.is-right
+                        button.button.is-small.is-primary(type='button')
+                          span.icon O
+                        button.button.is-small.is-danger.jb-modal(data-target='sample-modal' type='button')
+                          span.icon O
+                  tr
+                    td.is-image-cell
+                      .image
+                        img.is-rounded(src='https://avatars.dicebear.com/v2/initials/rebecca-bauch.svg')
+                    td(data-label='Name') Rebecca Bauch
+                    td(data-label='Company') Daugherty-Daniel
+                    td(data-label='City') South Cory
+                    td.is-progress-cell(data-label='Progress')
+                      progress.progress.is-small.is-primary(max='100' value='79') 79
+                    td(data-label='Created')
+                      small.has-text-grey.is-abbr-like(title='Oct 25, 2020') Oct 25, 2020
+                    td.is-actions-cell
+                      .buttons.is-right
+                        button.button.is-small.is-primary(type='button')
+                          span.icon O
+                        button.button.is-small.is-danger.jb-modal(data-target='sample-modal' type='button')
+                          span.icon O
+      .notification
+        .level
+          .level-left
+            .level-item
+              .buttons.has-addons
+                button.button.is-active(type='button') 1
+                button.button(type='button') 2
+                button.button(type='button') 3
+          .level-right
+            .level-item
+              small Page 1 of 3
+
+
+
+
+

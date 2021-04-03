@@ -33,7 +33,7 @@ exports.sidemenuType1 = [
   [
     { slug: '/add-activity', title: 'Add activity', icon: 'plus' },
     { slug: '/add-notice', title: 'Add notice', icon: 'plus' },
-    { slug: '/edit-info', title: 'Edit info', icon: 'edit' },
+    { slug: '/edit-info', title: 'Fridge info', icon: 'edit' },
   ],
 ];
 
