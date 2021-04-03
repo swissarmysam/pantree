@@ -4,13 +4,13 @@ include mixins/_navbar-dashboard.pug
 block prepend doc-header
   html(class= "has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded")
 
-block  header
+block header
   +navbar-dashboard()
 
 block content
   aside.aside.is-placed-left.is-expanded
     .aside-tools
-      a.aside-tools-label(href="/")
+      a.aside-tools-label(href="/dashboard")
           +logo(151, 32, '#ffffff')
     .menu.is-menu-main
       p.menu-label General

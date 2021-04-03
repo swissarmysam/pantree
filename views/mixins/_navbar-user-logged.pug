@@ -8,7 +8,5 @@ mixin navbar-user-logged ()
                 +logo(151, 32, '#ffffff') 
         .navbar-menu
             .navbar-end 
-                each item in h.menu
-                    a.nav__link.navbar-item(href=item.slug ) #{item.title}
                 +user-dropdown()
                     

@@ -1,5 +1,10 @@
 extends layout
 
+include mixins/_indexMenu
+
+block prepend mainMenu 
+  +indexMenu()
+
 block content 
   section.hero.is-large.is-info
     .hero-body
