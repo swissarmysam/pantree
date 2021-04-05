@@ -1,0 +1,14 @@
+include _userDropdown.pug
+mixin navbarDashboard ()
+    nav.navbar.is-fixed-top.is-primary(role='navigation', aria-label='main navigation')
+        .navbar-item.has-text-weight-semibold.is-size-5.has-text-white Community fridge name
+        .navbar-menu
+<<<<<<< HEAD:views/mixins/_navbarDashboard.pug
+            .navbar-end
+                each item in h.menu
+                    a.nav__link.navbar-item(href=item.slug ) #{item.title}
+                +userDropdown()
+=======
+            .navbar-end 
+                +user-dropdown()
+>>>>>>> main:views/mixins/_navbar-dashboard.pug

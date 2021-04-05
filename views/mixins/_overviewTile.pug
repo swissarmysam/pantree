@@ -1,0 +1,13 @@
+mixin overviewTile(title, stat, icon)
+    .tile.is-parent
+        .card.tile.is-child
+            .card-content
+                .level.is-mobile
+                    .level-item
+                        .is-widget-label
+                            h3.subtitle.is-size-4.mb-1.is-spaced= `${title}`
+                            h1.title.has-text-weight-semibold.is-size-3= `${stat}`
+                    .level-item.has-widget-icon
+                        .is-widget-icon
+                            span.icon.has-text-primary.is-large O
+                                // i.icon
