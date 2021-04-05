@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:wght@300;600;700&display=swap");
 /* Theme style (colors & sizes) */
 /* We'll need some initial vars to use here */
+/* SETUP CUSTOM VARIABLES */
 /* Base: Size  */
 /* Default font */
 /* Base color */
@@ -3310,22 +3311,22 @@ button.dropdown-item {
   line-height: 1.25; }
   .menu-list a {
     border-radius: 0;
-    color: #727c8f;
+    color: #38373a;
     display: block;
     padding: 0.5rem 0; }
     .menu-list a:hover {
-      background-color: #262930;
-      color: white; }
+      background-color: #f5f5f9;
+      color: #38373a; }
     .menu-list a.is-active {
-      background-color: #282c33;
-      color: white; }
+      background-color: #dbd3f6;
+      color: #463a82; }
   .menu-list li ul {
     border-left: 1px solid #dbdbdb;
     margin: 0.75em;
     padding-left: 0.75em; }
 
 .menu-label {
-  color: #666f81;
+  color: #38373a;
   font-size: 0.75em;
   letter-spacing: 0.1em;
   text-transform: uppercase; }
@@ -7896,30 +7897,14 @@ aside.aside {
     color: white;
     line-height: 3.25rem;
     height: 3.25rem;
-    background: #e6e6e6;
+    background: #9882e4;
     flex: 1; }
     aside.aside .aside-tools .icon {
       margin-right: 0.75rem; }
-  aside.aside .menu-list li a.has-dropdown-icon {
-    position: relative;
-    padding-right: 3rem; }
-    aside.aside .menu-list li a.has-dropdown-icon .dropdown-icon {
-      position: absolute;
-      top: 0.5rem;
-      right: 0; }
-  aside.aside .menu-list li ul {
-    display: none;
-    border-left: 0;
-    background-color: #282c33;
-    padding-left: 0;
-    margin: 0 0 0.75rem; }
-    aside.aside .menu-list li ul li a {
-      padding: 0.75rem 0 0.75rem 0.75rem;
-      font-size: 0.95rem; }
-      aside.aside .menu-list li ul li a.has-icon {
-        padding-left: 0; }
-      aside.aside .menu-list li ul li a.is-active:not(:hover) {
-        background: transparent; }
+  aside.aside .menu {
+    padding-right: 1.05rem; }
+  aside.aside .menu-list li a {
+    border-radius: 0 20px 20px 0; }
   aside.aside .menu-label {
     padding: 0 0.75rem;
     margin-top: 0.75rem;
@@ -8140,7 +8125,7 @@ footer.footer .logo img {
 .icon.has-update-mark {
   position: relative; }
   .icon.has-update-mark:after {
-    content: '';
+    content: "";
     width: 0.5rem;
     height: 0.5rem;
     position: absolute;

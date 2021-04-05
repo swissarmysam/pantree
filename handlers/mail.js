@@ -27,7 +27,7 @@ exports.send = async options => {
   const text = htmlToText.fromString(html);
 
   const mailOptions = {
-    from: `Wes Bos <noreply@wesbos.com>`,
+    from: `Pantree <no-reply@pantree-app.xyz>`,
     to: options.user.email,
     subject: options.subject,
     html,

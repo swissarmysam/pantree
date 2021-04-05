@@ -1,0 +1,21 @@
+extends dashboard 
+
+block primary
+  .card
+    .card-content
+      form.container.is-max-desktop(action="/account" method="POST")
+       .field 
+        label.label Name
+        .control.has-icons-left 
+          input.input(type="text" value=user.name name='name' )
+          span.icon.is-small.is-left 
+            i.fas.fas-user
+      .field 
+        label.label Email 
+        .control.has-icons-left 
+          input.input(type="text" value=user.email name='email' )
+          span.icon.is-small.is-left 
+            i.fas.fas-user
+      .field 
+        .control 
+          button.button.is-medium.is-fullwidth.is-primary(type="submit" value="Update My Account") Update Account

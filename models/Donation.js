@@ -6,15 +6,11 @@ const slug = require('slugs');
 // TODO Add optional associated details (name, number, email) in case it is different contact
 const donationSchema = new mongoose.Schema(
   {
-    contents: {
-      type: String,
-      trim: true,
-      required: 'Donation contents!',
-    },
     id: String,
     description: {
       type: String,
       trim: true,
+      required: true
     },
     tags: [String],
     photo: String,
@@ -22,7 +18,7 @@ const donationSchema = new mongoose.Schema(
       donatee: {
         type: mongoose.Schema.ObjectId,
         ref: 'Business',
-        required: '',
+        required: true,
       },
       claimer: {
         type: mongoose.Schema.ObjectId,

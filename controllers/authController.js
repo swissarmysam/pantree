@@ -18,6 +18,14 @@ exports.logout = (req, res) => {
   res.redirect('/');
 };
 
+exports.notLoggedIn = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    next();
+    return;
+  }
+  res.redirect('/dashboard');
+}
+
 exports.isLoggedIn = (req, res, next) => {
   // first check if the user is authenticated
   if (req.isAuthenticated()) {
@@ -28,47 +36,51 @@ exports.isLoggedIn = (req, res, next) => {
   res.redirect('/login');
 };
 
-// exports.forgot = async (req, res) => {
-//   // 1. See if a user with that email exists
-//   const account = await Account.findOne({ email: req.body.email });
-//   if (!account) {
-//     req.flash('error', 'No account with that email exists.');
-//     return res.redirect('/login');
-//   }
-//   // 2. Set reset tokens and expiry on their account
-//   account.resetPasswordToken = crypto.randomBytes(20).toString('hex');
-//   account.resetPasswordExpires = Date.now() + 3600000; // 1 hour from now
-//   await account.save();
-//   // 3. Send them an email with the token
-//   const resetURL = `http://${req.headers.host}/account/reset/${
-//     account.resetPasswordToken
-//   }`;
-//   await mail.send({
-//     account,
-//     filename: 'password-reset',
-//     subject: 'Password Reset',
-//     resetURL,
-//   });
-//   req.flash('success', `You have been emailed a password reset link.`);
-//   // 4. redirect to login page
-//   res.redirect('/login');
-// };
+exports.forgotPassword = (req, res) => {
+  res.render('forgot', { title: 'Reset Password' });
+};
 
-// exports.reset = async (req, res) => {
-//   const account = await Account.findOne({
-//     resetPasswordToken: req.params.token,
-//     resetPasswordExpires: { $gt: Date.now() },
-//   });
-//   if (!account) {
-//     req.flash('error', 'Password reset is invalid or has expired');
-//     return res.redirect('/login');
-//   }
-//   // if there is a user, show the rest password form
-//   res.render('reset', { title: 'Reset your Password' });
-// };
+exports.forgot = async (req, res) => {
+  // 1. See if a user with that email exists
+  const account = await Account.findOne({ email: req.body.email });
+  if (!account) {
+    req.flash('error', 'No account with that email exists.');
+    return res.redirect('/login');
+  }
+  // 2. Set reset tokens and expiry on their account
+  account.resetPasswordToken = crypto.randomBytes(20).toString('hex');
+  account.resetPasswordExpires = Date.now() + 3600000; // 1 hour from now
+  await account.save();
+  // 3. Send them an email with the token
+  const resetURL = `http://${req.headers.host}/account/reset/${
+    account.resetPasswordToken
+  }`;
+  await mail.send({
+    account,
+    filename: 'passwordReset',
+    subject: 'Password Reset',
+    resetURL,
+  });
+  req.flash('success', `You have been emailed a password reset link.`);
+  // 4. redirect to login page
+  res.redirect('/login');
+};
+
+exports.reset = async (req, res) => {
+  const account = await Account.findOne({
+    resetPasswordToken: req.params.token,
+    resetPasswordExpires: { $gt: Date.now() },
+  });
+  if (!account) {
+    req.flash('error', 'Password reset is invalid or has expired');
+    return res.redirect('/login');
+  }
+  // if there is a user, show the rest password form
+  res.render('reset', { title: 'Reset your Password' });
+};
 
 exports.confirmedPasswords = (req, res, next) => {
-  if (req.body.password === req.body['password-confirm']) {
+  if (req.body.password === req.body['confirm-password']) {
     next(); // keep it going!
     return;
   }

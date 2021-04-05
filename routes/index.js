@@ -9,7 +9,7 @@ const dashboardController = require('../controllers/dashboardController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
 /* GENERAL ROUTES */
-router.get('/', sharedController.homePage);
+router.get('/', authController.notLoggedIn, sharedController.homePage);
 
 /* ACCOUNT AND AUTH ROUTES */
 router.get('/login', authController.loginForm);
@@ -28,21 +28,22 @@ router.post(
 
 router.get('/logout', authController.logout);
 
-// router.get('/account', authController.isLoggedIn, accountController.account);
-// router.post('/account', catchErrors(accountController.updateAccount));
-// router.post('/account/forgot', catchErrors(authController.forgot));
-// router.get('/account/reset/:token', catchErrors(authController.reset));
-// router.post(
-//   '/account/reset/:token',
-//   authController.confirmedPasswords,
-//   catchErrors(authController.update)
-// );
+router.get('/account', authController.isLoggedIn, accountController.account);
+router.post('/account', catchErrors(accountController.updateAccount));
+router.get('/account/forgot', authController.forgotPassword);
+router.post('/account/forgot', authController.forgot);
+router.get('/account/reset/:token', catchErrors(authController.reset));
+router.post(
+  '/account/reset/:token',
+  authController.confirmedPasswords,
+  catchErrors(authController.update)
+);
 
 /* DASHBOARD ROUTE */
 router.get(
   '/dashboard',
   authController.isLoggedIn,
-  dashboardController.showDashboard
+  dashboardController.showDonations
 );
 
 /* FRIDGE ROUTES */

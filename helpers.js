@@ -19,8 +19,9 @@ exports.icon = (name) => fs.readFileSync(`./public/images/icons/${name}.svg`);
 exports.siteName = `pantree`;
 
 exports.menu = [
-  { slug: '/about', title: 'About', icon: 'info' },
-  { slug: '/map', title: 'Map', icon: 'pin' },
+  { slug: '#home', title: 'Home', icon: 'home' },
+  { slug: '#about', title: 'About', icon: 'info' },
+  { slug: '#contact', title: 'Contact', icon: 'contact' },
 ];
 
 // TO-DO render sidemenu links based on user type

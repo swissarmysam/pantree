@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  .columns.is-centered.is-vcentered.is-full-height 
+        +sideMessage()
+        .column.is-three-quarters
+          .card
+            .card-content
+              form.container.is-max-desktop(method="POST")
+                .field 
+                  label.label Password 
+                  .control.has-icons-left 
+                    input.input(type="password" placeholder="Enter your password" name='password')
+                    span.icon.is-small.is-left 
+                      i.fas.fas-lock
+                .field 
+                  label.label Confirm Password 
+                  .control.has-icons-left 
+                    input.input(type="password" placeholder="Enter your password" name='confirm-password')
+                    span.icon.is-small.is-left 
+                      i.fas.fas-lock        
+                .field 
+                  .control 
+                    button.button.is-medium.is-fullwidth.is-primary(type="submit" value="Reset Password")
