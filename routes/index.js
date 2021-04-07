@@ -41,7 +41,7 @@ router.post(
 
 /* DASHBOARD ROUTE */
 router.get(
-  '/dashboard',
+  '/donations',
   authController.isLoggedIn,
   dashboardController.showDonations
 );
