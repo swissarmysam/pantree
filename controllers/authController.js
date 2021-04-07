@@ -8,7 +8,7 @@ const promisify = require('es6-promisify');
 exports.login = passport.authenticate('local', {
   failureRedirect: '/login',
   failureFlash: 'Login failed!',
-  successRedirect: '/dashboard',
+  successRedirect: '/donations',
   successFlash: 'You are now logged in!',
 });
 
@@ -23,8 +23,8 @@ exports.notLoggedIn = (req, res, next) => {
     next();
     return;
   }
-  res.redirect('/dashboard');
-}
+  res.redirect('/donations');
+};
 
 exports.isLoggedIn = (req, res, next) => {
   // first check if the user is authenticated
@@ -52,9 +52,7 @@ exports.forgot = async (req, res) => {
   account.resetPasswordExpires = Date.now() + 3600000; // 1 hour from now
   await account.save();
   // 3. Send them an email with the token
-  const resetURL = `http://${req.headers.host}/account/reset/${
-    account.resetPasswordToken
-  }`;
+  const resetURL = `http://${req.headers.host}/account/reset/${account.resetPasswordToken}`;
   await mail.send({
     account,
     filename: 'passwordReset',
