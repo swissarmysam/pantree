@@ -7,13 +7,6 @@ const slug = require('slugs');
 const donationSchema = new mongoose.Schema(
   {
     id: String,
-    description: {
-      type: String,
-      trim: true,
-      required: true
-    },
-    tags: [String],
-    photo: String,
     details: {
       donatee: {
         type: mongoose.Schema.ObjectId,
@@ -24,19 +17,34 @@ const donationSchema = new mongoose.Schema(
         type: mongoose.Schema.ObjectId,
         ref: 'Fridge',
       },
+      description: {
+        type: String,
+        trim: true,
+        required: true,
+      },
+      tags: [String],
       available: {
         type: Boolean,
       },
-      created: {
+      addedDate: {
         type: Date,
         default: Date.now,
       },
-      expiry: {
+      expiryDate: {
         type: Date,
       },
       weight: {
         type: Number,
       },
+      altContact: {
+        name: {
+          type: String,
+        },
+        phoneNumber: {
+          type: Number,
+        },
+      },
+      photo: String,
     },
   },
   {

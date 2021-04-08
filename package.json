@@ -4,7 +4,9 @@
   "main": "start.js",
   "scripts": {
     "start": "node start.js",
-    "css-build": "node-sass public/sass/style.scss public/dist/css/style.css"
+    "css-build": "node-sass public/sass/style.scss public/dist/css/style.css",
+    "load-data": "node ./data/load-sample-data.js",
+    "delete-data": "node ./data/load-sample-data.js --delete"
   },
   "author": "2BY2",
   "license": "ISC",
