@@ -19,12 +19,14 @@ const business = JSON.parse(
   fs.readFileSync(`${__dirname}/business.json`, 'utf-8')
 );
 const fridge = JSON.parse(fs.readFileSync(`${__dirname}/fridge.json`, 'utf-8'));
+const account = JSON.parse(fs.readFileSync(`${__dirname}/account.json`, 'utf-8'));
 
 async function deleteData() {
   console.log('😢😢 Goodbye Data...');
   await Donation.remove();
   await Fridge.remove();
   await Business.remove();
+  await Account.remove();
   console.log(
     'Data Deleted. To load sample data, run\n\n\t npm run sample\n\n'
   );
@@ -36,6 +38,7 @@ async function loadData() {
     await Donation.insertMany(donation);
     await Business.insertMany(business);
     await Fridge.insertMany(fridge);
+    await Account.insertMany(account);
     console.log('Done!');
     process.exit();
   } catch (e) {

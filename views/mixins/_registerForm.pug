@@ -3,8 +3,6 @@ mixin registerForm()
         .card-content
             form.container.is-max-desktop(action="/register" method="POST")
                 h3.title.is-3.form-title Register
-                hr
-                .field.form-section(section-name="Account Information" section="accountInfo")
                     .field
                         label.label(for='name') Full Name
                         .control 
@@ -27,14 +25,6 @@ mixin registerForm()
                             input.input(type="password" name='password-confirm')
                             span.icon.is-small.is-left
                                 i.fas.fa-lock
-                .field.form-section(section-name="Welcome to the pantree family!" section="accountVerification")
-                    - email = 'example@email.com'
-                    h3.title.is-3.box.has-background-success.has-text-white Success Illustration
-                    article.message.is-success
-                        .message-body
-                            | We've sent an email to 
-                            strong= email 
-                            | to verify your account. If you can't find it try looking in your spam folder or clicking the button below to resend it. 
-                .field.is-grouped
-                    button.button.is-medium.is-primary.is-light.mr-3 Back
-                    button.button.is-medium.is-fullwidth.is-primary(type="button") Next
+                    .field 
+                        .control 
+                            button.button.is-medium.is-fullwidth.is-primary(type="submit") Submit

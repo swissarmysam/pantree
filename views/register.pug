@@ -1,16 +1,11 @@
 extends layout
 include mixins/_registerForm
-include mixins/_formSteps
 include mixins/_sideMessage
 
 block content
     .columns.is-centered.is-vcentered.is-full-height 
         +sideMessage()
         .column.is-three-quarters
-            +formSteps()
             +registerForm()
             a(href='/login') Already have an account?
 
-
-block scripts 
-    script(src="/dist/js/formHandler.js")

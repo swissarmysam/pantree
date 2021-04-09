@@ -18,13 +18,15 @@ router.get('/register', accountController.registerForm);
 
 // 1. Validate the registration data
 // 2. register the user
-// 3. we need to log them in
+// 3. redirect to complete details collection
 router.post(
   '/register',
   accountController.validateRegister,
   accountController.register,
-  authController.login
+  accountController.setupForm
 );
+
+router.post('/setup', accountController.setup, authController.login)
 
 router.get('/logout', authController.logout);
 
