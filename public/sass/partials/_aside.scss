@@ -14,12 +14,26 @@
       aside.is-placed-left {
         display: block;
       }
+      &.has-side-message {
+        nav.navbar {
+          padding-left: 0;
+        }
+        body {
+          padding-left: $aside-width-message;
+          transition-property: none;
+        }
+      }
     }
   }
 
   aside.aside.is-expanded {
     width: $aside-width;
-
+    &.is-side-message {
+      top: 3.25rem;
+      z-index: 0;
+      height: 92vh;
+      width: $aside-width-message;
+    }
     .menu-list {
       @include icon-with-update-mark($aside-icon-width);
 
@@ -90,6 +104,9 @@ aside.aside {
   }
   aside.aside {
     @include transition(left);
+  }
+  aside.aside.is-side-message {
+    transition-property: none;
   }
   html.has-aside-mobile-transition {
     body {

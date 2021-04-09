@@ -2,46 +2,25 @@ extends layout
 
 include mixins/_indexMenu
 
-block prepend mainMenu 
+block prepend mainMenu
   +indexMenu()
 
-block content 
-  section.hero.is-large.is-info
+block content
+  section.hero.is-medium
     .hero-body
-      p.title
-        | Large hero
-      p.subtitle
-        | Large subtitle
-      button.button.is-light Light
-  article.message.is-primary
-    .message-header
-      p Hello World
-      button.delete(aria-label='delete')
-    .message-body
-      | Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-      strong Pellentesque risus mi
-      | , tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum.
-  article.message.is-danger
-    .message-header
-      p Hello World
-      button.delete(aria-label='delete')
-    .message-body
-      | Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-      strong Pellentesque risus mi
-      | , tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum.
-  article.message.is-warning
-    .message-header
-      p Hello World
-      button.delete(aria-label='delete')
-    .message-body
-      | Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-      strong Pellentesque risus mi
-      | , tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum.
-  article.message
-    .message-header
-      p Hello World
-      button.delete(aria-label='delete')
-    .message-body
-      | Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-      strong Pellentesque risus mi
-      | , tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum.
+      .container.is-widescreen
+          .columns.is-vcentered
+            .column.is-half.is-hidden-desktop.my-6
+              img.hero-illustration(src="heroIllustration.svg")
+            .column.is-half
+              p.title.is-2
+                | Reducing food waste!
+              p.subtitle.is-5
+                | Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                | sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+                | sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+                | At vero eos et accusam et justo duo dolores
+              button.button.is-primary.is-large.is-hidden-touch Discover more
+              button.button.is-primary.is-medium.is-hidden-desktop Discover more
+            .column.is-half.is-hidden-touch
+              img.hero-illustration(src="heroIllustration.svg")

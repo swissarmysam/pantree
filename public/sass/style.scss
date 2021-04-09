@@ -1,20 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:wght@300;600;700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:wght@300;600;700&display=swap");
 
 /* Theme style (colors & sizes) */
 @import "partials/_theme-default";
 
 /* Import our custom variables */
-@import 'partials/_variables';
+@import "partials/_variables";
 
 /* Core Libs & Lib configs */
-@import 'partials/_framework';
+@import "partials/_framework";
 
 /* Mixins */
 @import "partials/_mixins";
 
 /* Components */
-
 
 /* Theme components */
 @import "partials/_nav-bar";
@@ -32,7 +30,8 @@
 @import "partials/steps";
 
 /* Own partials */
-@import 'partials/_flashes';
+@import "partials/_flashes";
+@import "partials/side-message";
 
 /* GLOBAL STYLES */
 .form-section {
@@ -42,4 +41,8 @@
 .is-full-height {
   min-height: 100vh !important;
   overflow-y: auto;
+}
+
+.button {
+  justify-content: center;
 }
