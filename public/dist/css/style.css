@@ -7991,10 +7991,12 @@ section.hero.is-hero-bar {
 table.table thead th {
   border-bottom-width: 1px; }
 
-table.table td.checkbox-cell .b-checkbox.checkbox:not(.button), table.table th.checkbox-cell .b-checkbox.checkbox:not(.button) {
+table.table td.checkbox-cell .b-checkbox.checkbox:not(.button),
+table.table th.checkbox-cell .b-checkbox.checkbox:not(.button) {
   margin-right: 0;
   width: 20px; }
-  table.table td.checkbox-cell .b-checkbox.checkbox:not(.button) .control-label, table.table th.checkbox-cell .b-checkbox.checkbox:not(.button) .control-label {
+  table.table td.checkbox-cell .b-checkbox.checkbox:not(.button) .control-label,
+  table.table th.checkbox-cell .b-checkbox.checkbox:not(.button) .control-label {
     display: none;
     padding: 0; }
 
@@ -8027,13 +8029,57 @@ table.table td.is-progress-col {
       border-color: #dbdbdb; }
       .b-table .table-wrapper + .level .pagination-link.is-current {
         border-color: #4a4a4a; }
-    .b-table .table-wrapper + .level .pagination-previous, .b-table .table-wrapper + .level .pagination-next, .b-table .table-wrapper + .level .pagination-link {
+    .b-table .table-wrapper + .level .pagination-previous,
+    .b-table .table-wrapper + .level .pagination-next,
+    .b-table .table-wrapper + .level .pagination-link {
       border-color: #dbdbdb;
       color: #2e323a; }
-      .b-table .table-wrapper + .level .pagination-previous[disabled], .b-table .table-wrapper + .level .pagination-next[disabled], .b-table .table-wrapper + .level .pagination-link[disabled] {
+      .b-table .table-wrapper + .level .pagination-previous[disabled],
+      .b-table .table-wrapper + .level .pagination-next[disabled],
+      .b-table .table-wrapper + .level .pagination-link[disabled] {
         background-color: transparent; }
 
 @media screen and (max-width: 768px) {
+  .b-table .table-wrapper.has-mobile-cards thead {
+    display: none; }
+  .b-table .table-wrapper.has-mobile-cards tfoot th {
+    border: 0;
+    display: inherit; }
+  .b-table .table-wrapper.has-mobile-cards tr {
+    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+    max-width: 100%;
+    position: relative;
+    display: block; }
+    .b-table .table-wrapper.has-mobile-cards tr td {
+      border: 0;
+      display: inherit; }
+      .b-table .table-wrapper.has-mobile-cards tr td:last-child {
+        border-bottom: 0; }
+    .b-table .table-wrapper.has-mobile-cards tr:not(:last-child) {
+      margin-bottom: 1rem; }
+    .b-table .table-wrapper.has-mobile-cards tr:not([class*="is-"]) {
+      background: inherit; }
+      .b-table .table-wrapper.has-mobile-cards tr:not([class*="is-"]):hover {
+        background-color: inherit; }
+    .b-table .table-wrapper.has-mobile-cards tr:not(.detail):not(.is-empty):not(.table-footer) td {
+      display: flex;
+      width: auto;
+      justify-content: space-between;
+      text-align: right;
+      border-bottom: 1px solid whitesmoke; }
+      .b-table .table-wrapper.has-mobile-cards tr:not(.detail):not(.is-empty):not(.table-footer) td:before {
+        content: attr(data-label);
+        font-weight: 600;
+        padding-right: 0.5rem;
+        text-align: left; }
+    .b-table .table-wrapper.has-mobile-cards tr:not(.detail):not(.is-empty):not(.table-footer) td.is-image-cell {
+      padding: 1rem 1rem 0 1rem; }
+      .b-table .table-wrapper.has-mobile-cards tr:not(.detail):not(.is-empty):not(.table-footer) td.is-image-cell .image {
+        width: 6rem;
+        height: 6rem;
+        margin: 0 auto 0.5rem; }
+  .b-table .table-wrapper.has-mobile-cards tr.detail {
+    margin-top: -1rem; }
   .card.has-table .b-table .table-wrapper + .level .level-left + .level-right {
     margin-top: 0; }
   .card.has-mobile-sort-spaced .b-table .field.table-mobile-sort {
@@ -8043,7 +8089,8 @@ table.table td.is-progress-col {
   .b-table .table-wrapper.has-mobile-cards tr {
     box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1);
     margin-bottom: 3px !important; }
-  .b-table .table-wrapper.has-mobile-cards td.is-progress-col span, .b-table .table-wrapper.has-mobile-cards td.is-progress-col progress {
+  .b-table .table-wrapper.has-mobile-cards td.is-progress-col span,
+  .b-table .table-wrapper.has-mobile-cards td.is-progress-col progress {
     display: flex;
     width: 45%;
     align-items: center;

@@ -1,10 +1,15 @@
 const mongoose = require('mongoose');
 
 const Account = mongoose.model('Account');
+const Business = mongoose.model('Business');
+const Fridge = mongoose.model('Fridge');
 const promisify = require('es6-promisify');
+const e = require('express');
 
 exports.registerForm = (req, res) => {
-  res.render('register', { title: 'Register' });
+  res.render('register', {
+    title: 'Register'
+  });
 };
 
 exports.validateRegister = (req, res, next) => {
@@ -44,11 +49,13 @@ exports.register = async (req, res, next) => {
   });
   const register = promisify(Account.register, Account);
   await register(account, req.body.password);
-  next(); // pass to authController.login
+  next(); // pass to accountController.setup
 };
 
 exports.account = (req, res) => {
-  res.render('account', { title: 'Edit Account' });
+  res.render('account', {
+    title: 'Edit Account'
+  });
 };
 
 exports.updateAccount = async (req, res) => {
@@ -57,11 +64,42 @@ exports.updateAccount = async (req, res) => {
     email: req.body.email,
   };
 
-  const account = await Account.findOneAndUpdate(
-    { _id: req.account._id },
-    { $set: updates },
-    { new: true, runValidators: true, context: 'query' }
-  );
+  const account = await Account.findOneAndUpdate({
+    _id: req.account._id
+  }, {
+    $set: updates
+  }, {
+    new: true,
+    runValidators: true,
+    context: 'query'
+  });
   req.flash('success', 'Updated the profile!');
   res.redirect('back');
+};
+
+exports.setupForm = (req, res) => {
+  res.redirect('/setup');
+  res.render('setup', {
+    title: 'Complete Registration',
+    account: req.account._id
+  });
+};
+
+exports.setup = async (req, res, next) => {
+  req.body.account = req.account._id;
+  if (req.body.type === 'Business') {
+    const business = await new Business(req.body).save();
+  } else {
+    const fridge = await new Fridge(req.body).save();
+  }
+
+  const update = {
+    profileCompleted: true,
+  };
+
+  const account = await Account.findOneAndUpdate({
+    _id: req.account._id
+  }, update);
+
+  next();
 };

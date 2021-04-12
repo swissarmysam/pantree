@@ -39,7 +39,7 @@ const fridgeSchema = new mongoose.Schema(
     },
     localAuthority: {
       council: {
-        type: String,
+        type: String, 
         required: 'Please pick your local council!',
       },
     },

@@ -81,6 +81,7 @@ const businessSchema = new mongoose.Schema(
       },
       ratingPassed: {
         type: Boolean,
+        default: false
       },
     },
     photo: String,

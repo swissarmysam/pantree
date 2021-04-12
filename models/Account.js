@@ -26,6 +26,10 @@ const accountSchema = new Schema({
   },
   resetPasswordToken: String,
   resetPasswordExpires: Date,
+  profileCompleted: {
+    type: Boolean,
+    default: false
+  }
 });
 
 accountSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
