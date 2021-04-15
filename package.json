@@ -6,7 +6,9 @@
     "start": "node start.js",
     "css-build": "node-sass public/sass/style.scss public/dist/css/style.css",
     "load-data": "node ./data/load-sample-data.js",
-    "delete-data": "node ./data/load-sample-data.js --delete"
+    "delete-data": "node ./data/load-sample-data.js --delete",
+    "cypress:open": "cypress open",
+    "test": "cypress run --record --key 90127939-5a6a-43fe-b92b-87ab52275ef5"
   },
   "author": "2BY2",
   "license": "ISC",
@@ -38,6 +40,7 @@
     "validator": "^7.0.0"
   },
   "devDependencies": {
+    "cypress": "^7.0.1",
     "node-sass": "^5.0.0",
     "nodemon": "^2.0.7",
     "parcel-bundler": "^1.12.4"
