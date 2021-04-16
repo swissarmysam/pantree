@@ -32,6 +32,9 @@
 /* Own partials */
 @import "partials/_flashes";
 
+@import "partials/side-message";
+
+
 /* GLOBAL STYLES */
 .form-section {
   display: none;
@@ -41,3 +44,8 @@
   min-height: 100vh !important;
   overflow-y: auto;
 }
+
+.button {
+  justify-content: center;
+}
+

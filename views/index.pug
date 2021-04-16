@@ -9,12 +9,14 @@ block prepend mainMenu
 
 block content
   section.hero.is-medium
-    .hero-body.is-flex.is-align-items-center
+    .hero-body
+
       .container.is-widescreen
           .columns.is-vcentered
             .column.is-half.is-hidden-desktop.my-6
               img.hero-illustration(src="heroIllustration.svg")
-            .column.is-5
+            .column.is-half
+
               p.title.is-2
                 | Reducing food waste!
               p.subtitle.is-5
@@ -24,7 +26,10 @@ block content
                 | At vero eos et accusam et justo duo dolores
               button.button.is-primary.is-large.is-hidden-touch Discover more
               button.button.is-primary.is-medium.is-hidden-desktop Discover more
-            .column.is-7.is-hidden-mobile
+
+            .column.is-half.is-hidden-touch
+              img.hero-illustration(src="heroIllustration.svg")
+  .column.is-7.is-hidden-mobile
               img.hero-illustration(src="heroIllustration.svg")
   +sectionTitle('Our goals')
   .section.has-text-centered
@@ -58,6 +63,5 @@ block content
         .column.is-6.is-offset-1
           .box
           .box
-
 
 
