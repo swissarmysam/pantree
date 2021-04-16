@@ -1,26 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:wght@300;600;700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:wght@300;600;700&display=swap");
 
 /* Theme style (colors & sizes) */
 @import "partials/_theme-default";
 
 /* Import our custom variables */
-@import 'partials/_variables';
+@import "partials/_variables";
 
 /* Core Libs & Lib configs */
-@import 'partials/_framework';
+@import "partials/_framework";
 
 /* Mixins */
 @import "partials/_mixins";
 
 /* Components */
 
-
 /* Theme components */
 @import "partials/_nav-bar";
 @import "partials/_aside";
 @import "partials/_title-bar";
-@import "partials/_hero-bar";
+@import "partials/hero.section";
 @import "partials/_card";
 @import "partials/_table";
 @import "partials/_tiles";
@@ -32,7 +30,7 @@
 @import "partials/steps";
 
 /* Own partials */
-@import 'partials/_flashes';
+@import "partials/_flashes";
 
 /* GLOBAL STYLES */
 .form-section {

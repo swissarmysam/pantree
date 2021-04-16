@@ -1,0 +1,14 @@
+.hero {
+    min-width: 100vw;
+    min-height: 100vh;
+    background-image: url("../../heroBackground.svg");
+    background-size: cover;
+}
+.goal {
+    .card-content {
+        img {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+}

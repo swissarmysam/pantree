@@ -1,0 +1,7 @@
+mixin goalCard(imgUrl, title, body)
+    .tile.is-parent
+          .goal.card.tile.is-child
+              .card-content
+                  img.image.is-96x96.mb-5(src=imgUrl)
+                  h1.title.is-4= title
+                  p.is-size-6= body
