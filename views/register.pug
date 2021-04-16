@@ -2,10 +2,16 @@ extends layout
 include mixins/_registerForm
 include mixins/_sideMessage
 
+block prepend doc-header
+  html(class= "has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded has-side-message")
+
 block content
-    .columns.is-centered.is-vcentered.is-full-height 
-        +sideMessage()
+    +sideMessage()
+    .columns.is-centered.is-vcentered.is-full-height
         .column.is-three-quarters
             +registerForm()
             a(href='/login') Already have an account?
+
+block footer
+
 

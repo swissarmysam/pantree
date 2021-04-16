@@ -1,0 +1,12 @@
+aside {
+    .side-message {
+        height: 92vh;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        .side-illustration {
+            flex-grow: 2;
+            height: max-content;
+        }
+    }
+}

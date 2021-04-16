@@ -1,0 +1,15 @@
+mixin donationPreview(donation)
+    tr
+        td.is-image-cell
+            .image
+                img.is-rounded(src=donation.profileImg)
+        td(data-label='Business') #{donation.business}
+        td(data-label='Donation contents') #{donation.contents}
+        td(data-label='Weight') #{donation.weight}
+        td(data-label='Distance') #{donation.distance}
+        td(data-label='Expiry date')
+            small.has-text-grey.is-abbr-like(title='Oct 25, 2020') #{donation.expiryDate}
+        td.is-actions-cell
+            .buttons.is-right
+                a.button.is-small.is-link(href=donation.slug) View
+                    //span.icon O
