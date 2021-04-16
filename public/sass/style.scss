@@ -28,12 +28,12 @@
 @import "partials/_footer";
 @import "partials/_misc";
 @import "partials/steps";
+@import "partials/switch";
 
 /* Own partials */
 @import "partials/_flashes";
 
 @import "partials/side-message";
-
 
 /* GLOBAL STYLES */
 .form-section {
@@ -48,4 +48,3 @@
 .button {
   justify-content: center;
 }
-

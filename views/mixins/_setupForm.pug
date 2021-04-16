@@ -1,0 +1,18 @@
+mixin setupForm()
+    .card
+        .card-content
+            form.container.is-max-desktop(action="" method="POST")
+                h3.title.is-3.form-title Setup
+                hr
+                .field.form-section.is-grouped(section-name="Sign up to pantree as,"
+                section="userType")
+
+                    label.radio
+                        input(type='radio' name='accountType')
+                        |     Community Fridge
+                    label.radio
+                        input(type='radio' name='accountType')
+                        |     Local Business
+                .field
+                    .control
+                        button.button.is-medium.is-fullwidth.is-primary(type="submit") Submit

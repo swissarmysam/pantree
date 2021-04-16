@@ -2,29 +2,30 @@ mixin registerForm()
     .card
         .card-content
             form.container.is-max-desktop(action="/register" method="POST")
-                h3.title.is-3.form-title Register
-                    .field
-                        label.label(for='name') Full Name
-                        .control
-                            input.input(type="text" value="" name='name')
-                    .field
-                        label.label(for='email') Email
-                        .control.has-icons-left.has-icons-right
-                            input.input(type="email" name='email')
-                            span.icon.is-small.is-left
-                                i.fas.fa-envelope
-                    .field
-                        label.label(for='password') Password
-                        .control.has-icons-left.has-icons-right
-                            input.input(type="password" name='password')
-                            span.icon.is-small.is-left
-                                i.fas.fa-lock
-                    .field
-                        label.label(for='password-confirm') Confirm Password
-                        .control.has-icons-left.has-icons-right
-                            input.input(type="password" name='password-confirm')
-                            span.icon.is-small.is-left
-                                i.fas.fa-lock
-                    .field 
-                        .control 
-                            button.button.is-medium.is-fullwidth.is-primary(type="submit") Submit
+                h3.title.is-3.form-title Sign up to pantree!
+                    hr
+                .field
+                    label.label(for='name') Full Name
+                    .control
+                        input.input(type="text" value="" name='name')
+                .field
+                    label.label(for='email') Email
+                    .control.has-icons-left.has-icons-right
+                        input.input(type="email" name='email')
+                        span.icon.is-small.is-left
+                            i.fas.fa-envelope
+                .field
+                    label.label(for='password') Password
+                    .control.has-icons-left.has-icons-right
+                        input.input(type="password" name='password')
+                        span.icon.is-small.is-left
+                            i.fas.fa-lock
+                .field
+                    label.label(for='password-confirm') Confirm Password
+                    .control.has-icons-left.has-icons-right
+                        input.input(type="password" name='password-confirm')
+                        span.icon.is-small.is-left
+                            i.fas.fa-lock
+                .field
+                    .control
+                        button.button.is-medium.is-fullwidth.is-primary(type="submit") Submit

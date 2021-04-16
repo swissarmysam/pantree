@@ -103,3 +103,15 @@ exports.setup = async (req, res, next) => {
 
   next();
 };
+
+exports.profileCheck = async (req, res, next) => {
+  const isSetup = await Account.findOne({
+    _id: req.account._id
+  }, 'profileCompleted');
+
+  if(!isSetup) {
+    res.redirect('/setup');
+  } else {
+    next();
+  }
+}
