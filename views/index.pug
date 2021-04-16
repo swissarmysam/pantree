@@ -1,6 +1,8 @@
 extends layout
 
 include mixins/_indexMenu
+include mixins/_sectionTitle
+include mixins/_goalCard
 
 block prepend mainMenu
   +indexMenu()
@@ -8,11 +10,13 @@ block prepend mainMenu
 block content
   section.hero.is-medium
     .hero-body
+
       .container.is-widescreen
           .columns.is-vcentered
             .column.is-half.is-hidden-desktop.my-6
               img.hero-illustration(src="heroIllustration.svg")
             .column.is-half
+
               p.title.is-2
                 | Reducing food waste!
               p.subtitle.is-5
@@ -22,5 +26,42 @@ block content
                 | At vero eos et accusam et justo duo dolores
               button.button.is-primary.is-large.is-hidden-touch Discover more
               button.button.is-primary.is-medium.is-hidden-desktop Discover more
+
             .column.is-half.is-hidden-touch
               img.hero-illustration(src="heroIllustration.svg")
+  .column.is-7.is-hidden-mobile
+              img.hero-illustration(src="heroIllustration.svg")
+  +sectionTitle('Our goals')
+  .section.has-text-centered
+    .container.is-widescreen
+      .tile.is-ancestor
+        +goalCard(
+            'reduceGoal.svg',
+            'Reduce Food Waste',
+            'We aim to shrink the amount of food that is thrown away, by giving it another life with someone else!'
+          )
+        +goalCard(
+          'communityGoal.svg',
+          'Bring Together Communities',
+          'Gathering people of all ages and backgrounds together to enjoy activities with new friends!'
+        )
+        +goalCard(
+          'awarenessGoal.svg',
+          'Raise Awareness & Educate',
+          'We want to erase the negative stigma surrounding community fridges and make them a thing to be celebrated.'
+        )
+  section.section
+    .container.is-widescreen
+      .columns.is-vcentered
+        .column.is-5
+          h2.title.is-3 Why use pantree?
+          p.text
+            | Food waste is a growing problem due to the shelf life being so short because of food standards.
+            | However, most of the time the food items are still fresh and ready to eat. By using pantree,
+            | we aim to offer a new life for this wasted food by giving it to community fridges.
+          a.button.is-primary.is-medium.mt-5 Join us today!
+        .column.is-6.is-offset-1
+          .box
+          .box
+
+

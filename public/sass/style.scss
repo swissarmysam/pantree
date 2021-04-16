@@ -18,7 +18,7 @@
 @import "partials/_nav-bar";
 @import "partials/_aside";
 @import "partials/_title-bar";
-@import "partials/_hero-bar";
+@import "partials/hero.section";
 @import "partials/_card";
 @import "partials/_table";
 @import "partials/_tiles";
@@ -31,7 +31,9 @@
 
 /* Own partials */
 @import "partials/_flashes";
+
 @import "partials/side-message";
+
 
 /* GLOBAL STYLES */
 .form-section {
@@ -46,3 +48,4 @@
 .button {
   justify-content: center;
 }
+
