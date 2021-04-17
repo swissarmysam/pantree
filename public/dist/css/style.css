@@ -7867,8 +7867,18 @@ nav.navbar {
     transition: padding-left 250ms ease-in-out 50ms; }
   html.has-aside-left aside.is-placed-left {
     display: block; }
+  html.has-aside-left.has-side-message nav.navbar {
+    padding-left: 0; }
+  html.has-aside-left.has-side-message body {
+    padding-left: 16rem;
+    transition-property: none; }
   aside.aside.is-expanded {
     width: 14rem; }
+    aside.aside.is-expanded.is-side-message {
+      top: 3.25rem;
+      z-index: 0;
+      height: 92vh;
+      width: 16rem; }
     aside.aside.is-expanded .menu-list .icon {
       width: 3rem; }
       aside.aside.is-expanded .menu-list .icon.has-update-mark:after {
@@ -7916,6 +7926,8 @@ aside.aside {
     transition: margin-left 250ms ease-in-out 50ms; }
   aside.aside {
     transition: left 250ms ease-in-out 50ms; }
+  aside.aside.is-side-message {
+    transition-property: none; }
   html.has-aside-mobile-transition body {
     overflow-x: hidden; }
   html.has-aside-mobile-transition body,
@@ -7946,23 +7958,15 @@ section.section.is-title-bar {
   padding: 1.5rem;
   border-bottom: 1px solid rgba(24, 28, 33, 0.06); }
 
-section.hero.is-hero-bar {
-  background-color: white;
-  border-bottom: 1px solid rgba(24, 28, 33, 0.06); }
-  section.hero.is-hero-bar .hero-body {
-    padding: 1.5rem; }
-    section.hero.is-hero-bar .hero-body .level-item.is-hero-avatar-item {
-      margin-right: 1.5rem; }
-    section.hero.is-hero-bar .hero-body .level-item > div > .level {
-      margin-bottom: 0.75rem; }
-    section.hero.is-hero-bar .hero-body .level-item .subtitle + p {
-      margin-top: 0.75rem; }
-    section.hero.is-hero-bar .hero-body .button.is-hero-button {
-      background-color: rgba(255, 255, 255, 0.5);
-      font-weight: 300;
-      transition: background-color 250ms ease-in-out 50ms; }
-      section.hero.is-hero-bar .hero-body .button.is-hero-button:hover {
-        background-color: white; }
+.hero {
+  min-width: 100vw;
+  min-height: 100vh;
+  background-image: url("../../heroBackground.svg");
+  background-size: cover; }
+
+.goal .card-content img {
+  margin-left: auto;
+  margin-right: auto; }
 
 .card:not(:last-child) {
   margin-bottom: 1.5rem; }
@@ -9422,6 +9426,15 @@ footer.footer .logo img {
   .flash-info {
     background: #FFD33F; }
 
+aside .side-message {
+  height: 92vh;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; }
+  aside .side-message .side-illustration {
+    flex-grow: 2;
+    height: max-content; }
+
 /* GLOBAL STYLES */
 .form-section {
   display: none; }
@@ -9429,3 +9442,6 @@ footer.footer .logo img {
 .is-full-height {
   min-height: 100vh !important;
   overflow-y: auto; }
+
+.button {
+  justify-content: center; }
