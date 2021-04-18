@@ -2,9 +2,9 @@ extends layout
 include mixins/_forgotForm
 include mixins/_sideMessage
 
+block prepend doc-header
+  html(class= "has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded has-side-message")
+
 block content
-    .columns.is-centered.is-vcentered.is-full-height 
-        +sideMessage()
-        .column.is-three-quarters
-            +forgotForm()
-            a(href='/register') Need an account?
+    +sideMessage()
+    +forgotForm()

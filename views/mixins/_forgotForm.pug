@@ -1,13 +1,16 @@
 mixin forgotForm()
-  .card
-    .card-content
-      form.container.is-max-desktop(action="/account/forgot" method="POST")
-        .field 
-          label.label Email 
-          .control.has-icons-left 
-            input.input(type="text" placeholder="Enter your email address" name='email')
-            span.icon.is-small.is-left 
-              i.fas.fas-user
-        .field 
-          .control 
-            button.button.is-medium.is-fullwidth.is-warning(type="submit" value='Send a Reset') Reset
+  .columns.is-centered.is-vcentered.is-full-height
+    .column.is-three-quarters.is-half-widescreen
+      .card
+        .card-content
+          form.container.is-max-desktop(action="/account/forgot" method="POST")
+            .field
+              label.label Email
+              .control.has-icons-left
+                input.input(type="text" placeholder="Enter your email address" name='email')
+                span.icon.is-small.is-left
+                  i.fas.fas-user
+            .field
+              .control
+                button.button.is-medium.is-fullwidth.is-warning(type="submit" value='Send a Reset') Reset
+      a(href='/register') Need an account?

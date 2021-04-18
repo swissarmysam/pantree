@@ -1,6 +1,6 @@
 aside {
     .side-message {
-        height: 92vh;
+        height: calc(100vh - 3.25rem);
         display: flex;
         flex-direction: column;
         flex-grow: 1;

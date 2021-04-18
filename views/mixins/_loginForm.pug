@@ -1,22 +1,25 @@
 mixin loginForm()
-  .card
-    .card-content
-      form.container.is-max-desktop(action="/login" method="POST")
-        h3.title.is-3.form-title Sign into pantree
-          hr
-        .field
-          label.label Email
-          .control.has-icons-left
-            input.input(type="text" placeholder="Enter your email address" name='email')
-            span.icon.is-small.is-left
-              i.fas.fas-user
-        .field
-          label.label Password
-          .control.has-icons-left
-            input.input(type="password" placeholder="Enter your password" name='password')
-            span.icon.is-small.is-left
-              i.fas.fas-lock
-        .field
-          .control
-            button.button.is-medium.is-fullwidth.is-primary(type="submit") Sign in
+  .columns.is-centered.is-vcentered.is-full-height
+    .column.is-three-quarters.is-half-widescreen
+      .card
+        .card-content
+          form.container.is-max-desktop(action="/login" method="POST")
+            h3.title.is-3.form-title Sign into pantree
+              hr
+            .field
+              label.label Email
+              .control.has-icons-left
+                input.input(type="text" placeholder="Enter your email address" name='email')
+                span.icon.is-small.is-left
+                  i.fas.fas-user
+            .field
+              label.label Password
+              .control.has-icons-left
+                input.input(type="password" placeholder="Enter your password" name='password')
+                span.icon.is-small.is-left
+                  i.fas.fas-lock
+            .field
+              .control
+                button.button.is-medium.is-fullwidth.is-primary(type="submit") Sign in
+      a(href='/account/forgot') Forgotten password?
 
