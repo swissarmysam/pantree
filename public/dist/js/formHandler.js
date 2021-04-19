@@ -1,3 +1,5 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-use-before-define */
 // if the form has multiple steps run the block below
 if (document.body.contains(document.querySelector('.steps'))) {
   const formSections = document.querySelectorAll('[section]');
@@ -9,13 +11,13 @@ if (document.body.contains(document.querySelector('.steps'))) {
 // renders the the active section
 function renderSection(formSections, switchToSection) {
   const section = formSections[switchToSection];
-  const button = document.querySelector('.button.is-fullwidth');
+  const button = document.querySelector('.button.primary-action');
   // fn veriable stores a function that handles the form section
   // function must match the value of the section attribute
   const fn = window[section.getAttribute('section')];
   renderTitle(section);
   if (typeof fn === 'function') fn.apply(null, [section, formSections, button]);
-  formSections.forEach(function(item, i) {
+  formSections.forEach((item, i) => {
     item.style.display = switchToSection === i ? 'block' : 'none';
   });
 }
@@ -69,7 +71,7 @@ function nextSection(formSections) {
 // updates the step component
 function switchStep(sectionIndex) {
   const steps = document.querySelectorAll('.steps-segment');
-  steps.forEach(function(item, i) {
+  steps.forEach((item, i) => {
     console.log(i);
     if (sectionIndex === i) {
       item.classList.add('is-active');

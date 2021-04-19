@@ -4,16 +4,9 @@ include mixins/_sideMessage
 include mixins/_formSteps
 include mixins/_setupForm
 
-block prepend doc-header
-  html(class= "has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded has-side-message")
-
 block content
-    +sideMessage()
-    .columns.is-centered.is-vcentered.is-full-height
-        .column.is-three-quarters
-            +formSteps()
-            +setupForm()
+    +setupForm()
 
 block prepend scripts
-    // script(src="./dist/js/formHandler.js")
+    script(src="./dist/js/formHandler.js")
 
