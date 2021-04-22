@@ -12,12 +12,10 @@ const { catchErrors } = require('../handlers/errorHandlers');
 router.get('/', authController.notLoggedIn, sharedController.homePage);
 router.get('/temp', sharedController.tempSetup);
 
-
 /* ACCOUNT AND AUTH ROUTES */
 router.get('/login', authController.loginForm);
 router.post('/login', authController.login);
 router.get('/register', accountController.registerForm);
-router.post('/check', accountController.profileCheck, accountController.setupForm);
 
 // 1. Validate the registration data
 // 2. register the user
@@ -29,7 +27,8 @@ router.post(
   authController.login
 );
 
-router.post('/setup', accountController.setup)
+router.get('/setup/:id', accountController.setupForm);
+router.post('/setup', accountController.setup);
 
 router.get('/logout', authController.logout);
 
@@ -48,7 +47,6 @@ router.post(
 router.get(
   '/donations/:id',
   authController.isLoggedIn,
-  accountController.profileCheck,
   dashboardController.showDonations
 );
 

@@ -4,5 +4,3 @@ exports.homePage = (req, res) => {
 exports.tempSetup = (req, res) => {
   res.render('setup', { title: 'Temp' });
 };
-
-

@@ -5,12 +5,17 @@ const mongoose = require('mongoose');
 const Account = mongoose.model('Account');
 const promisify = require('es6-promisify');
 
-exports.login = passport.authenticate('local', {
-  failureRedirect: '/login',
-  failureFlash: 'Login failed!',
-  successRedirect: '/donations',
-  successFlash: 'You are now logged in!',
-});
+exports.login = (req, res) => {
+  passport.authenticate('local', {
+    failureRedirect: '/login',
+    failureFlash: true,
+  });
+  if (!req.account.profileCompleted) {
+    res.redirect(`/setup/${req.account._id}`);
+  } else {
+    res.redirect(`/donations/${req.account._id}`);
+  }
+};
 
 exports.logout = (req, res) => {
   req.logout();
@@ -23,7 +28,7 @@ exports.notLoggedIn = (req, res, next) => {
     next();
     return;
   }
-  res.redirect('/donations');
+  res.redirect(`/donations/${req.account._id}`);
 };
 
 exports.isLoggedIn = (req, res, next) => {
@@ -52,7 +57,9 @@ exports.forgot = async (req, res) => {
   account.resetPasswordExpires = Date.now() + 3600000; // 1 hour from now
   await account.save();
   // 3. Send them an email with the token
-  const resetURL = `http://${req.headers.host}/account/reset/${account.resetPasswordToken}`;
+  const resetURL = `http://${req.headers.host}/account/reset/${
+    account.resetPasswordToken
+  }`;
   await mail.send({
     account,
     filename: 'passwordReset',

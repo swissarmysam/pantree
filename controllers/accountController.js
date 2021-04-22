@@ -8,7 +8,7 @@ const e = require('express');
 
 exports.registerForm = (req, res) => {
   res.render('register', {
-    title: 'Register'
+    title: 'Register',
   });
 };
 
@@ -54,7 +54,7 @@ exports.register = async (req, res, next) => {
 
 exports.account = (req, res) => {
   res.render('account', {
-    title: 'Edit Account'
+    title: 'Edit Account',
   });
 };
 
@@ -64,24 +64,27 @@ exports.updateAccount = async (req, res) => {
     email: req.body.email,
   };
 
-  const account = await Account.findOneAndUpdate({
-    _id: req.account._id
-  }, {
-    $set: updates
-  }, {
-    new: true,
-    runValidators: true,
-    context: 'query'
-  });
+  const account = await Account.findOneAndUpdate(
+    {
+      _id: req.account._id,
+    },
+    {
+      $set: updates,
+    },
+    {
+      new: true,
+      runValidators: true,
+      context: 'query',
+    }
+  );
   req.flash('success', 'Updated the profile!');
   res.redirect('back');
 };
 
-exports.setupForm = (req, res) => {
-  res.redirect('/setup');
-  res.render('setup', {
-    title: 'Complete Registration',
-    account: req.account._id
+exports.setupForm = async (req, res) => {
+  res.render('error', {
+    title: 'Profile Setup',
+    id: req.params._id,
   });
 };
 
@@ -97,21 +100,12 @@ exports.setup = async (req, res, next) => {
     profileCompleted: true,
   };
 
-  const account = await Account.findOneAndUpdate({
-    _id: req.account._id
-  }, update);
+  const account = await Account.findOneAndUpdate(
+    {
+      id: req.account._id,
+    },
+    update
+  );
 
   next();
 };
-
-exports.profileCheck = async (req, res, next) => {
-  const isSetup = await Account.findOne({
-    _id: req.account._id
-  }, 'profileCompleted');
-
-  if(!isSetup) {
-    res.redirect('/setup');
-  } else {
-    next();
-  }
-}

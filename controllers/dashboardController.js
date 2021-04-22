@@ -4,5 +4,5 @@ const Donation = mongoose.model('Donation');
 const Account = mongoose.model('Account');
 
 exports.showDonations = (req, res) => {
-  res.render('donations', { title: 'Donations' });
+  res.render('donations', { title: 'Donations', id: req.account._id });
 };
