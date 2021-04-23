@@ -9,20 +9,41 @@ mixin setupForm()
                     form.container.is-max-desktop(action="" method="POST")
                         h3.title.is-3.form-title Setup
                         hr
-                        .field.is-flex.is-grouped.form-section(section-name="Sign up to pantree as,"
+                        .form-section(section-name="Sign up to pantree as,"
                         section="userType")
-                            button.button.has-img.is-light.is-fullwidth.mr-3 Community Fridge
+                            button.button.has-img.is-light.is-fullwidth.mr-3(user-type="Community Fridge") Community Fridge
                                 img.image.is-128x128(src="reduceGoal.svg" alt="Fridge icon")
-                            button.button.has-img.is-light.is-fullwidth Food Business
-                                img.image.is-128x128(src="reduceGoal.svg" alt="Fridge icon")
-                        .field.form-section(section-name="registration" section="setupInfo")
-                            // put stuff here
-                        .field.form-section(section-name="What we found" section="confirmInfo")
-                            // put stuff here
+                            button.button.has-img.is-light.is-fullwidth(user-type="Food Business") Food Business
+                                img.image.is-128x128(src="reduceGoal.svg" alt="Business icon")
+                        .field.form-section(section-name="Registration" section="setupInfo")
+                            .field
+                                label.label(for='name') name
+                                .control
+                                    input.input(type="text" value="" name='name')
+                            .field
+                                label.label(for='street') Street
+                                .control
+                                    input.input(type="text" value="" name='address-street')
+                            .field
+                                label.label(for='town') City/Town
+                                .control
+                                    input.input(type="text" value="" name='address-town')
+                            .field
+                                label.label(for='post-code') Post code
+                                .control
+                                    input.input(type="text" value="" name='address-town')
+                        .field.form-section(section-name="Confirm match" section="confirmInfo")
+                            .field
+                                label.label(for='post-code-confirm') Post code
+                                .control
+                                    input.input(type="text" value="" name='address-town')
+                            #map
                         .field.form-section(section-name="Set opening times" section="openingTimes")
-                            // put stuff here
-                        .field.form-section(section-name="Review & Submit" section="Submit")
+                            label(for='switchRoundedDefault') Switch rounded default
+                            input#switchRoundedDefault.switch.is-rounded(type='checkbox' name='switchRoundedDefault' checked='checked')
+                        //.field.form-section(section-name="Review & Submit" section="Submit")
                             // put stuff here
                         hr
-                        .buttons.is-grouped
+                        .field.is-grouped
+                                button.button.is-medium.is-primary.is-light.mr-3.secondary-action(type="button") Back
                                 button.button.is-medium.is-fullwidth.is-primary.primary-action(type="submit") Submit
