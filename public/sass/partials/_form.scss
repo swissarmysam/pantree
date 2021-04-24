@@ -48,8 +48,16 @@ select {
     border: $checkbox-border;
   }
 }
-.button.has-img {
-  display: flex !important;
-  flex-direction: column-reverse !important;
-  height: auto;
+.button {
+  &.has-img {
+    display: flex !important;
+    flex-direction: column-reverse !important;
+    height: auto;
+  }
+  &.secondary-action {
+    display: none;
+  }
+}
+[section="userType"] {
+  display: flex;
 }
