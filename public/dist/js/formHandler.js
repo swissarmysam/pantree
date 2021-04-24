@@ -15,7 +15,7 @@ function renderSection(formSections, switchToSection, handlersArr) {
   const fn = handlersArr[switchToSection];
   renderTitle(section);
   if (typeof fn === 'function')
-    fn.apply(null, [section, formSections, button, backBtn]);
+    fn.apply(null, [section, formSections, button, backBtn, switchToSection]);
   formSections.forEach((item, i) => {
     item.style.display = switchToSection === i ? null : 'none';
   });
@@ -45,17 +45,6 @@ function renderTitle(section) {
   const title = document.querySelector('.form-title');
   title.innerHTML = section.getAttribute('section-name');
 }
-// returns the section currently displayed
-function currentSection(formSections) {
-  let sectionIndex;
-  formSections.forEach((section, i) => {
-    if (section.style.display !== 'none') {
-      sectionIndex = i;
-      console.log(sectionIndex);
-    }
-  });
-  return sectionIndex;
-}
 // renders the primary button
 export function renderButton(type, label, button, clickable = false) {
   button.type = type;
@@ -68,19 +57,16 @@ export function renderBackButton(backBtn, visible) {
   backBtn.style.display = visible === true ? 'block' : 'none';
 }
 // navigates to the section called from a form-section function
-// selectedSection will eiher add or substact 1 from the current section index
 export function switchSection(
   formSections,
   handlersArr,
-  switchDirection = 'prev'
+  currentSection,
+  switchDirection = 'next'
 ) {
-  const selectedSection = switchDirection === 'next' ? 1 : -1;
-  console.log('currentSection', currentSection(formSections));
-  const section = currentSection(formSections) + selectedSection;
-  renderSection(formSections, section, handlersArr);
-  switchStep(section);
-  console.log('selectedSection', selectedSection);
-  console.log('section', section);
+  switchDirection = switchDirection === 'next' ? 1 : -1;
+  const requestedSection = currentSection + switchDirection;
+  renderSection(formSections, requestedSection, handlersArr);
+  switchStep(requestedSection);
 }
 // updates the step component
 function switchStep(sectionIndex) {

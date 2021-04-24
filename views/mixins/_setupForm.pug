@@ -19,19 +19,19 @@ mixin setupForm()
                             .field
                                 label.label(for='name') name
                                 .control
-                                    input.input(type="text" value="" name='name')
+                                    input.input(type="text" value="" name='name' required)
                             .field
                                 label.label(for='street') Street
                                 .control
-                                    input.input(type="text" value="" name='address-street')
+                                    input.input(type="text" value="" name='address-street' required)
                             .field
                                 label.label(for='town') City/Town
                                 .control
-                                    input.input(type="text" value="" name='address-town')
+                                    input.input(type="text" value="" name='address-town' required)
                             .field
                                 label.label(for='post-code') Post code
                                 .control
-                                    input.input(type="text" value="" name='address-town')
+                                    input.input(type="text" value="" name='address-town' required)
                         .field.form-section(section-name="Confirm match" section="confirmInfo")
                             .field
                                 label.label(for='post-code-confirm') Post code
@@ -41,8 +41,8 @@ mixin setupForm()
                         .field.form-section(section-name="Set opening times" section="openingTimes")
                             label(for='switchRoundedDefault') Switch rounded default
                             input#switchRoundedDefault.switch.is-rounded(type='checkbox' name='switchRoundedDefault' checked='checked')
-                        //.field.form-section(section-name="Review & Submit" section="Submit")
-                            // put stuff here
+                        .field.form-section(section-name="Review & Submit" section="submitSetupInfo")
+                            .title Yooooooo!
                         hr
                         .field.is-grouped
                                 button.button.is-medium.is-primary.is-light.mr-3.secondary-action(type="button") Back
