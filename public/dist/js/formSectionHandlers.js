@@ -6,12 +6,18 @@ import {
   switchSection,
 } from './formHandler.js';
 
-const FORM_HANDLERS_ARRAY = [userType, setupInfo, confirmInfo, openingTimes];
+const FORM_HANDLERS_ARRAY = [
+  userType,
+  setupInfo,
+  confirmInfo,
+  openingTimes,
+  submitSetupInfo
+];
 
 initForm(FORM_HANDLERS_ARRAY);
 // The rest of these functions below handle the individual sections
 // They need to match the 'section' data attribute in order to get called
-function userType(section, formSections, button, backBtn) {
+function userType(section, formSections, button, backBtn, sectionIndex) {
   renderButton('button', 'Next', button, true);
   renderBackButton(backBtn, false);
 
@@ -39,50 +45,65 @@ function userType(section, formSections, button, backBtn) {
       localStorage.getItem('userType') === 'Food Business'
     ) {
       button.replaceWith(button.cloneNode(true));
-      switchSection(formSections, FORM_HANDLERS_ARRAY, 'next');
+      switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex);
     }
   });
 }
 
-function setupInfo(section, formSections, button, backBtn) {
+function setupInfo(section, formSections, button, backBtn, sectionIndex) {
+  renderButton('button', 'Next', button);
+  renderBackButton(backBtn, true);
+  // Abstract Event lister creation
+  button.addEventListener('click', () => {
+    // Check if inputs are empty
+    // if all fields are filled out call FHRS API request
+    button.replaceWith(button.cloneNode(true));
+    switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex);
+  });
+  backBtn.addEventListener('click', (e) => {
+    backBtn.replaceWith(backBtn.cloneNode(true));
+    switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex, 'prev');
+  });
+}
+
+function confirmInfo(section, formSections, button, backBtn, sectionIndex) {
   renderButton('button', 'Next', button);
   renderBackButton(backBtn, true);
 
   button.addEventListener('click', () => {
     button.replaceWith(button.cloneNode(true));
-    switchSection(formSections, FORM_HANDLERS_ARRAY, 'next');
+    switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex);
   });
   backBtn.addEventListener('click', (e) => {
     backBtn.replaceWith(backBtn.cloneNode(true));
-    switchSection(formSections, FORM_HANDLERS_ARRAY);
+    switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex, 'prev');
   });
 }
 
-function confirmInfo(section, formSections, button, backBtn) {
-  renderButton('button', 'Confirm', button);
-  renderBackButton(backBtn, true);
-
-  button.addEventListener('click', () => {
-    button.replaceWith(button.cloneNode(true));
-    switchSection(formSections, FORM_HANDLERS_ARRAY, 'next');
-  });
-  backBtn.addEventListener('click', (e) => {
-    console.log('YO');
-    backBtn.replaceWith(backBtn.cloneNode(true));
-    switchSection(formSections, FORM_HANDLERS_ARRAY);
-  });
-}
-
-function openingTimes(section, formSections, button, backBtn) {
+function openingTimes(section, formSections, button, backBtn, sectionIndex) {
   renderButton('button', 'Next', button);
   renderBackButton(backBtn, true);
 
   button.addEventListener('click', () => {
     button.replaceWith(button.cloneNode(true));
-    switchSection(formSections, FORM_HANDLERS_ARRAY, 'next');
+    switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex);
   });
   backBtn.addEventListener('click', (e) => {
     backBtn.replaceWith(backBtn.cloneNode(true));
-    switchSection(formSections, FORM_HANDLERS_ARRAY);
+    switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex, 'prev');
+  });
+}
+
+function submitSetupInfo(section, formSections, button, backBtn, sectionIndex) {
+  renderButton('submit', 'Submit', button);
+  renderBackButton(backBtn, true);
+
+  button.addEventListener('click', () => {
+    button.replaceWith(button.cloneNode(true));
+    switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex);
+  });
+  backBtn.addEventListener('click', (e) => {
+    backBtn.replaceWith(backBtn.cloneNode(true));
+    switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex, 'prev');
   });
 }
