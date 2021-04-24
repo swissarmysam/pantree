@@ -33,14 +33,14 @@ router.post('/setup', accountController.setup);
 router.get('/logout', authController.logout);
 
 router.get('/account', authController.isLoggedIn, accountController.account);
-router.post('/account', catchErrors(accountController.updateAccount));
+router.post('/account', accountController.updateAccount);
 router.get('/account/forgot', authController.forgotPassword);
 router.post('/account/forgot', authController.forgot);
-router.get('/account/reset/:token', catchErrors(authController.reset));
+router.get('/account/reset/:token', authController.reset);
 router.post(
   '/account/reset/:token',
   authController.confirmedPasswords,
-  catchErrors(authController.update)
+  authController.update
 );
 
 /* DASHBOARD ROUTE */

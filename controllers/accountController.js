@@ -96,15 +96,13 @@ exports.setup = async (req, res, next) => {
     const fridge = await new Fridge(req.body).save();
   }
 
-  const update = {
-    profileCompleted: true,
-  };
-
   const account = await Account.findOneAndUpdate(
     {
       id: req.account._id,
     },
-    update
+    {
+      profileCompleted: true,
+    }
   );
 
   next();

@@ -20,8 +20,7 @@ initForm(FORM_HANDLERS_ARRAY);
 function userType(section, formSections, button, backBtn, sectionIndex) {
   renderButton('button', 'Next', button, true);
   renderBackButton(backBtn, false);
-  console.log(section.getAttribute('section'));
-  console.log(formSections);
+
   const typeBtns = section.querySelectorAll('[user-type]');
 
   function setUser(e) {
@@ -68,7 +67,7 @@ function setupInfo(section, formSections, button, backBtn, sectionIndex) {
 }
 
 function confirmInfo(section, formSections, button, backBtn, sectionIndex) {
-  renderButton('button', 'Confirm', button);
+  renderButton('button', 'Next', button);
   renderBackButton(backBtn, true);
 
   button.addEventListener('click', () => {
