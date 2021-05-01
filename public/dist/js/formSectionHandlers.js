@@ -5,15 +5,17 @@ import {
   renderBackButton,
   switchSection,
 } from './formHandler.js';
+import getEstablishmentsByLocation from './fhrsHandler.js';
 
 const FORM_HANDLERS_ARRAY = [
   userType,
   setupInfo,
   confirmInfo,
   openingTimes,
-  submitSetupInfo
+  submitSetupInfo,
 ];
 
+// eslint-disable-next-line no-undef
 initForm(FORM_HANDLERS_ARRAY);
 // The rest of these functions below handle the individual sections
 // They need to match the 'section' data attribute in order to get called
@@ -53,28 +55,79 @@ function userType(section, formSections, button, backBtn, sectionIndex) {
 function setupInfo(section, formSections, button, backBtn, sectionIndex) {
   renderButton('button', 'Next', button);
   renderBackButton(backBtn, true);
-  // Abstract Event lister creation
+
+  let redirect;
   button.addEventListener('click', () => {
-    // Check if inputs are empty
-    // if all fields are filled out call FHRS API request
-    button.replaceWith(button.cloneNode(true));
-    switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex);
+    redirect = true;
+    section.querySelectorAll('[name]').forEach((field) => {
+      if (field.parentNode.nextSibling != null) {
+        field.parentNode.nextSibling.remove();
+        field.classList.remove('is-danger');
+      }
+      if (field.value === '') {
+        field.classList.add('is-danger');
+        const fieldContainer = field.parentNode;
+        const warning = document.createElement('p');
+        warning.classList.add('help', 'is-danger', 'is-size-6');
+        warning.textContent = 'This field is required.';
+        fieldContainer.insertAdjacentElement('afterend', warning);
+        redirect = false;
+      }
+    });
+    if (redirect === true) {
+      // eslint-disable-next-line no-undef
+      getEstablishmentsByLocation({
+        name: section.querySelector('[name=establishment-name]').value,
+        street: section.querySelector('[name=address-street]').value,
+        postCode: section.querySelector('[name=address-post-code]').value,
+      }).then((res) => {
+        if (res.meta.itemCount !== 0) {
+          button.replaceWith(button.cloneNode(true));
+          switchSection(
+            formSections,
+            FORM_HANDLERS_ARRAY,
+            sectionIndex,
+            'next',
+            res
+          );
+        }
+      });
+    }
   });
-  backBtn.addEventListener('click', (e) => {
+  backBtn.addEventListener('click', () => {
     backBtn.replaceWith(backBtn.cloneNode(true));
     switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex, 'prev');
   });
 }
 
-function confirmInfo(section, formSections, button, backBtn, sectionIndex) {
+function confirmInfo(
+  section,
+  formSections,
+  button,
+  backBtn,
+  sectionIndex,
+  fhrsResult
+) {
   renderButton('button', 'Next', button);
   renderBackButton(backBtn, true);
 
+  // render result
+
+  const establishment = fhrsResult.establishments[0];
+  console.log(establishment);
+  section.querySelector('.establishment-name').textContent =
+    establishment.BusinessName;
+  section.querySelector('.establishment-type').textContent =
+    establishment.BusinessType;
+  section.querySelector(
+    '.address'
+  ).textContent = `${establishment.AddressLine1}, ${establishment.AddressLine2}, ${establishment.AddressLine3}, ${establishment.AddressLine4}`;
+  section.querySelector('.post-code').textContent = establishment.PostCode;
   button.addEventListener('click', () => {
     button.replaceWith(button.cloneNode(true));
     switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex);
   });
-  backBtn.addEventListener('click', (e) => {
+  backBtn.addEventListener('click', () => {
     backBtn.replaceWith(backBtn.cloneNode(true));
     switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex, 'prev');
   });
@@ -102,7 +155,7 @@ function submitSetupInfo(section, formSections, button, backBtn, sectionIndex) {
     button.replaceWith(button.cloneNode(true));
     switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex);
   });
-  backBtn.addEventListener('click', (e) => {
+  backBtn.addEventListener('click', () => {
     backBtn.replaceWith(backBtn.cloneNode(true));
     switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex, 'prev');
   });

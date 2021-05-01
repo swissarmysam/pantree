@@ -5,8 +5,9 @@ mixin sideMessage(msg)
     else
       - let i = Math.floor(Math.random()* (3 - 0) + 0)
       section.side-message.section.has-background-primary
-        h2.title.is-3.mt-6
+        h2.title.is-2.mt-6
           | #{ h.foodFacts[i].fact }
         span.subtitle.is-size-6
           | #{ h.foodFacts[i].source }
-        .side-illustration.has-background-white
+        .side-illustration.is-flex.is-align-items-center
+          img(src="IllustrationSignUp.png", alt="")
