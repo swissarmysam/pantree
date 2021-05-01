@@ -5,7 +5,7 @@ mixin sideMessage(msg)
     else
       - let i = Math.floor(Math.random()* (3 - 0) + 0)
       section.side-message.section.has-background-primary
-        h2.title.is-2.mt-6
+        h2.title.is-size-4-widescreen.is-size-2-fullhd.mt-6
           | #{ h.foodFacts[i].fact }
         span.subtitle.is-size-6
           | #{ h.foodFacts[i].source }
