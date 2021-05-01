@@ -1,7 +1,7 @@
 mixin workingHoursInput(day)
     .field.is-grouped.is-horizontal.is-align-items-center
         label.has-text-weight-semibold(for='day') #{day}
-        input.switch.is-rtl.is-rounded.pt-0(type='checkbox' id=`switch${day}`)
+        input.switch.is-rounded.pt-0(type='checkbox' id=`switch${day}`)
         label.pt-0(for=`switch${day}`) .
         label.mx-3(for='start-time') From
         input.input(type="time" value="" placeholder="--:--" name=`start-time-${day.toLowerCase()}` disabled)

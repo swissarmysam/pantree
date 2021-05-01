@@ -74,24 +74,11 @@ function setupInfo(section, formSections, button, backBtn, sectionIndex) {
         redirect = false;
       }
     });
-    if (redirect === true) {
-      // eslint-disable-next-line no-undef
-      getEstablishmentsByLocation({
-        name: section.querySelector('[name=establishment-name]').value,
-        street: section.querySelector('[name=address-street]').value,
-        postCode: section.querySelector('[name=address-post-code]').value,
-      }).then((res) => {
-        if (res.meta.itemCount !== 0) {
-          button.replaceWith(button.cloneNode(true));
-          switchSection(
-            formSections,
-            FORM_HANDLERS_ARRAY,
-            sectionIndex,
-            'next',
-            res
-          );
-        }
-      });
+  });
+  button.addEventListener('click', () => {
+    if(redirect === true) {
+      button.replaceWith(button.cloneNode(true));
+      switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex);
     }
   });
   backBtn.addEventListener('click', () => {
@@ -105,24 +92,35 @@ function confirmInfo(
   formSections,
   button,
   backBtn,
-  sectionIndex,
-  fhrsResult
+  sectionIndex
 ) {
   renderButton('button', 'Next', button);
   renderBackButton(backBtn, true);
 
+  // grab result
+  getEstablishmentsByLocation({
+    name: document.querySelector('[name=establishment-name]').value,
+    street: document.querySelector('[name=address-street]').value,
+    postCode: document.querySelector('[name=address-post-code]').value,
+  }).then((res) => {
+    console.log(res);
+    if (res.meta.itemCount !== 0) {
+      const establishment = res.establishments[0];
+      console.log(establishment);
+      section.querySelector('.establishment-name').textContent =
+        establishment.BusinessName;
+      section.querySelector('.establishment-type').textContent =
+        establishment.BusinessType;
+      section.querySelector(
+        '.address'
+      ).textContent = `${establishment.AddressLine1}, ${establishment.AddressLine2}, ${establishment.AddressLine3}, ${establishment.AddressLine4}`;
+      section.querySelector('.post-code').textContent = establishment.PostCode;
+    } else {
+      section.querySelector('.establishment-name').textContent = `Sorry`;
+      button.disabled = true;
+    }
+  });
   // render result
-
-  const establishment = fhrsResult.establishments[0];
-  console.log(establishment);
-  section.querySelector('.establishment-name').textContent =
-    establishment.BusinessName;
-  section.querySelector('.establishment-type').textContent =
-    establishment.BusinessType;
-  section.querySelector(
-    '.address'
-  ).textContent = `${establishment.AddressLine1}, ${establishment.AddressLine2}, ${establishment.AddressLine3}, ${establishment.AddressLine4}`;
-  section.querySelector('.post-code').textContent = establishment.PostCode;
   button.addEventListener('click', () => {
     button.replaceWith(button.cloneNode(true));
     switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex);
@@ -137,11 +135,22 @@ function openingTimes(section, formSections, button, backBtn, sectionIndex) {
   renderButton('button', 'Next', button);
   renderBackButton(backBtn, true);
 
+  const switchBtns = section.querySelectorAll('label.pt-0');
+  switchBtns.forEach((btn) => {
+    btn.addEventListener('click', (e)=> {
+      e.currentTarget.parentNode.querySelectorAll('input[type=time]')
+        .forEach(input => {
+          input.disabled = input.disabled === true ? false : true;
+          input.value = '';
+        })
+    })
+  });
+
   button.addEventListener('click', () => {
     button.replaceWith(button.cloneNode(true));
     switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex);
   });
-  backBtn.addEventListener('click', (e) => {
+  backBtn.addEventListener('click', () => {
     backBtn.replaceWith(backBtn.cloneNode(true));
     switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex, 'prev');
   });

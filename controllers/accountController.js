@@ -82,7 +82,7 @@ exports.updateAccount = async (req, res) => {
 };
 
 exports.setupForm = async (req, res) => {
-  res.render('error', {
+  res.render('setup', {
     title: 'Profile Setup',
     id: req.params._id,
   });
