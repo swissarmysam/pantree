@@ -8,14 +8,26 @@ export function initForm(handlersArr) {
     renderSection(formSections, 0, handlersArr);
   }
 }
-function renderSection(formSections, switchToSection, handlersArr) {
+function renderSection(
+  formSections,
+  switchToSection,
+  handlersArr,
+  optionalParam
+) {
   const section = formSections[switchToSection];
   const button = document.querySelector('.button.primary-action');
   const backBtn = document.querySelector('.secondary-action');
   const fn = handlersArr[switchToSection];
   renderTitle(section);
   if (typeof fn === 'function')
-    fn.apply(null, [section, formSections, button, backBtn, switchToSection]);
+    fn.apply(null, [
+      section,
+      formSections,
+      button,
+      backBtn,
+      switchToSection,
+      optionalParam,
+    ]);
   formSections.forEach((item, i) => {
     item.style.display = switchToSection === i ? null : 'none';
   });
@@ -54,27 +66,30 @@ export function renderButton(type, label, button, clickable = false) {
 }
 // renders the secondary button
 export function renderBackButton(backBtn, visible) {
-  backBtn.style.display = visible === true ? 'block' : 'none';
+  backBtn.style.display = visible === true ? 'flex' : 'none';
 }
 // navigates to the section called from a form-section function
 export function switchSection(
   formSections,
   handlersArr,
   currentSection,
-  switchDirection = 'next'
+  direction = 'next',
+  optionalParam = null
 ) {
-  switchDirection = switchDirection === 'next' ? 1 : -1;
+  const switchDirection = direction === 'next' ? 1 : -1;
   const requestedSection = currentSection + switchDirection;
-  renderSection(formSections, requestedSection, handlersArr);
+  renderSection(formSections, requestedSection, handlersArr, optionalParam);
   switchStep(requestedSection);
 }
 // updates the step component
 function switchStep(sectionIndex) {
   const steps = document.querySelectorAll('.steps-segment');
+  const stepTitle = document.querySelector('label[for=step]');
   steps.forEach((item, i) => {
     if (sectionIndex === i) {
       item.classList.add('is-active');
       steps[i - 1].classList.remove('is-active');
+      stepTitle.textContent = `Step ${i + 1}`;
     }
   });
 }
