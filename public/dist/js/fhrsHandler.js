@@ -11,5 +11,6 @@ export default async function getEstablishmentsByLocation(searchParams) {
     }
   );
   const data = await res.json();
-  return data;
+  const establishment = data.establishments[0];
+  return establishment;
 }
