@@ -10,6 +10,7 @@ const { catchErrors } = require('../handlers/errorHandlers');
 
 /* GENERAL ROUTES */
 router.get('/', authController.notLoggedIn, sharedController.homePage);
+// TODO Remove routes @HRISTO
 router.get('/temp', sharedController.tempSetup);
 
 /* ACCOUNT AND AUTH ROUTES */

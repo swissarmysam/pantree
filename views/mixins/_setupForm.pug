@@ -7,15 +7,15 @@ mixin setupForm()
             +formSteps()
             .card
                 .card-content
-                    form.container.is-max-desktop(action="/setup" method="POST")
+                    form.container.is-max-desktop(action="" method="POST")
                         label.label.is-size-4.has-text-weight-light(for='step') Step 1
                         h3.title.is-3.form-title Setup
                         hr
                         .form-section(section-name="Sign up to pantree as,"
                         section="userType")
-                            button.button.has-img.is-light.is-fullwidth.mr-3(user-type="Community Fridge") Community Fridge
+                            button.button.has-img.is-light.is-fullwidth.mr-3(user-type="Fridge") Community Fridge
                                 img.image.is-128x128.mb-2(src="/fridgeIcon.svg" alt="Fridge icon")
-                            button.button.has-img.is-light.is-fullwidth(user-type="Food Business") Food Business
+                            button.button.has-img.is-light.is-fullwidth(user-type="Business") Food Business
                                 img.image.is-128x128.mb-2(src="/businessIcon.svg" alt="Business icon")
                         .field.form-section(section-name="Hygine inspection" section="setupInfo")
                             article.message.is-info

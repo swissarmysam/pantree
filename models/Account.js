@@ -28,8 +28,8 @@ const accountSchema = new Schema({
   resetPasswordExpires: Date,
   profileCompleted: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 accountSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
