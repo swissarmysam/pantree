@@ -154,7 +154,7 @@ function submitSetupInfo(section, formSections, button, backBtn, sectionIndex) {
   async function submit(e) {
     e.preventDefault();
 
-    const formData = new FormData();
+    const formData = new FormData(document.querySelector('#setupForm'));
     formData.append('type', localStorage.getItem('userType'));
     await getEstablishmentsByLocation({
       name: document.querySelector('[name=establishment-name]').value,
@@ -162,8 +162,8 @@ function submitSetupInfo(section, formSections, button, backBtn, sectionIndex) {
       postCode: document.querySelector('[name=address-post-code]').value,
     }).then((establishment) => {
       formData.append('name', establishment.BusinessName);
-      formData.append('longitude', parseFloat(establishment.geocode.longitude));
-      formData.append('latitude', parseFloat(establishment.geocode.latitude));
+      formData.append('lng', parseFloat(establishment.geocode.longitude));
+      formData.append('lat', parseFloat(establishment.geocode.latitude));
       formData.append(
         'address',
         `${establishment.AddressLine1}, ${establishment.AddressLine2}, ${establishment.AddressLine3}, ${establishment.AddressLine4}`
@@ -190,7 +190,6 @@ function submitSetupInfo(section, formSections, button, backBtn, sectionIndex) {
     const response = await fetch('/setup', {
       method: 'POST',
       body: formData,
-      timeout: 4000,
     });
     if (!response.ok) {
       const errorMessage = await response.text();

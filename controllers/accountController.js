@@ -90,7 +90,7 @@ exports.setupForm = async (req, res) => {
 };
 
 exports.setup = async (req, res, next) => {
-  req.body.account = req.account._id;
+  req.body.account = req.params._id;
   if (req.body.type === 'Business') {
     req.body.businessName = req.body.establishmentName;
     req.body.location.type = 'Point';
