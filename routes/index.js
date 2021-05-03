@@ -29,7 +29,11 @@ router.post(
 );
 
 router.get('/setup/:id', accountController.setupForm);
-router.post('/setup', accountController.setup);
+router.post(
+  '/setup',
+  accountController.setup,
+  dashboardController.showDonations
+);
 
 router.get('/logout', authController.logout);
 

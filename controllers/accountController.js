@@ -65,19 +65,15 @@ exports.updateAccount = async (req, res) => {
     email: req.body.email,
   };
 
-  const account = await Account.findOneAndUpdate(
-    {
-      _id: req.account._id,
-    },
-    {
-      $set: updates,
-    },
-    {
-      new: true,
-      runValidators: true,
-      context: 'query',
-    }
-  );
+  const account = await Account.findOneAndUpdate({
+    _id: req.account._id,
+  }, {
+    $set: updates,
+  }, {
+    new: true,
+    runValidators: true,
+    context: 'query',
+  });
   req.flash('success', 'Updated the profile!');
   res.redirect('back');
 };
@@ -92,96 +88,98 @@ exports.setupForm = async (req, res) => {
 exports.setup = async (req, res, next) => {
   req.body.account = req.params._id;
   if (req.body.type === 'Business') {
-    req.body.businessName = req.body.establishmentName;
+    req.body.businessName = req.body.name;
     req.body.location.type = 'Point';
     // coordinates need populating from google maps - naming may change
     req.body.location.coordinates[0] = req.body.lng;
     req.body.location.coordinates[1] = req.body.lat;
     req.body.location.address = req.body.address;
     req.body.location.postcode = req.body.postcode;
+    req.body.localAuthority.council = req.body.council;
     // depends on default behaviour of checkbox not submitting any value if false so checks this first
     // if checked then it will write data to table
-    if(req.body.switchMonday) {
-      req.body.openingHours.mon.open = req.body.switchMonday;
-      req.body.openingHours.mon.openTime = req.body.startTimeMonday;
-      req.body.openingHours.mon.closeTime = req.body.closeTimeMonday;
+    if (req.body.mon !== 'closed') {
+      req.body.openingHours.mon.open = true;
+      req.body.openingHours.mon.hours = req.body.mon;
     }
-    if(req.body.switchTuesday) {
-      req.body.openingHours.tues.open = req.body.switchTuesday;
-      req.body.openingHours.tues.openTime = req.body.startTimeTuesday;
-      req.body.openingHours.tues.closeTime = req.body.closeTimeTuesday;
+    if (req.body.tues !== 'closed') {
+      req.body.openingHours.tues.open = true;
+      req.body.openingHours.tues.hours = req.body.tues;
     }
-    if(req.body.switchWednesday) {
-      req.body.openingHours.weds.open = req.body.switchWednesday;
-      req.body.openingHours.weds.openTime = req.body.startTimeWednesday;
-      req.body.openingHours.weds.closeTime = req.body.closeTimeWednesday;
+    if (req.body.wed !== 'closed') {
+      req.body.openingHours.weds.open = true;
+      req.body.openingHours.weds.hours = req.body.wed;
     }
-    if(req.body.switchThursday) {
-      req.body.openingHours.thur.open = req.body.switchThursday;
-      req.body.openingHours.thur.openTime = req.body.startTimeThursday;
-      req.body.openingHours.thur.closeTime = req.body.closeTimeThursday;
+    if (req.body.thur !== 'closed') {
+      req.body.openingHours.thur.open = true;
+      req.body.openingHours.thur.hours = req.body.thur;
     }
-    if(req.body.switchFriday) {
-      req.body.openingHours.fri.open = req.body.switchFriday;
-      req.body.openingHours.fri.openTime = req.body.startTimeFriday;
-      req.body.openingHours.fri.closeTime = req.body.closeTimeFriday;
+    if (req.body.fri !== 'closed') {
+      req.body.openingHours.fri.open = true;
+      req.body.openingHours.fri.hours = req.body.fri;
     }
-    if(req.body.switchSaturday) {
-      req.body.openingHours.sat.open = req.body.switchSaturday;
-      req.body.openingHours.sat.openTime = req.body.startTimeSaturday;
-      req.body.openingHours.sat.closeTime = req.body.closeTimeSaturday;
+    if (req.body.sat !== 'closed') {
+      req.body.openingHours.sat.open = true;
+      req.body.openingHours.sat.hours = req.body.sat;
     }
-    if(req.body.switchSunday) {
-      req.body.openingHours.sun.open = req.body.switchSunday;
-      req.body.openingHours.sun.openTime = req.body.startTimeSunday;
-      req.body.openingHours.sun.closeTime = req.body.closeTimeSunday;
+    if (req.body.sun !== 'closed') {
+      req.body.openingHours.sun.open = true;
+      req.body.openingHours.sun.hours = req.body.sun;
     }
     const business = await new Business(req.body).save();
+    updateProfileComplete(req.params._id);
   } else {
-    req.body.fridgeName = req.body.establishmentName;
+    req.body.fridgeName = req.body.name;
     req.body.location.type = 'Point';
     // coordinates need populating from google maps - naming may change
     req.body.location.coordinates[0] = req.body.lng;
     req.body.location.coordinates[1] = req.body.lat;
     req.body.location.address = req.body.address;
     req.body.location.postcode = req.body.postcode;
-    // depends on default behaviour of checkbox not submitting any value if false so checks this first
+    // depends on default behaviour of checkbox not submitting any value checks this first
     // if checked then it will write data to table
-    if(req.body.switchMonday) {
-      req.body.openingHours.mon.open = req.body.switchMonday;
-      req.body.openingHours.mon.openTime = req.body.startTimeMonday;
-      req.body.openingHours.mon.closeTime = req.body.closeTimeMonday;
+    if (req.body.mon !== 'closed') {
+      req.body.openingHours.mon.open = true;
+      req.body.openingHours.mon.hours = req.body.mon;
     }
-    if(req.body.switchTuesday) {
-      req.body.openingHours.tues.open = req.body.switchTuesday;
-      req.body.openingHours.tues.openTime = req.body.startTimeTuesday;
-      req.body.openingHours.tues.closeTime = req.body.closeTimeTuesday;
+    if (req.body.tues !== 'closed') {
+      req.body.openingHours.tues.open = true;
+      req.body.openingHours.tues.hours = req.body.tues;
     }
-    if(req.body.switchWednesday) {
-      req.body.openingHours.weds.open = req.body.switchWednesday;
-      req.body.openingHours.weds.openTime = req.body.startTimeWednesday;
-      req.body.openingHours.weds.closeTime = req.body.closeTimeWednesday;
+    if (req.body.wed !== 'closed') {
+      req.body.openingHours.weds.open = true;
+      req.body.openingHours.weds.hours = req.body.wed;
     }
-    if(req.body.switchThursday) {
-      req.body.openingHours.thur.open = req.body.switchThursday;
-      req.body.openingHours.thur.openTime = req.body.startTimeThursday;
-      req.body.openingHours.thur.closeTime = req.body.closeTimeThursday;
+    if (req.body.thur !== 'closed') {
+      req.body.openingHours.thur.open = true;
+      req.body.openingHours.thur.hours = req.body.thur;
     }
-    if(req.body.switchFriday) {
-      req.body.openingHours.fri.open = req.body.switchFriday;
-      req.body.openingHours.fri.openTime = req.body.startTimeFriday;
-      req.body.openingHours.fri.closeTime = req.body.closeTimeFriday;
+    if (req.body.fri !== 'closed') {
+      req.body.openingHours.fri.open = true;
+      req.body.openingHours.fri.hours = req.body.fri;
     }
-    if(req.body.switchSaturday) {
-      req.body.openingHours.sat.open = req.body.switchSaturday;
-      req.body.openingHours.sat.openTime = req.body.startTimeSaturday;
-      req.body.openingHours.sat.closeTime = req.body.closeTimeSaturday;
+    if (req.body.sat !== 'closed') {
+      req.body.openingHours.sat.open = true;
+      req.body.openingHours.sat.hours = req.body.sat;
     }
-    if(req.body.switchSunday) {
-      req.body.openingHours.sun.open = req.body.switchSunday;
-      req.body.openingHours.sun.openTime = req.body.startTimeSunday;
-      req.body.openingHours.sun.closeTime = req.body.closeTimeSunday;
+    if (req.body.sun !== 'closed') {
+      req.body.openingHours.sun.open = true;
+      req.body.openingHours.sun.hours = req.body.sun;
     }
     const fridge = await new Fridge(req.body).save();
+    updateProfileComplete(req.params._id);
   }
+
+  next();
+}
+
+const updateProfileComplete = async (account) => {
+  const update = {
+    profileCompleted: true
+  }
+  const profile = await Account.findOneAndUpdate({
+    _id: account,
+  }, {
+    $set: update,
+  });
 }

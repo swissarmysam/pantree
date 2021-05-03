@@ -40,66 +40,69 @@ const businessSchema = new mongoose.Schema(
           type: Boolean,
           default: false,
         },
-        openTime: String,
-        closeTime: String,
+        hours: {
+          type: String,
+        },
       },
       tues: {
         open: {
           type: Boolean,
           default: false,
         },
-        openTime: String,
-        closeTime: String,
+        hours: {
+          type: String,
+        },
       },
       weds: {
         open: {
           type: Boolean,
           default: false,
         },
-        openTime: String,
-        closeTime: String,
+        hours: {
+          type: String,
+        },
       },
       thurs: {
         open: {
           type: Boolean,
           default: false,
         },
-        openTime: String,
-        closeTime: String,
+        hours: {
+          type: String,
+        },
       },
       fri: {
         open: {
           type: Boolean,
           default: false,
         },
-        openTime: String,
-        closeTime: String,
+        hours: {
+          type: String,
+        },
       },
       sat: {
         open: {
           type: Boolean,
           default: false,
         },
-        openTime: String,
-        closeTime: String,
+        hours: {
+          type: String,
+        },
       },
       sun: {
         open: {
           type: Boolean,
           default: false,
         },
-        openTime: String,
-        closeTime: String,
+        hours: {
+          type: String,
+        },
       },
     },
     localAuthority: {
       council: {
         type: String,
         required: 'Please pick your local council!',
-      },
-      ratingPassed: {
-        type: Boolean,
-        default: false,
       },
     },
     photo: String,

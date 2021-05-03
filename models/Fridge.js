@@ -52,56 +52,63 @@ const fridgeSchema = new mongoose.Schema(
           type: Boolean,
           default: false,
         },
-        openTime: String,
-        closeTime: String,
+        hours: {
+          type: String,
+        },
       },
       tues: {
         open: {
           type: Boolean,
           default: false,
         },
-        openTime: String,
-        closeTime: String,
+        hours: {
+          type: String,
+        },
       },
       weds: {
         open: {
           type: Boolean,
           default: false,
         },
-        openTime: String,
-        closeTime: String,
+        hours: {
+          type: String,
+        },
       },
       thurs: {
         open: {
           type: Boolean,
           default: false,
         },
-        openTime: String,
-        closeTime: String,
+        hours: {
+          type: String,
+        },
       },
       fri: {
         open: {
           type: Boolean,
           default: false,
         },
-        openTime: String,
-        closeTime: String,
+        hours: {
+          type: String,
+        },
       },
       sat: {
         open: {
           type: Boolean,
           default: false,
         },
-        openTime: String,
-        closeTime: String,
+        hours: {
+          type: String,
+        },
       },
       sun: {
         open: {
           type: Boolean,
           default: false,
         },
-        openTime: String,
-        closeTime: String,
+        hours: {
+          type: String,
+        },
       },
     },
   },
