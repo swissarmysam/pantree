@@ -31,8 +31,7 @@ router.post(
 router.get('/setup/:id', accountController.setupForm);
 router.post(
   '/setup',
-  accountController.setup,
-  dashboardController.showDonations
+  accountController.setup
 );
 
 router.get('/logout', authController.logout);

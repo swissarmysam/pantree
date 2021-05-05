@@ -12,7 +12,6 @@ const fridgeSchema = new mongoose.Schema(
     establishmentName: {
       type: String,
       trim: true,
-      required: 'Please enter the business name!',
     },
     // activities: [String],
     created: {
@@ -27,22 +26,18 @@ const fridgeSchema = new mongoose.Schema(
       coordinates: [
         {
           type: Number,
-          required: 'You must supply coordinates!',
         },
       ],
       address: {
         type: String,
-        required: 'You must supply an address!',
       },
       postcode: {
         type: String,
-        required: 'A postcode is required',
       },
     },
     localAuthority: {
       council: {
         type: String,
-        required: 'Please pick your local council!',
       },
     },
     photo: String,

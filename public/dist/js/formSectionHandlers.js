@@ -149,6 +149,12 @@ function openingTimes(section, formSections, button, backBtn, sectionIndex) {
   });
 }
 
+function getUrlParam() {
+  const url = window.location.href;
+  const urlArr = url.split('/');
+  return urlArr[4];
+}
+
 function submitSetupInfo(section, formSections, button, backBtn, sectionIndex) {
   renderButton('submit', 'Submit', button);
   renderBackButton(backBtn, true);
@@ -157,53 +163,51 @@ function submitSetupInfo(section, formSections, button, backBtn, sectionIndex) {
     e.preventDefault();
 
     const formData = new FormData();
+    formData.append('account', getUrlParam());
     formData.append('type', localStorage.getItem('userType'));
     await getEstablishmentsByLocation({
       name: document.querySelector('[name=establishment-name]').value,
       street: document.querySelector('[name=address-street]').value,
       postCode: document.querySelector('[name=address-post-code]').value,
     }).then(establishment => {
-      formData.append('name', establishment.BusinessName);
-      formData.append('lng', parseFloat(establishment.geocode.longitude));
-      formData.append('lat', parseFloat(establishment.geocode.latitude));
+      formData.append('establishmentName', establishment.BusinessName);
+      formData.append('location', [ parseFloat(establishment.geocode.latitude), parseFloat(establishment.geocode.longitude) ]);
       formData.append(
-        'address',
+        'location[address]',
         `${establishment.AddressLine1}, ${establishment.AddressLine2}, ${
           establishment.AddressLine3
         }, ${establishment.AddressLine4}`
       );
-      formData.append('postcode', establishment.PostCode);
-      formData.append('council', establishment.LocalAuthorityName);
+      formData.append('location[postcode]', establishment.PostCode);
+      formData.append('localAuthority[council]', establishment.LocalAuthorityName);
     });
     document.querySelectorAll('.working-hours').forEach((input, index) => {
       const weekMap = ['mon', 'tues', 'wed', 'thu', 'fri', 'sat', 'sun'];
       if (input.querySelector('.switch').checked === true) {
+        formData.append(`openingHours[${weekMap[index]}][open]`, true)
         formData.append(
-          `${weekMap[index]}`,
+          `openingHours[${weekMap[index]}][hours]`,
           `${input.querySelector('[name=start-time]').value}-${
             input.querySelector('[name=finish-time]').value
           }`
         );
       } else {
-        formData.append(`${weekMap[index]}`, 'closed');
+        formData.append(`openingHours[${weekMap[index]}][open]`, false);
       }
     });
     for (const value of formData.values()) {
       console.log(value);
     }
-    const response = await fetch('/setup', {
+    const response = await fetch(`/setup`, {
       method: 'POST',
       body: formData,
-      headers: {
-        'Content-Type': 'application/json',
-      },
     });
     if (!response.ok) {
       const errorMessage = await response.text();
       throw new Error(errorMessage);
     }
     console.log(response.json());
-    // return response.json();
+    return response.json();
   }
   button.addEventListener('click', submit);
   backBtn.addEventListener('click', () => {

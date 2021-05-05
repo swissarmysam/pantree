@@ -6,6 +6,7 @@ const Business = mongoose.model('Business');
 const Fridge = mongoose.model('Fridge');
 const promisify = require('es6-promisify');
 const e = require('express');
+const multer = require('multer');
 
 exports.registerForm = (req, res) => {
   res.render('register', {
@@ -86,92 +87,18 @@ exports.setupForm = async (req, res) => {
 };
 
 exports.setup = async (req, res, next) => {
-  req.body.account = req.params._id;
-  if (req.body.type === 'Business') {
-    req.body.businessName = req.body.name;
-    req.body.location.type = 'Point';
-    // coordinates need populating from google maps - naming may change
-    req.body.location.coordinates[0] = req.body.lng;
-    req.body.location.coordinates[1] = req.body.lat;
-    req.body.location.address = req.body.address;
-    req.body.location.postcode = req.body.postcode;
-    req.body.localAuthority.council = req.body.council;
-    // depends on default behaviour of checkbox not submitting any value if false so checks this first
-    // if checked then it will write data to table
-    if (req.body.mon !== 'closed') {
-      req.body.openingHours.mon.open = true;
-      req.body.openingHours.mon.hours = req.body.mon;
-    }
-    if (req.body.tues !== 'closed') {
-      req.body.openingHours.tues.open = true;
-      req.body.openingHours.tues.hours = req.body.tues;
-    }
-    if (req.body.wed !== 'closed') {
-      req.body.openingHours.weds.open = true;
-      req.body.openingHours.weds.hours = req.body.wed;
-    }
-    if (req.body.thur !== 'closed') {
-      req.body.openingHours.thur.open = true;
-      req.body.openingHours.thur.hours = req.body.thur;
-    }
-    if (req.body.fri !== 'closed') {
-      req.body.openingHours.fri.open = true;
-      req.body.openingHours.fri.hours = req.body.fri;
-    }
-    if (req.body.sat !== 'closed') {
-      req.body.openingHours.sat.open = true;
-      req.body.openingHours.sat.hours = req.body.sat;
-    }
-    if (req.body.sun !== 'closed') {
-      req.body.openingHours.sun.open = true;
-      req.body.openingHours.sun.hours = req.body.sun;
-    }
-    const business = await new Business(req.body).save();
-    updateProfileComplete(req.params._id);
-  } else {
-    req.body.fridgeName = req.body.name;
-    req.body.location.type = 'Point';
-    // coordinates need populating from google maps - naming may change
-    req.body.location.coordinates[0] = req.body.lng;
-    req.body.location.coordinates[1] = req.body.lat;
-    req.body.location.address = req.body.address;
-    req.body.location.postcode = req.body.postcode;
-    // depends on default behaviour of checkbox not submitting any value checks this first
-    // if checked then it will write data to table
-    if (req.body.mon !== 'closed') {
-      req.body.openingHours.mon.open = true;
-      req.body.openingHours.mon.hours = req.body.mon;
-    }
-    if (req.body.tues !== 'closed') {
-      req.body.openingHours.tues.open = true;
-      req.body.openingHours.tues.hours = req.body.tues;
-    }
-    if (req.body.wed !== 'closed') {
-      req.body.openingHours.weds.open = true;
-      req.body.openingHours.weds.hours = req.body.wed;
-    }
-    if (req.body.thur !== 'closed') {
-      req.body.openingHours.thur.open = true;
-      req.body.openingHours.thur.hours = req.body.thur;
-    }
-    if (req.body.fri !== 'closed') {
-      req.body.openingHours.fri.open = true;
-      req.body.openingHours.fri.hours = req.body.fri;
-    }
-    if (req.body.sat !== 'closed') {
-      req.body.openingHours.sat.open = true;
-      req.body.openingHours.sat.hours = req.body.sat;
-    }
-    if (req.body.sun !== 'closed') {
-      req.body.openingHours.sun.open = true;
-      req.body.openingHours.sun.hours = req.body.sun;
-    }
-    const fridge = await new Fridge(req.body).save();
-    updateProfileComplete(req.params._id);
-  }
-
-  next();
+  console.log(req.fields);
+    // req.fields.account = mongoose.Types.ObjectId(req.fields.account);
+    // if (req.fields.type === 'Business') {
+    //   const business = await new (Business(req.fields)).save();
+    //   updateProfileComplete(req.fields.account);
+    // } else {
+    //   const fridge = await new (Fridge(req.fields)).save();
+    //   updateProfileComplete(req.fields.account);
+    // }
+    // res.redirect(`/dashboard/${req.fields.account}`);
 }
+
 
 const updateProfileComplete = async (account) => {
   const update = {
@@ -181,5 +108,5 @@ const updateProfileComplete = async (account) => {
     _id: account,
   }, {
     $set: update,
-  });
+  }).exec();
 }

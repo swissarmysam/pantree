@@ -14,6 +14,7 @@ const promisify = require('es6-promisify');
 const routes = require('./routes/index');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
+const formidable = require('express-formidable');
 require('./handlers/passport');
 
 const app = express();
@@ -30,6 +31,8 @@ app.use(
     extended: true,
   })
 );
+
+app.use(formidable());
 
 // methods for validation on user forms
 app.use(expressValidator());
