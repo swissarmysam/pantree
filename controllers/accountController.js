@@ -6,7 +6,6 @@ const Business = mongoose.model('Business');
 const Fridge = mongoose.model('Fridge');
 const promisify = require('es6-promisify');
 const e = require('express');
-const multer = require('multer');
 
 exports.registerForm = (req, res) => {
   res.render('register', {
@@ -87,16 +86,15 @@ exports.setupForm = async (req, res) => {
 };
 
 exports.setup = async (req, res, next) => {
-  console.log(req.fields);
-    // req.fields.account = mongoose.Types.ObjectId(req.fields.account);
-    // if (req.fields.type === 'Business') {
-    //   const business = await new (Business(req.fields)).save();
-    //   updateProfileComplete(req.fields.account);
-    // } else {
-    //   const fridge = await new (Fridge(req.fields)).save();
-    //   updateProfileComplete(req.fields.account);
-    // }
-    // res.redirect(`/dashboard/${req.fields.account}`);
+    req.body.account = mongoose.Types.ObjectId(req.body.account);
+    if (req.body.type === 'Business') {
+        const business = await new Business(req.body).save();
+        updateProfileComplete(req.body.account);
+       } else {
+          const fridge = await new Fridge(req.body).save();
+          updateProfileComplete(req.body.account);
+    }
+    res.redirect(`/donations/${req.body.account}`);
 }
 
 
