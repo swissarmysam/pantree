@@ -26,7 +26,7 @@ function userType(section, formSections, button, backBtn, sectionIndex) {
 
   function setUser(e) {
     e.preventDefault();
-    typeBtns.forEach((btn) => btn.classList.remove('is-active'));
+    typeBtns.forEach(btn => btn.classList.remove('is-active'));
     e.currentTarget.classList.toggle('is-active');
     localStorage.setItem(
       'userType',
@@ -36,7 +36,7 @@ function userType(section, formSections, button, backBtn, sectionIndex) {
     button.disabled = false;
   }
 
-  typeBtns.forEach((btn) => {
+  typeBtns.forEach(btn => {
     btn.addEventListener('click', setUser);
   });
 
@@ -58,7 +58,7 @@ function setupInfo(section, formSections, button, backBtn, sectionIndex) {
   let redirect;
   button.addEventListener('click', () => {
     redirect = true;
-    section.querySelectorAll('[name]').forEach((field) => {
+    section.querySelectorAll('[name]').forEach(field => {
       if (field.parentNode.nextSibling != null) {
         field.parentNode.nextSibling.remove();
         field.classList.remove('is-danger');
@@ -95,16 +95,18 @@ function confirmInfo(section, formSections, button, backBtn, sectionIndex) {
     name: document.querySelector('[name=establishment-name]').value,
     street: document.querySelector('[name=address-street]').value,
     postCode: document.querySelector('[name=address-post-code]').value,
-  }).then((establishment) => {
+  }).then(establishment => {
     if (establishment) {
       console.log(establishment);
       section.querySelector('.establishment-name').textContent =
         establishment.BusinessName;
       section.querySelector('.establishment-type').textContent =
         establishment.BusinessType;
-      section.querySelector(
-        '.address'
-      ).textContent = `${establishment.AddressLine1}, ${establishment.AddressLine2}, ${establishment.AddressLine3}, ${establishment.AddressLine4}`;
+      section.querySelector('.address').textContent = `${
+        establishment.AddressLine1
+      }, ${establishment.AddressLine2}, ${establishment.AddressLine3}, ${
+        establishment.AddressLine4
+      }`;
       section.querySelector('.post-code').textContent = establishment.PostCode;
     } else {
       section.querySelector('.establishment-name').textContent = `Sorry`;
@@ -126,11 +128,11 @@ function openingTimes(section, formSections, button, backBtn, sectionIndex) {
   renderBackButton(backBtn, true);
 
   const switchBtns = section.querySelectorAll('label.pt-0');
-  switchBtns.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
+  switchBtns.forEach(btn => {
+    btn.addEventListener('click', e => {
       e.currentTarget.parentNode
         .querySelectorAll('input[type=time]')
-        .forEach((input) => {
+        .forEach(input => {
           input.disabled = input.disabled !== true;
           input.value = '';
         });
@@ -207,13 +209,15 @@ function submitSetupInfo(section, formSections, button, backBtn, sectionIndex) {
       name: document.querySelector('[name=establishment-name]').value,
       street: document.querySelector('[name=address-street]').value,
       postCode: document.querySelector('[name=address-post-code]').value,
-    }).then((establishment) => {
+    }).then(establishment => {
       formData.establishmentName = establishment.BusinessName;
       formData.location.coordinates = [
         parseFloat(establishment.geocode.latitude),
         parseFloat(establishment.geocode.longitude),
       ];
-      formData.location.address = `${establishment.AddressLine1}, ${establishment.AddressLine2}, ${establishment.AddressLine3}, ${establishment.AddressLine4}`;
+      formData.location.address = `${establishment.AddressLine1}, ${
+        establishment.AddressLine2
+      }, ${establishment.AddressLine3}, ${establishment.AddressLine4}`;
       formData.location.postcode = establishment.PostCode;
       formData.localAuthority.council = establishment.LocalAuthorityName;
     });
@@ -238,8 +242,8 @@ function submitSetupInfo(section, formSections, button, backBtn, sectionIndex) {
       const errorMessage = await response.text();
       throw new Error(errorMessage);
     }
-    console.log(response.json());
-    return response.json();
+    // console.log(response.json());
+    // return response.json();
   }
   button.addEventListener('click', submit);
   backBtn.addEventListener('click', () => {

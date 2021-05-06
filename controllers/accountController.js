@@ -86,15 +86,14 @@ exports.setupForm = async (req, res) => {
 };
 
 exports.setup = async (req, res, next) => {
-    req.body.account = mongoose.Types.ObjectId(req.body.account);
-    if (req.body.type === 'Business') {
-        const business = await new Business(req.body).save();
-        updateProfileComplete(req.body.account);
-       } else {
-          const fridge = await new Fridge(req.body).save();
-          updateProfileComplete(req.body.account);
-    }
-    res.redirect(`/donations/${req.body.account}`);
+  req.body.account = mongoose.Types.ObjectId(req.body.account);
+  if (req.body.type === 'Business') {
+    const business = await new Business(req.body).save();
+    updateProfileComplete(req.body.account);
+  } else {
+    const fridge = await new Fridge(req.body).save();
+    updateProfileComplete(req.body.account);
+  }
 }
 
 

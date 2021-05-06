@@ -20,8 +20,8 @@ mixin setupForm()
                         .field.form-section(section-name="Hygiene inspection" section="setupInfo")
                             article.message.is-info
                                 .message-body
-                                    | In order to join the pantree platform, we need to confirm that you have passed a hygiene inspection by the
-                                    strong  Food standards agency.
+                                    | In order to join pantree, we need to confirm that you have passed a hygiene inspection by the
+                                    strong  Food Standards Agency.
                                     |  To do so please fill out the form below.
                             .field
                                 label.label(for='establishment-name') Establishment name
@@ -64,8 +64,12 @@ mixin setupForm()
                             +workingHoursInput('Saturday')
                             +workingHoursInput('Sunday')
                         .field.form-section(section-name="Review & Submit" section="submitSetupInfo")
-                            .title Yooooooo!
+                            .title You're almost finished ...
+                            p Please hit submit to add your details to our system
                         hr
                         .field.is-grouped
                                 button.button.is-medium.is-primary.is-light.mr-3.secondary-action(type="button") Back
                                 button.button.is-medium.is-fullwidth.is-primary.primary-action(type="submit") Submit
+                        .field.form-section(section-name="Go to Dashboard" section="redirectToDashboard")
+                            .title Thanks for joining the family!
+                            a(href=`/donations/${user._id}`) Continue to donations dashboard
