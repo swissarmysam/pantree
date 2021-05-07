@@ -78,8 +78,8 @@ export function switchSection(
 ) {
   const switchDirection = direction === 'next' ? 1 : -1;
   const requestedSection = currentSection + switchDirection;
-  renderSection(formSections, requestedSection, handlersArr, optionalParam);
   switchStep(requestedSection);
+  renderSection(formSections, requestedSection, handlersArr, optionalParam);
 }
 // updates the step component
 function switchStep(sectionIndex) {
@@ -87,8 +87,8 @@ function switchStep(sectionIndex) {
   const stepTitle = document.querySelector('label[for=step]');
   steps.forEach((item, i) => {
     if (sectionIndex === i) {
+      steps.forEach((step) => step.classList.remove('is-active'));
       item.classList.add('is-active');
-      steps[i - 1].classList.remove('is-active');
       stepTitle.textContent = `Step ${i + 1}`;
     }
   });

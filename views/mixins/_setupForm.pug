@@ -64,12 +64,17 @@ mixin setupForm()
                             +workingHoursInput('Saturday')
                             +workingHoursInput('Sunday')
                         .field.form-section(section-name="Review & Submit" section="submitSetupInfo")
-                            .title You're almost finished ...
-                            p Please hit submit to add your details to our system
+                            article.message.is-info
+                                .message-body
+                                    strong You're almost finished!
+                                    |  Please hit submit button below to add your details to our system.
+                            .illustration-container.is-flex.is-justify-content-center
+                                img.illustration(src="/submit.png", alt="submit")
+                        .field.form-section(section-name="Welcome" section="redirectToDashboard")
+                            .title.has-text-success.is-2.has-text-centered Thanks for joining the family!
+                            .illustration-container.is-flex.is-justify-content-center
+                                img.illustration(src="/welcome.png", alt="submit")
                         hr
                         .field.is-grouped
                                 button.button.is-medium.is-primary.is-light.mr-3.secondary-action(type="button") Back
                                 button.button.is-medium.is-fullwidth.is-primary.primary-action(type="submit") Submit
-                        .field.form-section(section-name="Go to Dashboard" section="redirectToDashboard")
-                            .title Thanks for joining the family!
-                            a(href=`/donations/${user._id}`) Continue to donations dashboard
