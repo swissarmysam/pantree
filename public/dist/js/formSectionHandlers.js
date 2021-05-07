@@ -178,6 +178,7 @@ function submitSetupInfo(section, formSections, button, backBtn, sectionIndex) {
 
   async function submit(e) {
     e.preventDefault();
+    button.disabled = true;
 
     const formData = {
       account: getUrlParam(),
@@ -249,22 +250,23 @@ function submitSetupInfo(section, formSections, button, backBtn, sectionIndex) {
         }-${input.querySelector('[name=finish-time]').value}`;
       }
     });
-    const response = await fetch(`/setup`, {
+    const request = await fetch(`/setup`, {
       method: 'POST',
       body: JSON.stringify(formData),
       headers: {
         'Content-Type': 'application/json',
       },
+    }).then(res => {
+      console.log(res.text());
+      if (!res.ok) {
+        const errorMessage = res.text();
+        throw new Error(errorMessage);
+      } else if(res.ok){
+        button.replaceWith(button.cloneNode(true));
+        switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex);
+      }
     });
-    if (!response.ok) {
-      const errorMessage = await response.text();
-      throw new Error(errorMessage);
-    } else {
-      button.replaceWith(button.cloneNode(true));
-      switchSection(formSections, FORM_HANDLERS_ARRAY, sectionIndex);
-    }
-    // console.log(response.json());
-    // return response.json();
+
   }
   button.addEventListener('click', submit);
   backBtn.addEventListener('click', () => {

@@ -81,38 +81,10 @@ router.get(
 // );
 // router.get('/add', authController.isLoggedIn, businessController.addBusiness);
 
-// router.post(
-//   '/add',
-//   businessController.upload,
-//   catchErrors(businessController.resize),
-//   catchErrors(businessController.createBusiness)
-// );
-
-// router.post(
-//   '/add/:id',
-//   businessController.upload,
-//   catchErrors(businessController.resize),
-//   catchErrors(businessController.updateFridge)
-// );
-
-// router.get('/business/:id/edit', catchErrors(businessController.editBusiness));
-
-// router.get(
-//   '/business/:slug',
-//   catchErrors(businessController.getBusinessBySlug)
-// );
-
 /* DONATION ROUTES */
 // router.get('/map', donationController.mapPage);
 // router.get('/tags', catchErrors(donationController.getDonationsByTag));
 // router.get('/tags/:tag', catchErrors(donationController.getDonationsByTag));
-
-/* NOTICEBOARD ROUTES */
-// router.post(
-//   '/reviews/:id',
-//   authController.isLoggedIn,
-//   catchErrors(noticeboardController.addNotice)
-// );
 
 /*
   API

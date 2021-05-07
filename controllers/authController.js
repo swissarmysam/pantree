@@ -1,7 +1,14 @@
-const passport = require('passport');
-const crypto = require('crypto');
-const mongoose = require('mongoose');
-const mail = require('../handlers/mail');
+/**
+ * Account Controller code
+ * Methods for registration and setup details
+ * Any data saved from here will be in Account model
+ */
+
+/** Import required packages */
+const passport = require('passport'); // authentication handler
+const crypto = require('crypto'); // generate secure token for password reset
+const mongoose = require('mongoose'); // database wrapper
+const mail = require('../handlers/mail'); //
 
 const Account = mongoose.model('Account');
 const promisify = require('es6-promisify');
