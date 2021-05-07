@@ -122,23 +122,21 @@ function confirmInfo(section, formSections, button, backBtn, sectionIndex) {
 
   // grab result
   getEstablishmentsByLocation({
-    name: document.querySelector('[name=establishment-name]').value,
-    street: document.querySelector('[name=address-street]').value,
     postCode: document.querySelector('[name=address-post-code]').value,
-  }).then((establishment) => {
-    if (establishment) {
-      console.log(establishment);
-      section.querySelector('.establishment-name').textContent =
-        establishment.BusinessName;
-      section.querySelector('.establishment-type').textContent =
-        establishment.BusinessType;
-      // eslint-disable-next-line prettier/prettier
-      section.querySelector('.address').textContent = `${
-        establishment.AddressLine1
-      }, ${establishment.AddressLine2}, ${establishment.AddressLine3}, ${
-        establishment.AddressLine4
-      }`;
-      section.querySelector('.post-code').textContent = establishment.PostCode;
+  }).then((establishments) => {
+    if (establishments) {
+      console.log(establishments);
+      // section.querySelector('.establishment-name').textContent =
+      //   establishment.BusinessName;
+      // section.querySelector('.establishment-type').textContent =
+      //   establishment.BusinessType;
+      // // eslint-disable-next-line prettier/prettier
+      // section.querySelector('.address').textContent = `${
+      //   establishment.AddressLine1
+      // }, ${establishment.AddressLine2}, ${establishment.AddressLine3}, ${
+      //   establishment.AddressLine4
+      // }`;
+      // section.querySelector('.post-code').textContent = establishment.PostCode;
       button.disabled = false;
     } else {
       section.querySelector(
