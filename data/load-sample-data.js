@@ -22,7 +22,6 @@ const fridge = JSON.parse(fs.readFileSync(`${__dirname}/fridge.json`, 'utf-8'));
 const account = JSON.parse(fs.readFileSync(`${__dirname}/account.json`, 'utf-8'));
 
 async function deleteData() {
-  console.log('😢😢 Goodbye Data...');
   await Donation.remove();
   await Fridge.remove();
   await Business.remove();

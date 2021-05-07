@@ -23,19 +23,23 @@ const transport = nodemailer.createTransport({
   },
 });
 
+/** create email template - filename is the template and options are */
 const generateHTML = (filename, options = {}) => {
+  // generate html from pug file
   const html = pug.renderFile(
     `${__dirname}/../views/email/${filename}.pug`,
     options
   );
-  const inlined = juice(html);
+  const inlined = juice(html); // add inline styles to email
   return inlined;
 };
 
+/** Send the templated email */
 exports.send = async options => {
-  const html = generateHTML(options.filename, options);
-  const text = htmlToText.fromString(html);
+  const html = generateHTML(options.filename, options); // generate email template
+  const text = htmlToText.fromString(html); // turn html block into text
 
+  // create full email to send
   const mailOptions = {
     from: `Pantree <no-reply@pantree.co.uk>`,
     to: options.account.email,
