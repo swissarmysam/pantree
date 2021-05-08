@@ -1,3 +1,8 @@
+/**
+ * Start the server and create connections
+ */
+
+/** Import wrapper for database connection */
 const mongoose = require('mongoose');
 
 // get secure variables for DB passwords etc
@@ -9,7 +14,7 @@ mongoose.connect(process.env.DATABASE, {
 });
 mongoose.Promise = global.Promise; // set Mongoose to use ES6 promises
 mongoose.connection.on('error', err => {
-  console.error(`${err.message}`);
+  console.error(`${err.message}`); // console log any errors
 });
 
 // Import all database Models

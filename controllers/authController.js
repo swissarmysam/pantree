@@ -1,6 +1,6 @@
 /**
- * Account Controller code
- * Methods for registration and setup details
+ * Authentication Controller code
+ * Methods for handling login and password resets
  * Any data saved from here will be in Account model
  */
 
@@ -17,34 +17,35 @@ const promisify = require('es6-promisify'); // turn callback into promise
 exports.login = (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     // authentication is done using a local strategy meaning a username/password combination is used
-    if ( err ) {
+    if (err) {
       next(err); // pass error to route step
       return; // exit function
     }
     // if user doesn't pass authentication ...
     if (!user) {
       // flash error message and return to login page
-      req.flash('error', 'Incorrect email or password'); 
+      req.flash('error', 'Incorrect email or password');
       res.redirect('/login');
       return;
     }
-    // if user passes authentication ... 
+    // if user passes authentication ...
     req.logIn(user, err => {
-      if(err) {
+      if (err) {
         // errors from above are passed here and message displayed
         req.flash('error', 'Something went wrong.');
         next(err);
         return;
       }
-      if(!req.user.profileCompleted) { // if the user has not completed profile setup
+      if (!req.user.profileCompleted) {
+        // if the user has not completed profile setup
         res.redirect(`/setup/${req.user._id}`); // redirect to the setup form to collect details
       } else {
         res.redirect(`/donations/${req.user._id}`); // otherwise redirect to the dashboard
       }
-      return; // exit function
+      // exit function
     });
   })(req, res, next);
-}
+};
 
 /** Log the user out and end the active session */
 exports.logout = (req, res) => {
@@ -76,7 +77,7 @@ exports.isLoggedIn = (req, res, next) => {
 /** Display forgotten password form pug file */
 exports.forgotPassword = (req, res) => {
   res.render('forgot', {
-    title: 'Reset Password'
+    title: 'Reset Password',
   });
 };
 
@@ -84,9 +85,10 @@ exports.forgotPassword = (req, res) => {
 exports.forgot = async (req, res) => {
   // see if a user with that email exists
   const account = await Account.findOne({
-    email: req.body.email
+    email: req.body.email,
   });
-  if (!account) { // otherwise display a message saying it does not exist
+  if (!account) {
+    // otherwise display a message saying it does not exist
     req.flash('error', 'No account with that email exists.');
     return res.redirect('/login'); // redirect to login
   }
@@ -115,7 +117,7 @@ exports.reset = async (req, res) => {
   const account = await Account.findOne({
     resetPasswordToken: req.params.token,
     resetPasswordExpires: {
-      $gt: Date.now()
+      $gt: Date.now(),
     },
   });
   // if an account can't be found ..
@@ -125,7 +127,7 @@ exports.reset = async (req, res) => {
   }
   // if there is an account, show the rest password form
   res.render('reset', {
-    title: 'Reset your Password'
+    title: 'Reset your Password',
   });
 };
 
@@ -145,7 +147,7 @@ exports.update = async (req, res) => {
   const account = await Account.findOne({
     resetPasswordToken: req.params.token,
     resetPasswordExpires: {
-      $gt: Date.now()
+      $gt: Date.now(),
     },
   });
   // if account does not exist then reload the login form
@@ -166,6 +168,6 @@ exports.update = async (req, res) => {
 /** Display the login form pug file */
 exports.loginForm = (req, res) => {
   res.render('login', {
-    title: 'Login'
+    title: 'Login',
   });
 };

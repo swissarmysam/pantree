@@ -1,3 +1,9 @@
+/**
+ * Fridge Schema
+ * Model for
+ */
+
+/** Import wrapper for database connection */
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
@@ -48,12 +54,12 @@ const donationSchema = new mongoose.Schema(
     },
   },
   {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
+    toJSON: { virtuals: true }, // serialize when JSON.stringify() is called
+    toObject: { virtuals: true }, // convert the mongoose document into a JS object
   }
 );
 
-// Define our indexes
+// Define the indexes for faster querying
 donationSchema.index({
   name: 'text',
   description: 'text',

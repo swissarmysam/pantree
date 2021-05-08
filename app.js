@@ -1,26 +1,31 @@
-// set up middleware and plugins for app
+/**
+ * App.js file
+ * Server and middleware code
+ */
 
-const express = require('express');
-const mongoose = require('mongoose');
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
-const path = require('path');
-const bodyParser = require('body-parser');
-const expressValidator = require('express-validator');
-const cookieParser = require('cookie-parser');
-const flash = require('connect-flash');
-const passport = require('passport');
-const promisify = require('es6-promisify');
-const routes = require('./routes/index');
-const helpers = require('./helpers');
-const errorHandlers = require('./handlers/errorHandlers');
-require('./handlers/passport');
+/** Import all of the required packages */
+const express = require('express'); // Node.js server framework
+const mongoose = require('mongoose'); // MongoDB Wrapper
+const session = require('express-session'); // get user session details
+const MongoStore = require('connect-mongo')(session); // store user session details
+const path = require('path'); // file path handler
+const bodyParser = require('body-parser'); // handle raw requests and make available on the req.body
+const expressValidator = require('express-validator'); // validation methods for forms etc
+const cookieParser = require('cookie-parser'); // make cookie details available on req.cookie object
+const flash = require('connect-flash'); // display flash messages on the frontend
+const passport = require('passport'); // account detail authentication
+const promisify = require('es6-promisify'); // turn callbacks into promises
+const routes = require('./routes/index'); // all of the available application routes
+const helpers = require('./helpers'); // methods that are useful across the application
+const errorHandlers = require('./handlers/errorHandlers'); // custom error handlers
+require('./handlers/passport'); // strategy details for passport authentication
 
-const app = express();
+const app = express(); // create express server
 
 // set up view engine - PUG
 app.set('views', path.join(__dirname, 'views')); // pug files directory
 app.set('view engine', 'pug');
+// serve any static files from the public folder i.e. images, styles, built JS
 app.use(express.static(path.join(__dirname, 'public')));
 
 // take raw requests and turn into usable properties on req.body
@@ -38,6 +43,7 @@ app.use(expressValidator());
 app.use(cookieParser());
 
 // set up sessions to store visitor data across requests and keep users logged in
+// store details in a database collection name Sessions
 app.use(
   session({
     secret: process.env.SECRET,
@@ -91,5 +97,5 @@ if (app.get('env') === 'development') {
 // production error handler
 app.use(errorHandlers.productionErrors);
 
-// done! we export it so we can start the site in start.js
+// export to start the app in start.js
 module.exports = app;

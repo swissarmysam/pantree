@@ -1,3 +1,8 @@
+/**
+ * Custom error handlers
+ * (Bos, 2020)
+ */
+
 /*
   Catch Errors Handler
 
@@ -62,9 +67,9 @@ exports.developmentErrors = (err, req, res, next) => {
 };
 
 /*
-  Production Error Hanlder
+  Production Error Handler
 
-  No stacktraces are leaked to user
+  No stack traces are leaked to user
 */
 exports.productionErrors = (err, req, res, next) => {
   res.status(err.status || 500);
