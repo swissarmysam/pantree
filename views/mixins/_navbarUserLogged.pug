@@ -4,7 +4,7 @@ include _userDropdown.pug
 mixin navbarUserLogged ()
     nav.navbar.is-fixed-top.is-primary(role='navigation', aria-label='main navigation')
         .navbar-brand
-            a.nav__link.nav__link--logo.navbar-item(href="/")
+            .navbar-item
                 +logo(151, 32, '#ffffff')
         .navbar-menu
             .navbar-end

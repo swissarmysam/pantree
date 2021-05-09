@@ -65,8 +65,43 @@ export function renderButton(type, label, button, clickable = false) {
   button.disabled = clickable;
 }
 // renders the secondary button
-export function renderBackButton(backBtn, visible) {
+export function renderBackButton(
+  backBtn,
+  formSections,
+  handlersArr,
+  sectionIndex,
+  visible = true
+) {
   backBtn.style.display = visible === true ? 'flex' : 'none';
+  backBtn.addEventListener('click', () => {
+    backBtn.nextSibling.replaceWith(backBtn.nextSibling.cloneNode(true));
+    backBtn.replaceWith(backBtn.cloneNode(true));
+    switchSection(formSections, handlersArr, sectionIndex, 'prev');
+  });
+}
+// creates the layout for a establisment info
+export function renderCard(section, name, businessType, address, postcode) {
+  const html = `
+    <div class="notification establishment">
+      <p class="title is-3 establishment-name">${name}</p>
+      <p class="subtitle is-5 establishment-type">
+        ${businessType}
+      </p>
+      <label class="has-text-weight-semibold mb-1">Address</label>
+      <p  for="address" class="subtitle is-5 has-text-grey address">
+        ${address}
+      </p>
+      <label for="post-code" class="has-text-weight-semibold mb-1">
+      Post code
+      </label>
+      <p class="subtitle is-5 has-text-grey post-code">${postcode}</p>
+      <button type="button" class="button is-primary is-outlined">
+        Select
+      </button>
+    </div>
+  `;
+  const card = document.createRange().createContextualFragment(html);
+  section.appendChild(card);
 }
 // navigates to the section called from a form-section function
 export function switchSection(
@@ -92,4 +127,24 @@ function switchStep(sectionIndex) {
       stepTitle.textContent = `Step ${i + 1}`;
     }
   });
+}
+// validates input values
+export function checkInputs(section) {
+  let redirect = true;
+  section.querySelectorAll('[name]').forEach((field) => {
+    if (field.parentNode.nextSibling != null) {
+      field.parentNode.nextSibling.remove();
+      field.classList.remove('is-danger');
+    }
+    if (field.value === '') {
+      field.classList.add('is-danger');
+      const fieldContainer = field.parentNode;
+      const warning = document.createElement('p');
+      warning.classList.add('help', 'is-danger', 'is-size-6');
+      warning.textContent = 'This field is required.';
+      fieldContainer.insertAdjacentElement('afterend', warning);
+      redirect = false;
+    }
+  });
+  return redirect;
 }

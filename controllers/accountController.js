@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /**
  * Account Controller code
  * Methods for registration and setup details
