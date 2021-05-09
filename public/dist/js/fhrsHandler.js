@@ -1,16 +1,15 @@
-// search params obj {address - full/partial and maxDistanceLimit - in miles}
+/* eslint-disable prettier/prettier */
+
 export default async function getEstablishmentsByLocation(searchParams) {
-  const addressString = `${searchParams.street} ${searchParams.postCode}`;
+  const nameSting = searchParams.name === undefined
+  ? '' : searchParams.name.toLowerCase().split(' ').join('+');
   const res = await fetch(
-    `http://api.ratings.food.gov.uk/establishments?name=${searchParams.name
-      .toLowerCase()
-      .split(' ')
-      .join('+')}&address=${addressString.toLowerCase().split(' ').join('+')}`,
+    `http://api.ratings.food.gov.uk/establishments?name=${nameSting}&address=${searchParams.postCode.toLowerCase().split(' ').join('+')}`,
     {
       headers: { 'x-api-version': '2' },
     }
   );
   const data = await res.json();
-  const establishment = data.establishments[0];
-  return establishment;
+  const {establishments} = data;
+  return establishments;
 }

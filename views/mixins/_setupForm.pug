@@ -24,37 +24,21 @@ mixin setupForm()
                                     strong  Food Standards Agency.
                                     |  To do so please fill out the form below.
                             .field
-                                label.label(for='establishment-name') Establishment name
+                                label.label(for='post-code') Postcode
                                 .control
-                                    input.input(type="text" value="" name='establishment-name' required)
-                            .field
-                                label.label(for='street') House number, Street
-                                .control
-                                    input.input(type="text" value="" name='address-street' required)
-                            .field
-                                label.label(for='town') City/Town
-                                .control
-                                    input.input(type="text" value="" name='address-town' required)
-                            .field
-                                label.label(for='post-code') Post code
-                                .control
-                                    input.input(type="text" value="" name='address-post-code' required)
-                        .field.form-section(section-name="Here is what we found" section="confirmInfo")
-                            article.message.is-success
+                                    input.input.is-medium(type="text" value="" name='address-post-code' required)
+                        .field.form-section(section-name="Here is what we found" section="selectInfo")
+                            article.message
                                 .message-body
-                                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    strong Pellentesque risus mi
-                                    | , tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum
-                                    a felis venenatis
-                                    |  efficitur. Aenean ac
-                                    em eleifend lacus
-                                    | , in mollis lectus.
-                            p.title.is-3.establishment-name
-                            p.subtitle.is-5.has-text-grey-light.establishment-type
-                            label.has-text-weight-semibold.mb-1(for='adress') Address
-                            p.subtitle.is-5.has-text-grey.address
-                            label.has-text-weight-semibold.mb-1(for='post-code') Post code
-                            p.subtitle.is-5.has-text-grey.post-code
+                        .field.form-section(section-name="Edit your appearance" section="editInfo")
+                            article.message.is-info
+                                .message-body
+                                    strong  Optional:
+                                    |  Edit the way your establishment name is dispalyed for other users.
+                            .field
+                                label.label(for='establishment-name') Display name
+                                .control
+                                    input.input.is-medium(type="text" value="" name='establishment-name' required)
                         .field.form-section(section-name="Set opening times" section="openingTimes")
                             +workingHoursInput('Monday')
                             +workingHoursInput('Tuesday')
