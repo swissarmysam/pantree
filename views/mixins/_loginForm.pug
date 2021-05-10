@@ -11,13 +11,13 @@ mixin loginForm()
               .control.has-icons-left
                 input.input(type="text" placeholder="Enter your email address" name='email')
                 span.icon.is-small.is-left
-                  i.fas.fas-user
+                  ion-icon(src='/icons/mail.svg')
             .field
               label.label Password
               .control.has-icons-left
                 input.input(type="password" placeholder="Enter your password" name='password')
                 span.icon.is-small.is-left
-                  i.fas.fas-lock
+                  ion-icon(src='/icons/password.svg')
             .field
               .control
                 button.button.is-medium.is-fullwidth.is-primary(type="submit") Sign in

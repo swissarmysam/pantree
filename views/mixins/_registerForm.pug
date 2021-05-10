@@ -8,26 +8,28 @@ mixin registerForm()
                             hr
                         .field
                             label.label(for='name') Full Name
-                            .control
+                            .control.has-icons-left
                                 input.input(type="text" value="" name='name')
+                                span.icon.is-small.is-left
+                                    ion-icon(src='/icons/user.svg')
                         .field
                             label.label(for='email') Email
-                            .control.has-icons-left.has-icons-right
+                            .control.has-icons-left
                                 input.input(type="email" name='email')
                                 span.icon.is-small.is-left
-                                    i.fas.fa-envelope
+                                    ion-icon(src='/icons/mail.svg')
                         .field
                             label.label(for='password') Password
-                            .control.has-icons-left.has-icons-right
+                            .control.has-icons-left
                                 input.input(type="password" name='password')
                                 span.icon.is-small.is-left
-                                    i.fas.fa-lock
+                                    ion-icon(src='/icons/password.svg')
                         .field
                             label.label(for='password-confirm') Confirm Password
-                            .control.has-icons-left.has-icons-right
+                            .control.has-icons-left
                                 input.input(type="password" name='password-confirm')
                                 span.icon.is-small.is-left
-                                    i.fas.fa-lock
+                                    ion-icon(src='/icons/password-confirm.svg')
                         .field
                             .control
                                 button.button.is-medium.is-fullwidth.is-primary(type="submit") Submit
