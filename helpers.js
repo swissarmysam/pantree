@@ -27,16 +27,22 @@ exports.menu = [
 ];
 
 // TO-DO render sidemenu links based on user type
-exports.sidemenuType1 = [
+exports.coordinatorMenu = [
   [
-    { slug: '/donations', title: 'Food donations', icon: 'Apple' },
-    { slug: '/noticeboard', title: 'Noticeboard', icon: 'Clipboard' },
-    { slug: '/presskit', title: 'Presskit', icon: 'TBD' },
+    { slug: '/donations', title: 'Food donations', icon: 'fruit-apple' },
+    { slug: '/presskit', title: 'Presskit', icon: 'post' },
   ],
   [
-    { slug: '/add-activity', title: 'Add activity', icon: 'plus' },
-    { slug: '/add-notice', title: 'Add notice', icon: 'plus' },
     { slug: '/edit-info', title: 'Fridge info', icon: 'edit' },
+  ],
+];
+
+exports.businessMenu = [
+  [
+    { slug: '/donations', title: 'Food donations', icon: 'fruit-apple' },
+  ],
+  [
+    { slug: '/edit-info', title: 'Business info', icon: 'edit' },
   ],
 ];
 

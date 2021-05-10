@@ -16,19 +16,19 @@ block content
     .menu.is-menu-main
       p.menu-label General
       ul.menu-list
-        each item, index in h.sidemenuType1[0]
+        each item, index in h.coordinatorMenu[0]
           li
-            a.has-icon(href=item.slug class=(view === item.slug ? "is-active" : undefined))
-              span.icon O
-                //- icon
+            a.has-icon.is-flex.is-align-items-center(href=item.slug class=(view === item.slug ? "is-active" : undefined))
+              span.icon.is-small.is-left
+                ion-icon(src=`/icons/${item.icon}.svg`)
               span.menu-item-label.has-text-weight-semibold #{item.title}
       p.menu-label Quick actions
       ul.menu-list
-        each item in h.sidemenuType1[1]
+        each item in h.coordinatorMenu[1]
           li
             a.has-icon(href=item.slug )
-              span.icon O
-                //- icon
+              span.icon.is-small.is-left
+                ion-icon(src=`/icons/${item.icon}.svg`)
               span.menu-item-label.has-text-weight-semibold #{item.title}
   section.section.is-title-bar
     .level
