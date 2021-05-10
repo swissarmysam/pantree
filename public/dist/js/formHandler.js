@@ -53,9 +53,10 @@ function renderSteps(formSections, stepContainer) {
     // add a check icon to the last step
     if (i === formSections.length - 1) {
       const iconContainer = document.createElement('span');
-      const icon = document.createElement('i');
+      const icon = document.createElement('ion-icon');
       iconContainer.classList.add('icon');
-      icon.classList.add('fa', 'fa-check');
+      icon.setAttribute('name', 'checkmark-sharp');
+      icon.style.fontSize = '20px';
       iconContainer.appendChild(icon);
       stepMarker.appendChild(iconContainer);
     }
