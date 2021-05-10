@@ -1,26 +1,33 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-use-before-define */
+
+// utility functions used to power our multi-step forms
+
+// initialises the multi-step form
 export function initForm(handlersArr) {
-  if (document.body.contains(document.querySelector('.steps'))) {
-    const formSections = document.querySelectorAll('[section]');
-    const stepContainer = document.querySelector('.steps');
-    renderSteps(formSections, stepContainer);
-    renderSection(formSections, 0, handlersArr);
-  }
+  const formSections = document.querySelectorAll('[section]');
+  const stepContainer = document.querySelector('.steps');
+  renderSteps(formSections, stepContainer);
+  renderSection(formSections, 0, handlersArr);
 }
+// function renders a new form section
 function renderSection(
   formSections,
   switchToSection,
   handlersArr,
   optionalParam
 ) {
+  // select the specific section to be rendered
   const section = formSections[switchToSection];
   const button = document.querySelector('.button.primary-action');
   const backBtn = document.querySelector('.secondary-action');
-  const fn = handlersArr[switchToSection];
+  // select the specific handler function from the array
+  const handlerFn = handlersArr[switchToSection];
+  // render the section title
   renderTitle(section);
-  if (typeof fn === 'function')
-    fn.apply(null, [
+  // if the value contained in the handlersArr corresponds to a funtion, call it
+  if (typeof handlerFn === 'function')
+    handlerFn.apply(null, [
       section,
       formSections,
       button,
@@ -28,18 +35,22 @@ function renderSection(
       switchToSection,
       optionalParam,
     ]);
-  formSections.forEach((item, i) => {
-    item.style.display = switchToSection === i ? null : 'none';
+  formSections.forEach((item, index) => {
+    // if the index is not equal to switchToSection, don't display it
+    item.style.display = switchToSection !== index ? 'none' : null;
   });
 }
 // creates the step component
 function renderSteps(formSections, stepContainer) {
   for (let i = 0; i < formSections.length; i++) {
+    // create step indicator
     const step = document.createElement('li');
     const stepMarker = document.createElement('span');
+    // set the first step to active
     if (i === 0) step.classList.add('is-active');
     step.classList.add('steps-segment');
     stepMarker.classList.add('steps-marker');
+    // add a check icon to the last step
     if (i === formSections.length - 1) {
       const iconContainer = document.createElement('span');
       const icon = document.createElement('i');
@@ -48,6 +59,7 @@ function renderSteps(formSections, stepContainer) {
       iconContainer.appendChild(icon);
       stepMarker.appendChild(iconContainer);
     }
+    // append the step indicator to the parent container
     step.append(stepMarker);
     stepContainer.appendChild(step);
   }
@@ -73,13 +85,15 @@ export function renderBackButton(
   visible = true
 ) {
   backBtn.style.display = visible === true ? 'flex' : 'none';
+  // when the back button is clicked remove both button and backBtn event listeners
+  // then switch to the  previous section
   backBtn.addEventListener('click', () => {
     backBtn.nextSibling.replaceWith(backBtn.nextSibling.cloneNode(true));
     backBtn.replaceWith(backBtn.cloneNode(true));
     switchSection(formSections, handlersArr, sectionIndex, 'prev');
   });
 }
-// creates the layout for a establisment info
+// creates the layout for a establisment info card
 export function renderCard(section, name, businessType, address, postcode) {
   const html = `
     <div class="notification establishment">
@@ -100,10 +114,13 @@ export function renderCard(section, name, businessType, address, postcode) {
       </button>
     </div>
   `;
+  // using create range we create a contextual fragment from the html string
+  // it allows the string to be parsed into actual html element
+  // which is needed to edit the component dynamically
   const card = document.createRange().createContextualFragment(html);
   section.appendChild(card);
 }
-// navigates to the section called from a form-section function
+// navigates to the section called from a formHandler function
 export function switchSection(
   formSections,
   handlersArr,
@@ -132,17 +149,22 @@ function switchStep(sectionIndex) {
 export function checkInputs(section) {
   let redirect = true;
   section.querySelectorAll('[name]').forEach((field) => {
+    // remove all error styling applied to inputs from previous invocation of the function
     if (field.parentNode.nextSibling != null) {
       field.parentNode.nextSibling.remove();
       field.classList.remove('is-danger');
     }
+    // check if all fields are filled out
     if (field.value === '') {
+      // if a field is empty apply error styling
       field.classList.add('is-danger');
       const fieldContainer = field.parentNode;
       const warning = document.createElement('p');
       warning.classList.add('help', 'is-danger', 'is-size-6');
       warning.textContent = 'This field is required.';
       fieldContainer.insertAdjacentElement('afterend', warning);
+      // if a field is empty set redirect to false
+      // this stops the user being redirected to the next section
       redirect = false;
     }
   });
