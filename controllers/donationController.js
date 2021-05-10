@@ -12,6 +12,23 @@ const Donation = mongoose.model('Donation');
 const Account = mongoose.model('Account');
 
 /** Display donations page and pass account ID */
-exports.showDonations = (req, res) => {
+exports.dashboard = (req, res) => {
   res.render('donations', { title: 'Donations', id: req.params._id });
 };
+
+/** */
+exports.addDonation = (req, res) => {
+
+}
+
+/** */
+exports.getDonations = (req, res) => {
+
+}
+
+/** */
+exports.showDonation = (req, res) => {
+
+}
+
+/** */

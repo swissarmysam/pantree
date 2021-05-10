@@ -12,7 +12,7 @@ const router = express.Router();
 const sharedController = require('../controllers/sharedController');
 const authController = require('../controllers/authController');
 const accountController = require('../controllers/accountController');
-const dashboardController = require('../controllers/dashboardController');
+const donationController = require('../controllers/donationController');
 
 const { catchErrors } = require('../handlers/errorHandlers');
 
@@ -52,7 +52,7 @@ router.post(
 router.get(
   '/donations/:id',
   authController.isLoggedIn,
-  dashboardController.showDonations
+  donationController.dashboard
 );
 
 /* FRIDGE ROUTES */
