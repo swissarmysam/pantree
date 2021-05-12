@@ -1,7 +1,7 @@
 include _userDropdown.pug
 mixin navbarDashboard ()
     nav.navbar.is-fixed-top.is-primary(role='navigation', aria-label='main navigation')
-        .navbar-item.has-text-weight-semibold.is-size-5.has-text-white Community fridge name
+        .navbar-item.has-text-weight-semibold.is-size-5.has-text-white #{account.establishmentName}
         .navbar-menu
             .navbar-end
                 +userDropdown()

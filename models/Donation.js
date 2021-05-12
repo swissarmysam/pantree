@@ -1,57 +1,54 @@
 /**
- * Fridge Schema
- * Model for
+ * Donation Schema
+ * Model for storing donation details
  */
 
 /** Import wrapper for database connection */
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
-const slug = require('slugs');
 
-// TODO Add optional associated details (name, number, email) in case it is different contact
 const donationSchema = new mongoose.Schema(
   {
     id: String,
-    details: {
-      donatee: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Business',
-        required: true,
-      },
-      claimer: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Fridge',
-      },
-      description: {
+    donor: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Business',
+      required: true,
+    },
+    claimer: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Fridge',
+    },
+    description: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+    tags: [String],
+    available: {
+      type: Boolean,
+      default: true,
+    },
+    addedDate: {
+      type: Date,
+      default: Date.now,
+    },
+    expiryDate: {
+      type: Date,
+    },
+    weight: {
+      type: Number,
+    },
+    altContact: {
+      name: {
         type: String,
-        trim: true,
-        required: true,
       },
-      tags: [String],
-      available: {
-        type: Boolean,
-      },
-      addedDate: {
-        type: Date,
-        default: Date.now,
-      },
-      expiryDate: {
-        type: Date,
-      },
-      weight: {
+      phoneNumber: {
         type: Number,
       },
-      altContact: {
-        name: {
-          type: String,
-        },
-        phoneNumber: {
-          type: Number,
-        },
-      },
-      photo: String,
     },
+    photo: String,
   },
   {
     toJSON: { virtuals: true }, // serialize when JSON.stringify() is called
@@ -71,7 +68,7 @@ donationSchema.index({ location: '2dsphere' });
 donationSchema.virtual('reviews', {
   ref: 'Business', // what model to link?
   localField: '_id', // which field on the store?
-  foreignField: 'donatee', // which field on the review?
+  foreignField: 'donor', // which field on the review?
 });
 
 module.exports = mongoose.model('Donation', donationSchema);

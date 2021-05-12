@@ -48,34 +48,38 @@ router.post(
   authController.update
 );
 
-/* DASHBOARD ROUTE */
+/* DASHBOARD AND DONATIONS ROUTES */
+// show main dashboard
 router.get(
   '/donations/:id',
   authController.isLoggedIn,
   donationController.dashboard
 );
+// display a single donation
+router.get(
+  '/donations/donation/:donation_id',
+  authController.isLoggedIn,
+  donationController.getDonation
+);
+// claim a donation
+router.post(
+  '/donations/donation/:donation_id',
+  donationController.claimDonation
+);
+// delete the donation
+router.post(
+  '/donations/donation/:donation_id/remove',
+  donationController.removeDonation
+);
+// show the donation form
+router.get(
+  '/donations/donation/add',
+  authController.isLoggedIn,
+  donationController.donationForm
+);
+router.post('/donations/donation/add', donationController.addDonation);
 
-/* FRIDGE ROUTES */
-// router.get('/fridge', catchErrors(fridgeController.getFridges));
-// router.get('/fridge/page/:page', catchErrors(fridgeController.getFridge));
-// router.get('/add', authController.isLoggedIn, fridgeController.addFridge);
-
-// router.post(
-//   '/add',
-//   fridgeController.upload,
-//   catchErrors(fridgeController.resize),
-//   catchErrors(fridgeController.createFridge)
-// );
-
-// router.post(
-//   '/add/:id',
-//   fridgeController.upload,
-//   catchErrors(fridgeController.resize),
-//   catchErrors(fridgeController.updateFridge)
-// );
-
-// router.get('/fridge/:id/edit', catchErrors(fridgeController.editFridge));
-// router.get('/fridge/:slug', catchErrors(fridgeController.getFridgeBySlug));
+// TODO: NEED TO HANDLE WAY TO DISPLAY ALL DONATIONS BELONGING TO BUSINESS AND CLAIMED BY FRIDGE
 
 /* BUSINESS ROUTES */
 // router.get('/business', catchErrors(businessController.getBusinesses));
