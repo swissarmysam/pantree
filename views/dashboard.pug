@@ -13,7 +13,9 @@ block content
     .menu.is-menu-main
       p.menu-label General
       ul.menu-list
-        each item, index in h.coordinatorMenu[0]
+        - var menu = establishmentType === 'Fridge' ? h.coordinatorMenu[0] : h.businessMenu[0]
+        - var quickActions = establishmentType === 'Fridge' ? h.coordinatorMenu[1] : h.businessMenu[1]
+        each item, index in menu
           li
             a.has-icon.is-flex.is-align-items-center(href=item.slug class=(view === item.slug ? "is-active" : undefined))
               span.icon.is-small.is-left
@@ -21,7 +23,7 @@ block content
               span.menu-item-label.has-text-weight-semibold #{item.title}
       p.menu-label Quick actions
       ul.menu-list
-        each item in h.coordinatorMenu[1]
+        each item in quickActions
           li
             a.has-icon(href=item.slug )
               span.icon.is-small.is-left

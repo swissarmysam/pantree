@@ -12,7 +12,8 @@ block append content
         +overviewTile('Collected', '2 of 6', 'shopping-bag')
         +overviewTile('Claimed', '5.2 kg', 'box')
         +overviewTile('Available', '6.9 kg', 'fruit-apple')
-      #donations-map(data-lat=account.location.coordinates[0] data-lng=account.location.coordinates[1])
+      if establishmentType === 'Fridge'
+        #donations-map(data-lat=account.location.coordinates[0] data-lng=account.location.coordinates[1])
       .card.has-table.has-mobile-sort-spaced
         header.card-header
           p.card-header-title Donations

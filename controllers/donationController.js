@@ -16,16 +16,22 @@ const Business = mongoose.model('Business');
 exports.dashboard = async (req, res) => {
   const count = await Business.count({ account: req.user._id });
   let account;
+  let establishmentType;
 
   if (count > 0) {
     account = await Business.findOne({ account: { $eq: req.user._id } });
-    console.log('account', account);
+    establishmentType = 'Business';
   } else {
     account = await Fridge.findOne({ account: { $eq: req.user._id } });
-    console.log('account', account);
+    establishmentType = 'Fridge';
   }
 
-  res.render('donations', { title: 'Donations', id: req.params._id, account });
+  res.render('donations', {
+    title: 'Donations',
+    id: req.params._id,
+    account,
+    establishmentType,
+  });
 };
 
 exports.donationForm = (req, res) => {
@@ -129,7 +135,7 @@ exports.removeDonation = async (req, res) => {
 exports.getDonationsById = async (req, res) => {
   // if donor or claimer id matches then add to result
   const allDonations = await Donation.find({
-    $or: {[ {donor: req.user._id}, {claimer: req.user._id} ]}
+    // $or: {[ {donor: req.user._id}, {claimer: req.user._id} ]}
   });
   // return as JSON? res.json(allDonations)
 };

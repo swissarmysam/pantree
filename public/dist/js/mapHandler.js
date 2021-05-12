@@ -9,6 +9,8 @@ function makeMap(mapContainer) {
       lng: parseFloat(mapContainer.dataset.lng),
     },
     zoom: 10,
+    mapTypeControl: false,
+    streetViewControl: false,
   });
   // get donations function
 }
