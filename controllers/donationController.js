@@ -154,7 +154,7 @@ exports.getSingleDonation = async (req, res) => {
 
 exports.getAssociatedDonations = async (req, res) => {
   const donations = await Donation.find({
-    $or: {[ {donor: req.user._id}, {claimer: req.user._id} ]}
+    $or: [ {donor: req.user._id}, {claimer: req.user._id} ]
   });
   res.json(donations);
 }
