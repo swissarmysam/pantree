@@ -3,9 +3,21 @@
 // findBusinesses function
 function findBusinesses(map) {
   //fetch request based on lat and lng
-  // if response has something convert it to JSON
-  // else notify user that there are no businesses in their area
-  // if restonse containes businesses, map them
+  fetch('/api/business/all')
+  .then(res => {
+    let businesses;
+    if (!res.ok) {
+      const errorMessage = res.text();
+      throw new Error(errorMessage);
+    } else if (res.ok) {
+      businesses = res.json();
+      console.log(businesses);
+      // if response has something convert it to JSON
+      // else notify user that there are no businesses in their area
+    }
+  })
+
+  // if response containes businesses, map them
   // create a coordinates array for each business
   // add marker to map
   //assign the business to marker.place
@@ -31,7 +43,7 @@ function makeMap(mapContainer) {
     mapTypeControl: false,
     streetViewControl: false,
   });
-  // call findBusinesses(map)
+  findBusinesses(map);
 }
 
 makeMap(document.querySelector('#donations-map'));

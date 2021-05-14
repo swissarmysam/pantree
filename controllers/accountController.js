@@ -135,7 +135,7 @@ const updateProfileComplete = async (account) => {
 }
 
 /** API endpoint for all businesses/fridges */
-exports.getAllBusiness = async (req, res) => {
+exports.getAllBusinesses = async (req, res) => {
   const businesses = await Business.find().select('establishmentName location openingHours');
   res.json(businesses);
 }
