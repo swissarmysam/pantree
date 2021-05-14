@@ -26,9 +26,9 @@ const donationSchema = new mongoose.Schema(
       required: true,
     },
     tags: [String],
-    available: {
+    claimed: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     addedDate: {
       type: Date,

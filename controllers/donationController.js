@@ -133,9 +133,28 @@ exports.removeDonation = async (req, res) => {
 // TODO: NEED TO HANDLE WAY TO DISPLAY ALL DONATIONS BELONGING TO BUSINESS AND CLAIMED BY FRIDGE
 /** */
 exports.getDonationsById = async (req, res) => {
-  // if donor or claimer id matches then add to result
-  const allDonations = await Donation.find({
-    // $or: {[ {donor: req.user._id}, {claimer: req.user._id} ]}
-  });
-  // return as JSON? res.json(allDonations)
+
 };
+
+/** API endpoints */
+exports.getAllDonations = async (req, res) => {
+  const donations = await Donation.find();
+  res.json(donations);
+}
+
+exports.getSingleDonation = async (req, res) => {
+  //query for
+  const q = {
+    _id: req.params._id
+  };
+
+  const donation = await Donation.find(q);
+  res.json(donation);
+}
+
+exports.getAssociatedDonations = async (req, res) => {
+  const donations = await Donation.find({
+    $or: {[ {donor: req.user._id}, {claimer: req.user._id} ]}
+  });
+  res.json(donations);
+}

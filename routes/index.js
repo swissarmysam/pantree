@@ -81,24 +81,16 @@ router.post('/donations/donation/add', donationController.addDonation);
 
 // TODO: NEED TO HANDLE WAY TO DISPLAY ALL DONATIONS BELONGING TO BUSINESS AND CLAIMED BY FRIDGE
 
-/* BUSINESS ROUTES */
-// router.get('/business', catchErrors(businessController.getBusinesses));
-// router.get(
-//   '/business/page/:page',
-//   catchErrors(businessController.getBusinesses)
-// );
-// router.get('/add', authController.isLoggedIn, businessController.addBusiness);
-
-/* DONATION ROUTES */
-// router.get('/map', donationController.mapPage);
-// router.get('/tags', catchErrors(donationController.getDonationsByTag));
-// router.get('/tags/:tag', catchErrors(donationController.getDonationsByTag));
-
 /*
-  API
+  API ENDPOINTS
 */
 
-// router.get('/api/search', catchErrors(donationController.searchDonations));
-// router.get('/api/donations/near', catchErrors(donationController.mapDonations));
+router.get('/api/donations/all', donationController.getAllDonations);
+router.get('/api/donations/:id/single', donationController.getSingleDonation);
+router.get('/api/donations/:id/owner', donationController.getAssociatedDonations);
+router.get('/api/business/all', accountController.getAllBusinesses);
+router.get('/api/business/:id/single', accountController.getSingleBusiness);
+router.get('/api/fridge/all', accountController.getAllFridges);
+router.get('/api/fridge/:id/single', accountController.getSingleFridge);
 
 module.exports = router;

@@ -133,3 +133,35 @@ const updateProfileComplete = async (account) => {
     $set: update,
   }).exec();
 }
+
+/** API endpoint for all businesses/fridges */
+exports.getAllBusiness = async (req, res) => {
+  const businesses = await Business.find().select('establishmentName location openingHours');
+  res.json(businesses);
+}
+
+exports.getAllFridges = async (req, res) => {
+  const fridges = await Fridge.find().select('establishmentName location');
+  res.json(fridges);
+}
+
+/** API endpoint for single business/fridge */
+exports.getSingleBusiness = async (req, res) => {
+  //query for
+  const q = {
+    account: req.params._id
+  };
+
+  const business = await Business.find(q).select('establishmentName location openingHours');
+  res.json(business);
+}
+
+exports.getSingleFridge = async (req, res) => {
+  //query for
+  const q = {
+    account: req.params._id
+  };
+
+  const fridge = await Fridge.find(q).select('establishmentName location');
+  res.json(fridge);
+}
