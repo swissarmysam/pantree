@@ -280,7 +280,6 @@ function submitSetupInfo(section, formSections, button, backBtn, sectionIndex) {
         'Content-Type': 'application/json',
       },
     }).then((res) => {
-      console.log(res.text());
       if (!res.ok) {
         const errorMessage = res.text();
         throw new Error(errorMessage);
