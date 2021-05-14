@@ -16,6 +16,7 @@ const Business = mongoose.model('Business');
 exports.dashboard = async (req, res) => {
   const count = await Business.count({ account: req.user._id });
   let account;
+  let donations;
   let establishmentType;
 
   if (count > 0) {
@@ -23,6 +24,7 @@ exports.dashboard = async (req, res) => {
     establishmentType = 'Business';
   } else {
     account = await Fridge.findOne({ account: { $eq: req.user._id } });
+    donations = getNearbyDonations(req.user._id);
     establishmentType = 'Fridge';
   }
 
@@ -30,6 +32,7 @@ exports.dashboard = async (req, res) => {
     title: 'Donations',
     id: req.params._id,
     account,
+    donations,
     establishmentType,
   });
 };
@@ -130,10 +133,37 @@ exports.removeDonation = async (req, res) => {
   res.redirect(`/donations/${req.user._id}`);
 };
 
-// TODO: NEED TO HANDLE WAY TO DISPLAY ALL DONATIONS BELONGING TO BUSINESS AND CLAIMED BY FRIDGE
 /** */
-exports.getDonationsById = async (req, res) => {
+const getNearbyDonations = async (user) => {
+  // get fridge coordinates from signed in user
+  const q = {
+    account: user
+  }
+  const fridge = await Fridge.findOne(q).select('location');
+  const coordinates = [fridge.location.coordinates[0], fridge.location.coordinates[1]].map(parseFloat);
 
+  // search for businesses within 20km radius of fridge
+  const q2 = {
+    location: {
+      $near: {
+        $geometry: {
+          type: 'Point',
+          coordinates
+        },
+        $maxDistance: 20000 // 20km
+      }
+    }
+  };
+  const nearbyBusinesses = await Business.find(q2).select('account');
+
+  // get all donations which belong to those businesses and are NOT claimed
+  const q2 = {
+    $and: [{ donor: nearbyBusinesses.account }, { claimed: false }]
+  };
+  const donations = await Donation.find(q3);
+
+  // pass object to page
+  res.json(donations);
 };
 
 /** API endpoints */
@@ -152,6 +182,7 @@ exports.getSingleDonation = async (req, res) => {
   res.json(donation);
 }
 
+// TODO: NEED TO HANDLE WAY TO DISPLAY ALL DONATIONS BELONGING TO BUSINESS AND CLAIMED BY FRIDGE
 exports.getAssociatedDonations = async (req, res) => {
   const donations = await Donation.find({
     $or: [ {donor: req.user._id}, {claimer: req.user._id} ]

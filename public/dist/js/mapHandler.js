@@ -1,31 +1,46 @@
 /* eslint-disable no-undef */
 
 // findBusinesses function
-function findBusinesses(map) {
+async function findBusinesses(map) {
   //fetch request based on lat and lng
-  fetch('/api/business/all')
-  .then(res => {
-    let businesses;
-    if (!res.ok) {
-      const errorMessage = res.text();
-      throw new Error(errorMessage);
-    } else if (res.ok) {
-      businesses = res.json();
-      console.log(businesses);
-      // if response has something convert it to JSON
-      // else notify user that there are no businesses in their area
-    }
-  })
+  const res = await fetch('/api/business/all')
+  if (!res.ok) {
+    const errorMessage = res.text();
+    throw new Error(errorMessage);
+  }
+
+  const businesses = await res.json();
+  if (businesses.length === 0) {
+    console.log('Sorry. No businesses found.')
+    return;
+  }
+
+  function businessPreview(business) {
+    // grab modal
+    console.log(business);
+    // const html = ``;
+    // const businessInfo = document.createRange().createContextualFragment(html);
+    // append businessInfo to modal
+    //fetch the donations associated with the business id
+  }
 
   // if response containes businesses, map them
-  // create a coordinates array for each business
-  // add marker to map
-  //assign the business to marker.place
-  // return marker
+  const markers = businesses.map(business => {
+    // create a coordinates array for each business
+    const [businessLat, businessLng] = business.location.coordinates;
+    const position = { lat: businessLat, lng: businessLng };
+    // add marker to map
+    const marker = new google.maps.Marker({ map, position });
+    //assign the business to marker.place
+    marker.business = business;
+    return marker;
+  });
 
   // when someone clicks on a marker, get the details of that place
+  markers.forEach(marker => marker.addListener('click', function() {
+    businessPreview(this.business);
+  }));
   //call business preview, which renders a model view of the business
-  //fetch the donations associated with the business id
 };
 
 
@@ -39,10 +54,11 @@ function makeMap(mapContainer) {
       lat: parseFloat(mapContainer.dataset.lat),
       lng: parseFloat(mapContainer.dataset.lng),
     },
-    zoom: 10,
+    zoom: 14,
     mapTypeControl: false,
     streetViewControl: false,
   });
+  // create fridge marker
   findBusinesses(map);
 }
 

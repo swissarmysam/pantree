@@ -1,4 +1,6 @@
 extend dashboard
+include mixins/_navbarDashboard.pug
+include mixins/_donationTable.pug
 
 block  header
   +navbarDashboard()
@@ -14,63 +16,18 @@ block append content
         +overviewTile('Available', '6.9 kg', 'fruit-apple')
       if establishmentType === 'Fridge'
         #donations-map(data-lat=account.location.coordinates[0] data-lng=account.location.coordinates[1])
-      .card.has-table.has-mobile-sort-spaced
-        header.card-header
-          p.card-header-title Donations
-        .card-content
-          .b-table.has-pagination
-            .table-wrapper.has-mobile-cards
-              table.table.is-fullwidth.is-hoverable.is-fullwidth
-                thead
-                  tr
-                    th
-                    th Business
-                    th Donation contents
-                    th Weight
-                    th Distance
-                    th Expiry date
-                    th
-                tbody
-                  tr
-                    td.is-image-cell
-                      .image
-                        img.is-rounded(src='https://avatars.dicebear.com/v2/initials/rebecca-bauch.svg')
-                    td(data-label='Name') Rebecca Bauch
-                    td(data-label='Donation contents') Daugherty-Daniel
-                    td(data-label='Weight') South Cory
-                    td(data-label='Distance') 1.7 km
-                    td(data-label='Expiry date')
-                      small.has-text-grey.is-abbr-like(title='Oct 25, 2020') Oct 25, 2020
-                    td.is-actions-cell
-                      .buttons.is-right
-                        button.button.is-small.is-success(type='button') View
-                          //span.icon O
-                  tr
-                  tr
-                    td.is-image-cell
-                      .image
-                        img.is-rounded(src='https://avatars.dicebear.com/v2/initials/rebecca-bauch.svg')
-                    td(data-label='Name') Rebecca Bauch
-                    td(data-label='Donation contents') Daugherty-Daniel
-                    td(data-label='Weight') South Cory
-                    td(data-label='Distance') 1.7 km
-                    td(data-label='Expiry date')
-                      small.has-text-grey.is-abbr-like(title='Oct 25, 2020') Oct 25, 2020
-                    td.is-actions-cell
-                      .buttons.is-right
-                        button.button.is-small.is-success(type='button') View
-                          //span.icon O
-            .notification
-              .level
-                .level-left
-                  .level-item
-                    .buttons.has-addons
-                      button.button.is-active(type='button') 1
-                      button.button(type='button') 2
-                      button.button(type='button') 3
-                .level-right
-                  .level-item
-                    small Page 1 of 3
+        .modal
+          .modal-background
+          .modal-card
+            header.modal-card-head
+              p.modal-card-title Business Information
+              button.delete(aria-label="close")
+            section.modal-card-body
+            footer.modal-card-foot
+              button.button.is-success View Donation
+              button.button Close
+      +donationTable()
+
 
 block prepend scripts
     script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places`)

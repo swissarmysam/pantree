@@ -81,10 +81,7 @@ router.post('/donations/donation/add', donationController.addDonation);
 
 // TODO: NEED TO HANDLE WAY TO DISPLAY ALL DONATIONS BELONGING TO BUSINESS AND CLAIMED BY FRIDGE
 
-/*
-  API ENDPOINTS
-*/
-
+/** API ENDPOINTS */
 router.get('/api/donations/all', donationController.getAllDonations);
 router.get('/api/donations/:id/single', donationController.getSingleDonation);
 router.get('/api/donations/:id/owner', donationController.getAssociatedDonations);
