@@ -16,16 +16,73 @@ block append content
         +overviewTile('Available', '6.9 kg', 'fruit-apple')
       if establishmentType === 'Fridge'
         #donations-map(data-lat=account.location.coordinates[0] data-lng=account.location.coordinates[1])
-        .modal
+        .modal.has-align-items-center
           .modal-background
           .modal-card
-            header.modal-card-head
-              p.modal-card-title Business Information
-              button.delete(aria-label="close")
+            header.modal-card-head.has-background-white
+              p.modal-card-title.is-size-3.has-text-weight-bold.has-text-primary-dark McDonalds
+              button.delete.closeBtn(aria-label="close")
             section.modal-card-body
-            footer.modal-card-foot
-              button.button.is-success View Donation
-              button.button Close
+              label.has-text-weight-semibold.mb-1 Address
+              p.subtitle.is-5.has-text-grey(for="address") 20-24 Pittville St, Cheltenham GL52 2LJ
+              label.has-text-weight-semibold.mb-1 Donations from McDonalds
+              .box.my-3
+                .columns.is-vcentered
+                  .column.is-narrow.is-flex.is-justify-content-center
+                    .image.is-32x32
+                        img.is-rounded(src="https://eu.ui-avatars.com/api/?name=McDonalds")
+                  .column.devider-y.pr-5.has-text-centered-mobile
+                    p.title.is-6.my-1 Donation contents
+                    p.is-size-6.my-1  Pastries, vegetables, packaged food
+                  .column.is-narrow.pl-5.has-text-centered-mobile
+                    p.title.is-6.my-1 Weight
+                    p.is-size-6.my-1  2.3kg
+                  .column.is-narrow.has-text-centered-mobile
+                    p.title.is-6.my-1 Expiry date
+                    p.is-size-6.my-1  May 16, 2021
+                  .column.is-narrow.is-flex.is-justify-content-center
+                    a.button.is-link.is-small.is-hidden-mobile(href="#") View
+                    a.button.is-link.is-hidden-tablet(href="#") View Donation
+              label.has-text-weight-semibold Opening hours
+              .notification.mt-3
+                .columns.is-mobile
+                  .column.is-one-quarter-fullhd.is-one-third-desktop
+                    p.subtitle.is-6.has-text-grey Monday
+                  .column
+                    p.subtitle.is-6.has-text-grey 09:00 - 17:00
+                .columns.is-mobile
+                  .column.is-one-quarter-fullhd.is-one-third-desktop
+                    p.subtitle.is-6.has-text-grey Tuesday
+                  .column
+                    p.subtitle.is-6.has-text-grey 09:00 - 17:00
+                .columns.is-mobile
+                  .column.is-one-quarter-fullhd.is-one-third-desktop
+                    p.subtitle.is-6.has-text-grey Wednesday
+                  .column.is-mobile
+                    p.subtitle.is-6.has-text-grey 09:00 - 17:00
+                .columns.is-mobile
+                  .column.is-one-quarter-fullhd.is-one-third-desktop
+                    p.subtitle.is-6.has-text-grey Thursday
+                  .column
+                    p.subtitle.is-6.has-text-grey 09:00 - 17:00
+                .columns.is-mobile
+                  .column.is-one-quarter-fullhd.is-one-third-desktop
+                    p.subtitle.is-6.has-text-grey Friday
+                  .column
+                    p.subtitle.is-6.has-text-grey 09:00 - 17:00
+                .columns.is-mobile
+                  .column.is-one-quarter-fullhd.is-one-third-desktop
+                    p.subtitle.is-6.has-text-grey Saturday
+                  .column
+                    p.subtitle.is-6.has-text-grey closed
+                .columns.is-mobile
+                  .column.is-one-quarter-fullhd.is-one-third-desktop
+                    p.subtitle.is-6.has-text-grey Sunday
+                  .column
+                    p.subtitle.is-6.has-text-grey closed
+            footer.modal-card-foot.has-background-white
+              button.button.is-primary Get directions
+              button.button.is-primary.is-light.closeBtn Close
       +donationTable()
 
 

@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
-
+const modal = document.querySelector('.modal');
 // findBusinesses function
 async function findBusinesses(map) {
-  //fetch request based on lat and lng
-  const res = await fetch('/api/business/all')
+  // fetch request based on lat and lng
+  const res = await fetch('/api/business/all');
   if (!res.ok) {
     const errorMessage = res.text();
     throw new Error(errorMessage);
@@ -11,39 +11,48 @@ async function findBusinesses(map) {
 
   const businesses = await res.json();
   if (businesses.length === 0) {
-    console.log('Sorry. No businesses found.')
+    console.log('Sorry. No businesses found.');
     return;
   }
 
-  function businessPreview(business) {
-    // grab modal
+  function businessInfoModal(business) {
     console.log(business);
     // const html = ``;
     // const businessInfo = document.createRange().createContextualFragment(html);
     // append businessInfo to modal
-    //fetch the donations associated with the business id
+    // fetch the donations associated with the business id
+    modal.style.display = 'flex';
+    modal.style.position = 'fixed';
+    document.documentElement.classList.add('is-clipped');
   }
 
   // if response containes businesses, map them
-  const markers = businesses.map(business => {
+  const markers = businesses.map((business) => {
     // create a coordinates array for each business
     const [businessLat, businessLng] = business.location.coordinates;
     const position = { lat: businessLat, lng: businessLng };
     // add marker to map
     const marker = new google.maps.Marker({ map, position });
-    //assign the business to marker.place
+    // assign the business to marker.place
     marker.business = business;
     return marker;
   });
 
   // when someone clicks on a marker, get the details of that place
-  markers.forEach(marker => marker.addListener('click', function() {
-    businessPreview(this.business);
-  }));
-  //call business preview, which renders a model view of the business
-};
+  markers.forEach((marker) =>
+    marker.addListener('click', function () {
+      businessInfoModal(this.business);
+    })
+  );
+  // call business preview, which renders a model view of the business
+}
 
-
+// handler function that closes modal
+function handleModalClose(e) {
+  modal.style.display = 'none';
+  document.documentElement.classList.remove('is-clipped');
+  // remove all children of modal body
+}
 
 // google maps intialisation
 function makeMap(mapContainer) {
@@ -63,3 +72,6 @@ function makeMap(mapContainer) {
 }
 
 makeMap(document.querySelector('#donations-map'));
+document
+  .querySelectorAll('.closeBtn')
+  .forEach((btn) => btn.addEventListener('click', handleModalClose));

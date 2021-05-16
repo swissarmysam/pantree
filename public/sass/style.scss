@@ -38,16 +38,25 @@
 @import "partials/side-message";
 
 /* GLOBAL STYLES */
-
+.is-overflow-y-hidden {
+  overflow-y: hidden !important;
+}
 .is-full-height {
   min-height: 100vh !important;
   overflow-y: auto;
 }
-
+.devider-y {
+  border-right: 1px solid $grey-lighter;
+}
 .button {
   justify-content: center;
 }
 
 .mt-8 {
   margin-top: 4.5rem;
+}
+.is-round {
+  padding: 2rem !important;
+  border-radius: 50% !important;
+  width: 0 !important;
 }

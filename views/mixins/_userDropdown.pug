@@ -2,7 +2,8 @@ mixin userDropdown()
     .navbar-item.has-dropdown.has-dropdown-with-icons.has-divider.has-user-avatar.is-hoverable.has-text-dark
         a.navbar-link
             .is-user-avatar
-                img(src='https://avatars.dicebear.com/v2/initials/john-doe.svg' alt='John Doe')
+                img(src=`https://eu.ui-avatars.com/api/?name=${user.name.split(' ').join('+')}&bold=true&background=random`
+                alt='user-avatar')
             .is-user-name
             span= user.name
             span.icon

@@ -1,14 +1,18 @@
-.modal-card {
-  width: $modal-card-width;
-}
-
-.modal-card-foot {
-  background-color: $modal-card-foot-background-color;
-}
-
 @include mobile {
-  .modal .animation-content .modal-card {
+  .modal-card {
     width: $modal-card-width-mobile;
-    margin: 0 auto;
+    .devider-y {
+      border-right: none;
+    }
+  }
+}
+@include tablet {
+  .modal-card {
+    width: $modal-card-width-tablet;
+  }
+}
+@include desktop {
+  .modal-card {
+    width: $modal-card-width;
   }
 }

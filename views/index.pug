@@ -9,14 +9,10 @@ block prepend mainMenu
 
 block content
   section.hero.is-medium
-    .hero-body
-
+    .hero-body.is-flex.is-align-items-center
       .container.is-widescreen
-          .columns.is-vcentered
-            .column.is-half.is-hidden-desktop.my-6
-              img.hero-illustration(src="heroIllustration.svg")
-            .column.is-half
-
+          .columns.is-vcentered.is-align-items-center
+            .column
               p.title.is-2
                 | Reducing food waste!
               p.subtitle.is-5
@@ -26,10 +22,7 @@ block content
                 | At vero eos et accusam et justo duo dolores
               button.button.is-primary.is-large.is-hidden-touch Discover more
               button.button.is-primary.is-medium.is-hidden-desktop Discover more
-
-            .column.is-half.is-hidden-touch
-              img.hero-illustration(src="heroIllustration.svg")
-            .column.is-7.is-hidden-desktop
+            .column.is-three-fifths-fullhd
               img.hero-illustration(src="heroIllustration.svg")
   +sectionTitle('Our goals')
   .section.has-text-centered
@@ -50,7 +43,7 @@ block content
           'Raise Awareness & Educate',
           'We want to erase the negative stigma surrounding community fridges and make them a thing to be celebrated.'
         )
-  section.section
+  section.section.is-medium
     .container.is-widescreen
       .columns.is-vcentered
         .column.is-5
@@ -61,7 +54,50 @@ block content
             | we aim to offer a new life for this wasted food by giving it to community fridges.
           a.button.is-primary.is-medium.mt-5 Join us today!
         .column.is-6.is-offset-1
-          .box
-          .box
+          .box.is-vcentered.mb-6
+            .columns
+              .column.is-one-third.is-flex.is-justify-content-center
+                img.image(src="fridgeIcon.svg")
+              .column
+                p.title.is-5 Community Fridges
+                p.is-size-6
+                  | The pantree app allows fridge coordinators to manage and update information
+                  | on community fridges all in one place. Coordinators will have a secure way
+                  | to update their fridge space and keep track of incoming donations.
+          .box.is-vcentered
+            .columns
+              .column.is-one-third.is-flex.is-justify-content-center
+                img.image(src="businessIcon.svg")
+              .column
+                p.title.is-5 Local Business
+                p.is-size-6
+                  | Pantree allows local businesses to find and donate food items to community fridges.
+                  | Businesses will have an easy to use system to manage donations via weight and send
+                  | items on their way for a second chance.
+  section.section
+    .container.is-widescreen
+      figure.image.is-16by9
+        iframe( class="has-ratio" width='1182' height='665' src='https://www.youtube.com/embed/dyQ1F31_tBk'
+        title='YouTube video player' frameborder='0'
+        allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+        allowfullscreen='')
+  section.section.is-medium
+    +sectionTitle(`See what we're up to!`)
+    p.is-size-5.has-text-centered.mb-6
+      | Keep up to date with all that's going on with pantree!
+      br
+      | Follow us on Twitter, Facebook and Instagram.
+    .buttons.is-flex.is-justify-content-center
+      a.button.is-large.is-round.is-primary.is-light.mx-5.my-3(href="#")
+        span.icon
+          ion-icon(size="large" name="logo-twitter")
+      a.button.is-large.is-round.is-primary.is-light.mx-5.my-3(href="#")
+        span.icon
+          ion-icon(size="large" name="logo-facebook")
+      a.button.is-large.is-round.is-primary.is-light.mx-5.my-3(href="#")
+        span.icon
+          ion-icon(size="large" name="logo-instagram")
+
+
 
 

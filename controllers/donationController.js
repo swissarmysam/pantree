@@ -137,10 +137,13 @@ exports.removeDonation = async (req, res) => {
 const getNearbyDonations = async (user) => {
   // get fridge coordinates from signed in user
   const q = {
-    account: user
-  }
+    account: user,
+  };
   const fridge = await Fridge.findOne(q).select('location');
-  const coordinates = [fridge.location.coordinates[0], fridge.location.coordinates[1]].map(parseFloat);
+  const coordinates = [
+    fridge.location.coordinates[0],
+    fridge.location.coordinates[1],
+  ].map(parseFloat);
 
   // search for businesses within 20km radius of fridge
   const q2 = {
@@ -148,18 +151,19 @@ const getNearbyDonations = async (user) => {
       $near: {
         $geometry: {
           type: 'Point',
-          coordinates
+          coordinates,
         },
-        $maxDistance: 20000 // 20km
-      }
-    }
+        $maxDistance: 20000, // 20km
+      },
+    },
   };
   const nearbyBusinesses = await Business.find(q2).select('account');
 
   // get all donations which belong to those businesses and are NOT claimed
-  const q2 = {
-    $and: [{ donor: nearbyBusinesses.account }, { claimed: false }]
-  };
+  // UNCOMMENT @HRISTO
+  // const q2 = {
+  //   $and: [{ donor: nearbyBusinesses.account }, { claimed: false }]
+  // };
   const donations = await Donation.find(q3);
 
   // pass object to page
@@ -170,22 +174,22 @@ const getNearbyDonations = async (user) => {
 exports.getAllDonations = async (req, res) => {
   const donations = await Donation.find();
   res.json(donations);
-}
+};
 
 exports.getSingleDonation = async (req, res) => {
-  //query for
+  // query for
   const q = {
-    _id: req.params._id
+    _id: req.params._id,
   };
 
   const donation = await Donation.find(q);
   res.json(donation);
-}
+};
 
 // TODO: NEED TO HANDLE WAY TO DISPLAY ALL DONATIONS BELONGING TO BUSINESS AND CLAIMED BY FRIDGE
 exports.getAssociatedDonations = async (req, res) => {
   const donations = await Donation.find({
-    $or: [ {donor: req.user._id}, {claimer: req.user._id} ]
+    $or: [{ donor: req.user._id }, { claimer: req.user._id }],
   });
   res.json(donations);
-}
+};
