@@ -12,41 +12,81 @@ const Donation = mongoose.model('Donation');
 const Fridge = mongoose.model('Fridge');
 const Business = mongoose.model('Business');
 
-/** Display donations page and pass account ID */
-exports.dashboard = async (req, res) => {
+/** Set account cookie data */
+exports.setProfileCookies = async (req, res, next) => {
   const count = await Business.count({ account: req.user._id });
-  let account;
-  let donations;
-  let establishmentType;
 
   if (count > 0) {
-    account = await Business.findOne({ account: { $eq: req.user._id } });
-    establishmentType = 'Business';
+    const account = await Business.findOne({ account: { $eq: req.user._id } });
+    res.cookie('account', account, { maxAge: 86400000 }); // 24 hour cookie
+    res.cookie('establishmentType', 'Business', { maxAge: 86400000 });
   } else {
-    account = await Fridge.findOne({ account: { $eq: req.user._id } });
-    donations = getNearbyDonations(req.user._id);
-    establishmentType = 'Fridge';
+    const account = await Fridge.findOne({ account: { $eq: req.user._id } });
+    res.cookie('account', account, { maxAge: 86400000 }); // 24 hour cookie
+    const donations = getNearbyDonations(req.user._id);
+    res.cookie('donations', donations, { maxAge: 864000000 });
+    res.cookie('establishmentType', 'Fridge', { maxAge: 86400000 });
   }
+
+  next();
+}
+
+/** Display donations page and pass account ID */
+exports.dashboard = async (req, res) => {
 
   res.render('donations', {
     title: 'Donations',
     id: req.params._id,
-    account,
-    donations,
-    establishmentType,
+    account: req.cookies.account,
+    donations: req.cookies.donations,
+    estasblishmentType: req.cookies.establishmentType,
   });
 };
 
 exports.donationForm = (req, res) => {
-  res.render('donationForm', { title: 'Add Donation' });
+  res.render('addDonation', { title: 'Add Donation', account: req.cookies.account });
 };
 
 /** */
+exports.validateDonationForm = (req, res, next) => {
+  console.log('Hitting validate donation');
+  req.sanitizeBody('tags');
+  req.checkBody('tags', 'Some tags are required').notEmpty();
+  req.sanitizeBody('description');
+  req.checkBody('description', 'Please describe the contents of the donation').notEmpty();
+  req.checkBody('expiryDate').notEmpty();
+  req.sanitizeBody('expiryDate').toDate();
+  req.checkBody('weight').notEmpty().isDecimal({force_decimal: false, decimal_digits: '0,2'});
+  req.sanitizeBody('weight')
+  req.sanitizeBody('contact[name]');
+  req.checkBody('contact[email]').isEmail();
+  req.sanitizeBody('contact[email]').normalizeEmail({
+    gmail_remove_dots: false,
+    remove_extension: false,
+    gmail_remove_subaddress: false,
+  });
+  req.checkBody('contact[phoneNumber]').isMobilePhone();
+
+  // flash all validation errors on the register page
+  const errors = req.validationErrors();
+  if (errors) {
+    req.flash('error', errors.map(err => err.msg));
+    res.render('addDonation', {
+      title: 'Add Donation',
+      body: req.body,
+      flashes: req.flash(),
+    });
+    return; // stop the function from moving onto next()
+  }
+  next(); // move onto next step in route - move onto saving data otherwise flash errors
+}
+
+/** */
 exports.addDonation = async (req, res) => {
-  req.body.donor = req.user._id;
-  const newDonation = await new Donation(req.body).save();
-  req.flash('success', 'Thank you for adding a donation');
-  res.redirect(`/donations/donation/${req.donation._id}`);
+  req.body.donor = mongoose.Types.ObjectId(req.user._id);
+  const donation = await new Donation(req.body).save();
+  req.flash('success', 'Thank you for adding your donation');
+  return res.redirect(`/donations/donation/${req.donation._id}`);
 };
 
 /** */
@@ -101,11 +141,11 @@ exports.getDonation = async (req, res) => {
 exports.claimDonation = async (req, res) => {
   const updates = {
     claimer: req.user._id,
-    available: false,
+    claimed: false,
   };
   const claimDonation = await Donation.findOneAndUpdate(
     {
-      _id: req.params.donation,
+      _id: req.params.donation_id,
     },
     {
       $set: updates,
@@ -127,11 +167,32 @@ exports.claimDonation = async (req, res) => {
 /** */
 exports.removeDonation = async (req, res) => {
   const deletePromise = await Donation.findOneAndDelete({
-    _id: req.params.donation,
+    _id: req.params.donation_id,
   });
   req.flash('success', 'Donation has been removed.');
   res.redirect(`/donations/${req.user._id}`);
 };
+
+/**  */
+exports.markDonationAsCollect = async (req, res) => {
+  const update = {
+    collected: true,
+  }
+
+  const claimDonation = await Donation.findOneAndUpdate(
+    {
+      _id: req.params.donation_id,
+    },
+    {
+      $set: update,
+    },
+    {
+      new: true,
+      runValidators: true,
+      context: 'query',
+    }
+  ).exec();
+}
 
 /** */
 const getNearbyDonations = async (user) => {

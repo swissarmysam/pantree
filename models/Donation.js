@@ -10,29 +10,36 @@ mongoose.Promise = global.Promise;
 
 const donationSchema = new mongoose.Schema(
   {
-    id: String,
     donor: {
       type: mongoose.Schema.ObjectId,
-      ref: 'Business',
+      ref: 'Account',
       required: true,
     },
     claimer: {
       type: mongoose.Schema.ObjectId,
-      ref: 'Fridge',
+      ref: 'Account',
     },
     description: {
       type: String,
       trim: true,
       required: true,
     },
+    addedDate: {
+      type: Date,
+      default: Date.now,
+    },
     tags: [String],
     claimed: {
       type: Boolean,
       default: false,
     },
-    addedDate: {
-      type: Date,
-      default: Date.now,
+    collected: {
+      type: Boolean,
+      default: false,
+    },
+    expired: {
+      type: Boolean,
+      default: false,
     },
     expiryDate: {
       type: Date,
@@ -40,15 +47,18 @@ const donationSchema = new mongoose.Schema(
     weight: {
       type: Number,
     },
-    altContact: {
+    photo: String,
+    contact: {
       name: {
+        type: String,
+      },
+      email: {
         type: String,
       },
       phoneNumber: {
         type: Number,
       },
     },
-    photo: String,
   },
   {
     toJSON: { virtuals: true }, // serialize when JSON.stringify() is called
@@ -57,18 +67,6 @@ const donationSchema = new mongoose.Schema(
 );
 
 // Define the indexes for faster querying
-donationSchema.index({
-  name: 'text',
-  description: 'text',
-});
-
 donationSchema.index({ location: '2dsphere' });
-
-// find donations where the business _id property === donation donatee property
-donationSchema.virtual('reviews', {
-  ref: 'Business', // what model to link?
-  localField: '_id', // which field on the store?
-  foreignField: 'donor', // which field on the review?
-});
 
 module.exports = mongoose.model('Donation', donationSchema);

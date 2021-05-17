@@ -1,0 +1,46 @@
+mixin donationForm()
+    .columns.is-centered.is-vcentered.is-full-height.my-3
+        .column.is-three-quarters.is-half-widescreen
+            .card
+                .card-content
+                    form.container.is-max-desktop.donation-form(action="/donations/donation/add" method="POST")
+                        h3.title.is-3.form-title New donation
+                        hr
+                        .field
+                            label.label Donation contents
+                            .control
+                                input.input(type="tags" placeholder="add item" name='tags')
+                        .field
+                            .control
+                                textarea.textarea(placeholder="e.g. Hello world" name='description' required)
+                        .field
+                            label.label Expiry date
+                            .control
+                                input.input(type="date" id="start" name="expiryDate" required)
+                        label.label Weight
+                        .field
+                            p.control
+                                input.input(type='number' placeholder='0.0 kg' name="weight" required)
+                        hr
+                        .field
+                            label.label Contact name
+                            .control.has-icons-left
+                                input.input(type="text" value=user.name name='contact[name]' required)
+                                span.icon.is-small.is-left
+                                    ion-icon(src='/icons/user.svg')
+                        .field
+                            label.label Email
+                            .control.has-icons-left
+                                input.input(type="email" value=user.email name='contact[email]' required)
+                                span.icon.is-small.is-left
+                                    ion-icon(src='/icons/mail.svg')
+                        .field
+                            label.label Phone
+                            .control.has-icons-left
+                                input.input(type="tel" name='contact[phonenumber]')
+                                span.icon.is-small.is-left
+                                    ion-icon(src='/icons/phone.svg')
+                        hr
+                        .field
+                            .control
+                                button.button.is-medium.is-fullwidth.is-primary(type="submit") Submit

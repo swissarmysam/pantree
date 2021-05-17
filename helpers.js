@@ -37,7 +37,7 @@ exports.businessMenu = [
   [{ slug: '/donations', title: 'Food donations', icon: 'fruit-apple' }],
   [
     { slug: '/edit-info', title: 'Business info', icon: 'edit' },
-    { slug: '/add-donation', title: 'Add donation', icon: 'add-circle' },
+    { slug: '/donations/donation/add', title: 'Add donation', icon: 'add-circle' },
   ],
 ];
 

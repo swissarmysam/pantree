@@ -111,7 +111,7 @@ exports.setupForm = (req, res) => {
 /** Handler for setup form submission - save data to relevant collection with account ID association */
 exports.setup = async (req, res, next) => {
   // data to store in database comes from formSectionHandler.js
-  req.body.account = mongoose.Types.ObjectId(req.body.account); // get user ID from params and convert to Object ID for storage
+  req.body.account = mongoose.Types.ObjectId(req.params.id); // get user ID from params and convert to Object ID for storage
   if (req.body.type === 'Business') {
     const business = await new Business(req.body).save();
     updateProfileComplete(req.body.account);

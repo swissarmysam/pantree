@@ -53,6 +53,7 @@ router.post(
 router.get(
   '/donations/:id',
   authController.isLoggedIn,
+  donationController.setProfileCookies,
   donationController.dashboard
 );
 // display a single donation
@@ -71,13 +72,13 @@ router.post(
   '/donations/donation/:donation_id/remove',
   donationController.removeDonation
 );
-// show the donation form
+// show the donation form and handle data submissions
 router.get(
-  '/donations/donation/add',
+  '/donations/donation/add/:id',
   authController.isLoggedIn,
   donationController.donationForm
 );
-router.post('/donations/donation/add', donationController.addDonation);
+router.post('/donations/donation/add', donationController.validateDonationForm, donationController.addDonation);
 
 // TODO: NEED TO HANDLE WAY TO DISPLAY ALL DONATIONS BELONGING TO BUSINESS AND CLAIMED BY FRIDGE
 

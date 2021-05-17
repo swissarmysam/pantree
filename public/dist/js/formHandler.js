@@ -156,7 +156,7 @@ export function checkInputs(section) {
       field.classList.remove('is-danger');
     }
     // check if all fields are filled out
-    if (field.value === '') {
+    if (field.value === '' && field.required) {
       // if a field is empty apply error styling
       field.classList.add('is-danger');
       const fieldContainer = field.parentNode;
