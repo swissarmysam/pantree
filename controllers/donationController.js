@@ -51,17 +51,17 @@ exports.donationForm = (req, res) => {
 
 /** */
 exports.validateDonationForm = (req, res, next) => {
-  console.log(req);
+  // console.log(req);
   req.sanitizeBody('tags');
   req.checkBody('tags', 'Some tags are required').notEmpty();
   req.sanitizeBody('description');
   req
     .checkBody('description', 'Please describe the contents of the donation')
     .notEmpty();
-  req.checkBody('expiryDate').notEmpty();
+  req.checkBody('expiryDate', 'Please enter a date').notEmpty();
   req.sanitizeBody('expiryDate').toDate();
   req
-    .checkBody('weight')
+    .checkBody('weight', 'Please enter a weight as a decimal')
     .notEmpty()
     .isDecimal({ force_decimal: false, decimal_digits: '0,2' });
   req.sanitizeBody('weight');
@@ -72,17 +72,17 @@ exports.validateDonationForm = (req, res, next) => {
     remove_extension: false,
     gmail_remove_subaddress: false,
   });
-  req.checkBody('contact[phoneNumber]').isMobilePhone();
+  // req
+  //   .checkBody('contact[phoneNumber]', 'Please enter a valid mobile number')
+  //   .isMobilePhone();
 
   // flash all validation errors on the register page
   const errors = req.validationErrors();
   if (errors) {
-    req.flash(
-      'error',
-      errors.map((err) => err.msg)
-    );
-    res.render('error', {
+    req.flash('error', errors.map(err => err.msg));
+    res.render('addDonation', {
       title: 'Add Donation',
+      account: req.cookies.account,
       body: req.body,
       flashes: req.flash(),
     });
@@ -95,8 +95,9 @@ exports.validateDonationForm = (req, res, next) => {
 exports.addDonation = async (req, res) => {
   req.body.donor = req.user._id;
   const donation = await new Donation(req.body).save();
+  console.log(req);
   req.flash('success', 'Thank you for adding your donation');
-  return res.redirect(`/donations/donation/${req.donation._id}`);
+  // res.redirect(`/donations/donation/${req.donation._id}`);
 };
 
 /** */
@@ -205,7 +206,7 @@ exports.markDonationAsCollect = async (req, res) => {
 };
 
 /** */
-const getNearbyDonations = async (user) => {
+const getNearbyDonations = async user => {
   // get fridge coordinates from signed in user
   const q = {
     account: user,
