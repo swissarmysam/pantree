@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /**
  * Application Routes
  */
@@ -78,7 +79,11 @@ router.get(
   authController.isLoggedIn,
   donationController.donationForm
 );
-router.post('/donations/donation/add', donationController.validateDonationForm, donationController.addDonation);
+router.post(
+  '/donations/donation/add/:id',
+  donationController.validateDonationForm,
+  donationController.addDonation
+);
 
 // TODO: NEED TO HANDLE WAY TO DISPLAY ALL DONATIONS BELONGING TO BUSINESS AND CLAIMED BY FRIDGE
 

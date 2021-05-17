@@ -3,7 +3,7 @@ mixin donationForm()
         .column.is-three-quarters.is-half-widescreen
             .card
                 .card-content
-                    form.container.is-max-desktop.donation-form(action="/donations/donation/add" method="POST")
+                    form.container.is-max-desktop.donation-form(action=`/donations/donation/add/${user.id}` method="POST")
                         h3.title.is-3.form-title New donation
                         hr
                         .field

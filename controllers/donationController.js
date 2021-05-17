@@ -29,11 +29,10 @@ exports.setProfileCookies = async (req, res, next) => {
   }
 
   next();
-}
+};
 
 /** Display donations page and pass account ID */
 exports.dashboard = async (req, res) => {
-
   res.render('donations', {
     title: 'Donations',
     id: req.params._id,
@@ -44,20 +43,28 @@ exports.dashboard = async (req, res) => {
 };
 
 exports.donationForm = (req, res) => {
-  res.render('addDonation', { title: 'Add Donation', account: req.cookies.account });
+  res.render('addDonation', {
+    title: 'Add Donation',
+    account: req.cookies.account,
+  });
 };
 
 /** */
 exports.validateDonationForm = (req, res, next) => {
-  console.log('Hitting validate donation');
+  console.log(req);
   req.sanitizeBody('tags');
   req.checkBody('tags', 'Some tags are required').notEmpty();
   req.sanitizeBody('description');
-  req.checkBody('description', 'Please describe the contents of the donation').notEmpty();
+  req
+    .checkBody('description', 'Please describe the contents of the donation')
+    .notEmpty();
   req.checkBody('expiryDate').notEmpty();
   req.sanitizeBody('expiryDate').toDate();
-  req.checkBody('weight').notEmpty().isDecimal({force_decimal: false, decimal_digits: '0,2'});
-  req.sanitizeBody('weight')
+  req
+    .checkBody('weight')
+    .notEmpty()
+    .isDecimal({ force_decimal: false, decimal_digits: '0,2' });
+  req.sanitizeBody('weight');
   req.sanitizeBody('contact[name]');
   req.checkBody('contact[email]').isEmail();
   req.sanitizeBody('contact[email]').normalizeEmail({
@@ -70,8 +77,11 @@ exports.validateDonationForm = (req, res, next) => {
   // flash all validation errors on the register page
   const errors = req.validationErrors();
   if (errors) {
-    req.flash('error', errors.map(err => err.msg));
-    res.render('addDonation', {
+    req.flash(
+      'error',
+      errors.map((err) => err.msg)
+    );
+    res.render('error', {
       title: 'Add Donation',
       body: req.body,
       flashes: req.flash(),
@@ -79,11 +89,11 @@ exports.validateDonationForm = (req, res, next) => {
     return; // stop the function from moving onto next()
   }
   next(); // move onto next step in route - move onto saving data otherwise flash errors
-}
+};
 
 /** */
 exports.addDonation = async (req, res) => {
-  req.body.donor = mongoose.Types.ObjectId(req.user._id);
+  req.body.donor = req.user._id;
   const donation = await new Donation(req.body).save();
   req.flash('success', 'Thank you for adding your donation');
   return res.redirect(`/donations/donation/${req.donation._id}`);
@@ -177,7 +187,7 @@ exports.removeDonation = async (req, res) => {
 exports.markDonationAsCollect = async (req, res) => {
   const update = {
     collected: true,
-  }
+  };
 
   const claimDonation = await Donation.findOneAndUpdate(
     {
@@ -192,7 +202,7 @@ exports.markDonationAsCollect = async (req, res) => {
       context: 'query',
     }
   ).exec();
-}
+};
 
 /** */
 const getNearbyDonations = async (user) => {
