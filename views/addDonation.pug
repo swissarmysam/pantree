@@ -3,8 +3,11 @@ extend dashboard
 include mixins/_navbarDashboard.pug
 include mixins/_donationForm.pug
 
-block  header
-  +navbarDashboard()
+block append additionalScripts
+    script(type='text/javascript' src='https://upload-widget.cloudinary.com/global/all.js')
+
+block header
+    +navbarDashboard()
 
 block prepend content
     - var view = '/donations/donation/add'
@@ -14,3 +17,4 @@ block append content
 block prepend scripts
     script(src="https://cdn.jsdelivr.net/npm/@creativebulma/bulma-tagsinput@1.0.3/dist/js/bulma-tagsinput.min.js")
     script(type="module" src="/dist/js/donationFormHandler.js")
+    script(src='/dist/js/uploadWidget.js')

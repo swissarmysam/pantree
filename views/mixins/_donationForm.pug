@@ -14,6 +14,9 @@ mixin donationForm()
                             .control
                                 textarea.textarea(placeholder="e.g. Hello world" name='description' required)
                         .field
+                            .control 
+                                button.button.is-medium.is-fullwidth.is-info(id='donationUploadBtn') Add Image
+                        .field
                             label.label Expiry date
                             .control
                                 input.input(type="date" id="start" name="expiryDate" required)
@@ -43,4 +46,4 @@ mixin donationForm()
                         hr
                         .field
                             .control
-                                button.button.is-medium.is-fullwidth.is-primary(type="submit") Submit
+                                button.button.is-medium.is-fullwidth.is-primary(id='submitBtn' type="submit") Submit
