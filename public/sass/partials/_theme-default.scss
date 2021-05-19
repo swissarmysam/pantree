@@ -102,3 +102,14 @@ $progress-bar-background-color: $grey-lighter;
 /* Icon: specifics */
 $icon-update-mark-size: $size-base * 0.5;
 $icon-update-mark-color: $yellow;
+// Hamburgers variables
+$hamburger-padding-x: 1.5rem;
+$hamburger-padding-y: 4.5px;
+$hamburger-layer-width: 24px;
+$hamburger-layer-height: 2px;
+$hamburger-layer-spacing: 4px;
+$hamburger-layer-color: $white;
+$hamburger-layer-border-radius: 1px;
+$hamburger-hover-opacity: 0.7;
+$hamburger-active-layer-color: $hamburger-layer-color;
+$hamburger-active-hover-opacity: $hamburger-hover-opacity;

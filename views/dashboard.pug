@@ -15,6 +15,7 @@ block content
       ul.menu-list
         - var menu = establishmentType === 'Fridge' ? h.coordinatorMenu[0] : h.businessMenu[0]
         - var quickActions = establishmentType === 'Fridge' ? h.coordinatorMenu[1] : h.businessMenu[1]
+        - console.log(establishmentType)
         each item, index in menu
           li
             a.has-icon.is-flex.is-align-items-center(href=`${item.slug}/${user.id}` class=(view === item.slug ? "is-active" : undefined))
@@ -29,12 +30,25 @@ block content
               span.icon.is-small.is-left
                 ion-icon(src=`/icons/${item.icon}.svg`)
               span.menu-item-label.has-text-weight-semibold #{item.title}
+        li.is-hidden-desktop
+          a.has-icon.is-flex.is-align-items-center(href="/account")
+            span.icon.is-small.is-left
+              ion-icon(src=`/icons/user.svg`)
+            span.menu-item-label.has-text-weight-semibold My Profile
+        hr.is-hidden-desktop
+        li.is-hidden-desktop
+          a.has-icon.is-flex.is-align-items-center(href="/logout")
+            span.icon.is-small.is-left
+              ion-icon(src=`/icons/signout.svg`)
+            span.menu-item-label.has-text-weight-semibold Sign Out
   section.section.is-title-bar
     .level
       .level-left
         .level-item
           ul
             li.title.is-size-2 #{title}
+block prepend scripts
+    script(src="/dist/js/dashboardMenu.js")
 
 
 
