@@ -1,7 +1,12 @@
 include _userDropdown.pug
 mixin navbarDashboard ()
     nav.navbar.is-fixed-top.is-primary(role='navigation', aria-label='main navigation')
-        .navbar-item.has-text-weight-semibold.is-size-5.has-text-white #{account.establishmentName}
+        .navbar-brand
+            button.navbar-item.is-hidden-desktop.aside-mobile-toggle.hamburger.hamburger--arrow(type='button' aria-label='Menu' aria-controls='navigation')
+                span.hamburger-box
+                    span.hamburger-inner
+
+            .navbar-item.has-text-weight-semibold.is-size-5.has-text-white.is-hidden-mobile #{account.establishmentName}
         .navbar-menu
             .navbar-end
                 +userDropdown()

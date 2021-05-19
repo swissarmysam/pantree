@@ -8,12 +8,12 @@ mixin userDropdown()
             span= user.name
             span.icon
         .navbar-dropdown
-            a.navbar-item(href="/account" )
+            a.navbar-item(href="/account")
                 span.icon
-                    i
+                    ion-icon(src='/icons/user.svg')
                 span My Profile
             hr.navbar-divider
             a.navbar-item(href="/logout" )
                 span.icon
-                    i
-                span Log Out
+                    ion-icon(src='/icons/signout.svg')
+                span Sign Out

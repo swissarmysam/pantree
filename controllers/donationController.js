@@ -27,18 +27,18 @@ exports.setProfileCookies = async (req, res, next) => {
     res.cookie('donations', donations, { maxAge: 864000000 });
     res.cookie('establishmentType', 'Fridge', { maxAge: 86400000 });
   }
-
   next();
 };
 
 /** Display donations page and pass account ID */
 exports.dashboard = async (req, res) => {
+  console.log(req.cookies);
   res.render('donations', {
     title: 'Donations',
     id: req.params._id,
     account: req.cookies.account,
+    establishmentType: req.cookies.establishmentType,
     donations: req.cookies.donations,
-    estasblishmentType: req.cookies.establishmentType,
   });
 };
 
@@ -100,7 +100,7 @@ exports.addDonation = async (req, res) => {
   req.body.donor = req.user._id;
   const donation = await new Donation(req.body).save();
   req.flash('success', 'Thank you for adding your donation');
-  res.redirect(`/donations/donation/${donation._id}`);
+  res.redirect(`/donations/${req.body.donor}`);
 };
 
 /** */
@@ -239,10 +239,10 @@ const getNearbyDonations = async (user) => {
   // const q2 = {
   //   $and: [{ donor: nearbyBusinesses.account }, { claimed: false }]
   // };
-  const donations = await Donation.find(q3);
+  // const donations = await Donation.find(q3);
 
   // pass object to page
-  res.json(donations);
+  // res.json(donations);
 };
 
 /** API endpoints */

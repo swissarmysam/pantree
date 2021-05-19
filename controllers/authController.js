@@ -29,7 +29,7 @@ exports.login = (req, res, next) => {
       return;
     }
     // if user passes authentication ...
-    req.logIn(user, err => {
+    req.logIn(user, (err) => {
       if (err) {
         // errors from above are passed here and message displayed
         req.flash('error', 'Something went wrong.');
@@ -49,6 +49,10 @@ exports.login = (req, res, next) => {
 
 /** Log the user out and end the active session */
 exports.logout = (req, res) => {
+  res.clearCookie('establishmentType');
+  res.clearCookie('account');
+  res.clearCookie('donations');
+  res.clearCookie('profesh');
   req.logout(); // end session
   req.flash('success', 'You are now logged out!');
   res.redirect('/'); // redirect to the home page
@@ -60,7 +64,7 @@ exports.notLoggedIn = (req, res, next) => {
     next(); // allow to proceed to requested page
     return;
   }
-  res.redirect(`/donations/${req.account._id}`); // redirect logged in users back to the dashboard
+  res.redirect(`/donations/${req.user._id}`); // redirect logged in users back to the dashboard
 };
 
 /** Check that the user is logged in otherwise prompt login */
@@ -97,9 +101,7 @@ exports.forgot = async (req, res) => {
   account.resetPasswordExpires = Date.now() + 3600000; // set to expire in an hour from creation time
   await account.save(); // save to Account collection
   // send them an email with the token
-  const resetURL = `http://${req.headers.host}/account/reset/${
-    account.resetPasswordToken
-  }`;
+  const resetURL = `http://${req.headers.host}/account/reset/${account.resetPasswordToken}`;
   await mail.send({
     account,
     filename: 'passwordReset', // from ./view/email folder

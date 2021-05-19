@@ -34,7 +34,10 @@ exports.validateRegister = (req, res, next) => {
     gmail_remove_subaddress: false,
   });
   // ensure password is at least 8 characters
-  req.checkBody('password', 'Minimum password length is 8 characters').notEmpty().isLength({ min: 8 });
+  req
+    .checkBody('password', 'Minimum password length is 8 characters')
+    .notEmpty()
+    .isLength({ min: 8 });
   // check that confirmed password field has a length ...
   req
     .checkBody('password-confirm', 'Confirmed password cannot be blank!')
@@ -47,7 +50,10 @@ exports.validateRegister = (req, res, next) => {
   // flash all validation errors on the register page
   const errors = req.validationErrors();
   if (errors) {
-    req.flash('error', errors.map(err => err.msg));
+    req.flash(
+      'error',
+      errors.map((err) => err.msg)
+    );
     res.render('register', {
       title: 'Register',
       body: req.body,
@@ -87,15 +93,19 @@ exports.updateAccount = async (req, res) => {
   };
 
   // find record in collection from session id and update based on req.body input
-  const account = await Account.findOneAndUpdate({
-    _id: req.account._id,
-  }, {
-    $set: updates,
-  }, {
-    new: true,
-    runValidators: true,
-    context: 'query',
-  });
+  const account = await Account.findOneAndUpdate(
+    {
+      _id: req.user._id,
+    },
+    {
+      $set: updates,
+    },
+    {
+      new: true,
+      runValidators: true,
+      context: 'query',
+    }
+  );
   req.flash('success', 'Profile has been updated.'); // display a success message
   res.redirect('back'); // reload the page
 };
@@ -109,9 +119,9 @@ exports.setupForm = (req, res) => {
 };
 
 /** Handler for setup form submission - save data to relevant collection with account ID association */
-exports.setup = async (req, res, next) => {
+exports.setup = async (req, res) => {
   // data to store in database comes from formSectionHandler.js
-  req.body.account = mongoose.Types.ObjectId(req.params.id); // get user ID from params and convert to Object ID for storage
+  req.body.account = mongoose.Types.ObjectId(req.body.account); // get user ID from params and convert to Object ID for storage
   if (req.body.type === 'Business') {
     const business = await new Business(req.body).save();
     updateProfileComplete(req.body.account);
@@ -120,48 +130,55 @@ exports.setup = async (req, res, next) => {
     updateProfileComplete(req.body.account);
   }
   res.sendStatus(200);
-}
+};
 
 /** Update the profileCompleted prop in Account collection to stop setup form being shown */
 const updateProfileComplete = async (account) => {
   const update = {
-    profileCompleted: true
-  }
-  const profile = await Account.findOneAndUpdate({
-    _id: account,
-  }, {
-    $set: update,
-  }).exec();
-}
+    profileCompleted: true,
+  };
+  const profile = await Account.findOneAndUpdate(
+    {
+      _id: account,
+    },
+    {
+      $set: update,
+    }
+  ).exec();
+};
 
 /** API endpoint for all businesses/fridges */
 exports.getAllBusinesses = async (req, res) => {
-  const businesses = await Business.find().select('establishmentName location openingHours');
+  const businesses = await Business.find().select(
+    'establishmentName location openingHours'
+  );
   res.json(businesses);
-}
+};
 
 exports.getAllFridges = async (req, res) => {
   const fridges = await Fridge.find().select('establishmentName location');
   res.json(fridges);
-}
+};
 
 /** API endpoint for single business/fridge */
 exports.getSingleBusiness = async (req, res) => {
-  //query for
+  // query for
   const q = {
-    account: req.params._id
+    account: req.params._id,
   };
 
-  const business = await Business.find(q).select('establishmentName location openingHours');
+  const business = await Business.find(q).select(
+    'establishmentName location openingHours'
+  );
   res.json(business);
-}
+};
 
 exports.getSingleFridge = async (req, res) => {
-  //query for
+  // query for
   const q = {
-    account: req.params._id
+    account: req.params._id,
   };
 
   const fridge = await Fridge.find(q).select('establishmentName location');
   res.json(fridge);
-}
+};

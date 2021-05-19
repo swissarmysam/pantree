@@ -98,7 +98,7 @@ aside.aside {
 }
 
 @include touch {
-  #app,
+  .section,
   nav.navbar {
     @include transition(margin-left);
   }
@@ -113,7 +113,7 @@ aside.aside {
       overflow-x: hidden;
     }
     body,
-    #app,
+    .section,
     nav.navbar {
       width: 100vw;
     }
@@ -145,7 +145,7 @@ aside.aside {
     }
   }
   html.has-aside-mobile-expanded {
-    #app,
+    .section,
     nav.navbar {
       margin-left: $aside-mobile-width;
     }

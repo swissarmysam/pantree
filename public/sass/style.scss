@@ -32,6 +32,7 @@
 @import "partials/_icons";
 @import "partials/_map";
 @import "partials/_tags";
+@import "partials/_hamburger";
 
 /* Own partials */
 @import "partials/_flashes";
@@ -39,6 +40,14 @@
 @import "partials/side-message";
 
 /* GLOBAL STYLES */
+.input {
+  height: auto !important;
+}
+.field.has-addons {
+  button.is-static {
+    height: auto !important;
+  }
+}
 .is-overflow-y-hidden {
   overflow-y: hidden !important;
 }

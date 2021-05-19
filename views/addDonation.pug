@@ -9,7 +9,8 @@ block  header
 block prepend content
     - var view = '/donations/donation/add'
 block append content
-    +donationForm()
+    .section
+        +donationForm()
 
 block prepend scripts
     script(src="https://cdn.jsdelivr.net/npm/@creativebulma/bulma-tagsinput@1.0.3/dist/js/bulma-tagsinput.min.js")

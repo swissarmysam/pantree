@@ -1,26 +1,32 @@
 mixin donationForm()
-    .columns.is-centered.is-vcentered.is-full-height.my-3
-        .column.is-three-quarters.is-half-widescreen
+    .columns.is-centered.is-vcentered.is-full-height
+        .column.is-full-touch.is-three-quarters-desktop.is-half-widescreen
             .card
                 .card-content
                     form.container.is-max-desktop.donation-form(action=`/donations/donation/add/${user.id}` method="POST")
-                        h3.title.is-3.form-title New donation
+                        h3.title.is-3.form-title Donation
                         hr
+                        label.label Donation contents
+                        p.help give a general overview of items in donation, e.g tommatoes, onions
+                        .field.has-addons
+                            p.control.is-expanded
+                                input.input.donation-overview(type="tags" placeholder="add item" data-max-chars="15" name='tags')
+                            p.control
+                                a.button.is-medium.is-primary.is-link.add-tag() Add
                         .field
-                            label.label Donation contents
                             .control
-                                input.input(type="tags" placeholder="add item" name='tags')
-                        .field
-                            .control
-                                textarea.textarea(placeholder="e.g. Hello world" name='description' required)
+                                textarea.textarea(placeholder="Include the quantities of items in donation, as well as any information you think might be helpful." name='description' required)
                         .field
                             label.label Expiry date
+                            p.help For donations containing multiple expiry dates provide the closest one.
                             .control
                                 input.input(type="date" id="start" name="expiryDate" required)
-                        label.label Weight
-                        .field
+                        label.label Approximate weight
+                        .field.has-addons
+                            p.control.is-expanded
+                                input.input(type='number' step="0.01" placeholder='0.0' name="weight" required)
                             p.control
-                                input.input(type='number' placeholder='0.0 kg' name="weight" required)
+                                button.button.is-static kg
                         hr
                         .field
                             label.label Contact name
@@ -37,10 +43,13 @@ mixin donationForm()
                         .field
                             label.label Phone
                             .control.has-icons-left
-                                input.input(type="text" name='contact[phoneNumber]')
+                                input.input(type="text" name='contact[phoneNumber]' placeholder='0000-000-0000')
                                 span.icon.is-small.is-left
                                     ion-icon(src='/icons/phone.svg')
+                        .field
+                            input(class="mr-2" type="checkbox" required)
+                            span I confirm that all items are within their use-by date and packaged food items are unopened.
                         hr
                         .field
                             .control
-                                button.button.is-medium.is-fullwidth.is-primary(type="submit") Submit
+                                button.button.is-medium.is-fullwidth.is-primary.submit Submit
