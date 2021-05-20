@@ -151,19 +151,14 @@ export function checkInputs(section) {
   let redirect = true;
   section.querySelectorAll('[name]').forEach((field) => {
     // remove all error styling applied to inputs from previous invocation of the function
-    if (field.parentNode.nextSibling != null) {
-      field.parentNode.nextSibling.remove();
+    if (field.classList.contains('is-danger')) {
       field.classList.remove('is-danger');
     }
     // check if all fields are filled out
     if (field.value === '' && field.required) {
       // if a field is empty apply error styling
+      console.log(field);
       field.classList.add('is-danger');
-      const fieldContainer = field.parentNode;
-      const warning = document.createElement('p');
-      warning.classList.add('help', 'is-danger', 'is-size-6');
-      warning.textContent = 'This field is required.';
-      fieldContainer.insertAdjacentElement('afterend', warning);
       // if a field is empty set redirect to false
       // this stops the user being redirected to the next section
       redirect = false;

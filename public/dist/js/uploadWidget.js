@@ -26,6 +26,21 @@ function showUploadWidget(folderName) {
         },
       },
       styles: {
+        palette: {
+          window: '#FFFFFF',
+          windowBorder: '#DBDBDB',
+          tabIcon: '#3273DC',
+          menuIcons: '#3273DC',
+          textDark: '#38373A',
+          textLight: '#FFFFFF',
+          link: '#3273DC',
+          action: '#3273DC',
+          inactiveTabIcon: '#38373A',
+          error: '#F04770',
+          inProgress: '#3273DC',
+          complete: '#4FC9CE',
+          sourceBg: '#FDFDFD',
+        },
         fonts: {
           "'Lato', sans-serif":
             'https://fonts.googleapis.com/css2?family=Lato&display=swap',

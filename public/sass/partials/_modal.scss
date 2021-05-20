@@ -1,8 +1,10 @@
 @include mobile {
   .modal-card {
     width: $modal-card-width-mobile;
-    .devider-y {
+    .devider-l,
+    .devider-r {
       border-right: none;
+      border-left: none;
     }
   }
 }

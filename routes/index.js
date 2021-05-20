@@ -84,7 +84,12 @@ router.post(
   donationController.validateDonationForm,
   donationController.addDonation
 );
-
+// show the edit establishment form and handle data submissions
+router.get(
+  '/edit-establishment/:id',
+  authController.isLoggedIn,
+  accountController.editEstablishmentForm
+)
 // TODO: NEED TO HANDLE WAY TO DISPLAY ALL DONATIONS BELONGING TO BUSINESS AND CLAIMED BY FRIDGE
 
 /** API ENDPOINTS */

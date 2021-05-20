@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /*
   This is a file of data and helper functions that we can expose and use in our templating function
 */
@@ -30,14 +31,18 @@ exports.coordinatorMenu = [
     { slug: '/donations', title: 'Food donations', icon: 'fruit-apple' },
     { slug: '/presskit', title: 'Presskit', icon: 'post' },
   ],
-  [{ slug: '/edit-info', title: 'Fridge info', icon: 'edit' }],
+  [
+    { slug: '/donations/manage', title: 'Claimed donations', icon: 'box' },
+    { slug: '/edit-establishment', title: 'Fridge info', icon: 'edit' },
+  ]
 ];
 
 exports.businessMenu = [
   [{ slug: '/donations', title: 'Food donations', icon: 'fruit-apple' }],
   [
-    { slug: '/edit-info', title: 'Business info', icon: 'edit' },
     { slug: '/donations/donation/add', title: 'Add donation', icon: 'add-circle' },
+    { slug: '/donations/manage', title: 'Manage donations', icon: 'box' },
+    { slug: '/edit-establishment', title: 'Business info', icon: 'edit' },
   ],
 ];
 
