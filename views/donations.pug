@@ -7,7 +7,6 @@ block  header
 
 block prepend content
   - var view = '/donations'
-  -var title = "Food donations"
 block append content
     section.section.is-main-section
       .tile.is-ancestor
@@ -19,67 +18,40 @@ block append content
         .modal.has-align-items-center
           .modal-background
           .modal-card
-            header.modal-card-head.has-background-white
-              p.modal-card-title.is-size-3.has-text-weight-bold.has-text-primary-dark McDonalds
+            header.modal-card-head.has-background-primary
+              p.modal-card-title.is-size-3.has-text-weight-bold.has-text-white
               button.delete.closeBtn(aria-label="close")
-            section.modal-card-body
-              label.has-text-weight-semibold.mb-1 Address
-              p.subtitle.is-5.has-text-grey(for="address") 20-24 Pittville St, Cheltenham GL52 2LJ
-              label.has-text-weight-semibold.mb-1 Donations from McDonalds
+            section.modal-card-body.pb-0
+              label.has-text-weight-semibold.mb-2
+                span.icon.is-small.mr-2
+                  ion-icon(src=`/icons/location-pin.svg`)
+                span Address
+              p.subtitle.is-5.has-text-grey.establishment-address
+              label.has-text-weight-semibold.mb-2.is-flex.is-align-items-center
+                span.icon.is-small.mr-2
+                  ion-icon(src=`/icons/box.svg`)
+                span.donor-name
               .box.my-3
                 .columns.is-vcentered
                   .column.is-narrow.is-flex.is-justify-content-center
                     .image.is-32x32
                         img.is-rounded(src="https://eu.ui-avatars.com/api/?name=McDonalds")
-                  .column.devider-y.pr-5.has-text-centered-mobile
+                  .column.has-text-centered-mobile
                     p.title.is-6.my-1 Donation contents
                     p.is-size-6.my-1  Pastries, vegetables, packaged food
-                  .column.is-narrow.pl-5.has-text-centered-mobile
+                  .column.is-narrow.has-text-centered-mobile.devider-l.pl-5
                     p.title.is-6.my-1 Weight
                     p.is-size-6.my-1  2.3kg
-                  .column.is-narrow.has-text-centered-mobile
+                  .column.is-narrow.has-text-centered-mobile.devider-r.pr-5
                     p.title.is-6.my-1 Expiry date
                     p.is-size-6.my-1  May 16, 2021
-                  .column.is-narrow.is-flex.is-justify-content-center
-                    a.button.is-link.is-small.is-hidden-mobile(href="#") View
+                  .column.is-narrow.is-flex.is-justify-content-center.pl-4
+                    a.is-link.is-hidden-mobile(href="#") View
                     a.button.is-link.is-hidden-tablet(href="#") View Donation
-              label.has-text-weight-semibold Opening hours
-              .notification.mt-3
-                .columns.is-mobile
-                  .column.is-one-quarter-fullhd.is-one-third-desktop
-                    p.subtitle.is-6.has-text-grey Monday
-                  .column
-                    p.subtitle.is-6.has-text-grey 09:00 - 17:00
-                .columns.is-mobile
-                  .column.is-one-quarter-fullhd.is-one-third-desktop
-                    p.subtitle.is-6.has-text-grey Tuesday
-                  .column
-                    p.subtitle.is-6.has-text-grey 09:00 - 17:00
-                .columns.is-mobile
-                  .column.is-one-quarter-fullhd.is-one-third-desktop
-                    p.subtitle.is-6.has-text-grey Wednesday
-                  .column.is-mobile
-                    p.subtitle.is-6.has-text-grey 09:00 - 17:00
-                .columns.is-mobile
-                  .column.is-one-quarter-fullhd.is-one-third-desktop
-                    p.subtitle.is-6.has-text-grey Thursday
-                  .column
-                    p.subtitle.is-6.has-text-grey 09:00 - 17:00
-                .columns.is-mobile
-                  .column.is-one-quarter-fullhd.is-one-third-desktop
-                    p.subtitle.is-6.has-text-grey Friday
-                  .column
-                    p.subtitle.is-6.has-text-grey 09:00 - 17:00
-                .columns.is-mobile
-                  .column.is-one-quarter-fullhd.is-one-third-desktop
-                    p.subtitle.is-6.has-text-grey Saturday
-                  .column
-                    p.subtitle.is-6.has-text-grey closed
-                .columns.is-mobile
-                  .column.is-one-quarter-fullhd.is-one-third-desktop
-                    p.subtitle.is-6.has-text-grey Sunday
-                  .column
-                    p.subtitle.is-6.has-text-grey closed
+              label.has-text-weight-semibold.mb-2.is-flex.is-align-items-center
+                span.icon.is-small.mr-2
+                  ion-icon(src=`/icons/clock.svg`)
+                span Opening hours
             footer.modal-card-foot.has-background-white
               button.button.is-primary Get directions
               button.button.is-primary.is-light.closeBtn Close
@@ -89,5 +61,5 @@ block append content
 block prepend scripts
     script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places`)
     script(type="module" src="/dist/js/mapHandler.js")
-    
+
 

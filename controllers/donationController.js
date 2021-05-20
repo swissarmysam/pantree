@@ -32,7 +32,6 @@ exports.setProfileCookies = async (req, res, next) => {
 
 /** Display donations page and pass account ID */
 exports.dashboard = async (req, res) => {
-  console.log(req.cookies);
   res.render('donations', {
     title: 'Donations',
     id: req.params._id,

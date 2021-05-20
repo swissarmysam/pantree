@@ -55,7 +55,10 @@
   min-height: 100vh !important;
   overflow-y: auto;
 }
-.devider-y {
+.devider-l {
+  border-left: 1px solid $grey-lighter;
+}
+.devider-r {
   border-right: 1px solid $grey-lighter;
 }
 .button {

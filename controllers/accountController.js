@@ -147,6 +147,16 @@ const updateProfileComplete = async (account) => {
   ).exec();
 };
 
+/** Display the edit establishment form */
+exports.editEstablishmentForm = (req, res) => {
+  res.render('editEstablishment', {
+    title: 'Edit Establishment',
+    id: req.params._id,
+    account: req.cookies.account,
+    establishmentType: req.cookies.establishmentType,
+  });
+};
+
 /** API endpoint for all businesses/fridges */
 exports.getAllBusinesses = async (req, res) => {
   const businesses = await Business.find().select(
