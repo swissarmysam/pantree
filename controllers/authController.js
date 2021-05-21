@@ -13,6 +13,9 @@ const Account = mongoose.model('Account'); // load database collection
 const promisify = require('es6-promisify'); // turn callback into promise
 const mail = require('../handlers/mail'); // generate email template to send
 
+const Business = mongoose.model('Business');
+const Fridge = mongoose.model('Fridge');
+
 /** Log in the user - uses passport authentication */
 exports.login = (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
@@ -29,17 +32,30 @@ exports.login = (req, res, next) => {
       return;
     }
     // if user passes authentication ...
-    req.logIn(user, (err) => {
+    req.logIn(user, async (err) => {
       if (err) {
         // errors from above are passed here and message displayed
         req.flash('error', 'Something went wrong.');
         next(err);
         return;
       }
+      console.log(user);
       if (!req.user.profileCompleted) {
         // if the user has not completed profile setup
         res.redirect(`/setup/${req.user._id}`); // redirect to the setup form to collect details
       } else {
+        const count = await Business.count({ account: user._id });
+        const oneDayInSeconds = 24 * 60 * 60;
+      
+        if (count > 0) {
+          const account = await Business.findOne({ account: { $eq: user._id } });
+          res.cookie('account', account, { maxAge: oneDayInSeconds }); // 24 hour cookie
+          res.cookie('establishmentType', 'Business', { maxAge: oneDayInSeconds });
+        } else {
+          const account = await Fridge.findOne({ account: { $eq: user._id } });
+          res.cookie('account', account, { maxAge: oneDayInSeconds }); // 24 hour cookie
+          res.cookie('establishmentType', 'Fridge', { maxAge: oneDayInSeconds });
+        }
         res.redirect(`/donations/${req.user._id}`); // otherwise redirect to the dashboard
       }
       // exit function
