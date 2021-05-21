@@ -54,7 +54,6 @@ router.post(
 router.get(
   '/donations/:id',
   authController.isLoggedIn,
-  donationController.setProfileCookies,
   donationController.dashboard
 );
 // display a single donation
