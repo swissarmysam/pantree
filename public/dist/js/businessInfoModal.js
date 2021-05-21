@@ -113,9 +113,7 @@ export async function getDonationsByBusiness(businessId) {
 }
 
 export function getWeekday() {
-  const weekday = new Intl.DateTimeFormat('en-US', {
-    weekday: 'long',
-  }).format(new Date().getDay());
+  const weekday = new Date().toLocaleString("default", { weekday: "long" })
   weekday.toString();
   return weekday;
 }
