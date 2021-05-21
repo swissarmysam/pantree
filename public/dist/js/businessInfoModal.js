@@ -1,30 +1,77 @@
-export function businessInfoModal(business, modal, open) {
-  console.log(business);
-  console.log(open);
+export function businessInfoModal(business, donations, modal) {
   modal.querySelector('.modal-card-title').textContent =
     business.establishmentName;
   modal.querySelector(
     '.donor-name'
   ).textContent = `Donations from ${business.establishmentName}`;
-  // TODO - remove string sanitasation
+  // if string contains double commas replace it with one
   // eslint-disable-next-line prettier/prettier
   const address = `${business.location.address}, ${
     business.location.postcode
   }`.replace(',,',',');
-  // if string contains double commas replace it with one
   // eslint-disable-next-line prettier/prettier
     modal.querySelector('.establishment-address').textContent = address;
+  // render donations that belong to business
+  if (donations.length === 0) {
+    const donationTemplate = `
+      <div class="box my-3 donation">
+        <p class="subtitle is-5 has-text-grey">No available donations</p>
+      </div>
+    `;
+    const donationEl = document
+      .createRange()
+      .createContextualFragment(donationTemplate);
+    modal.querySelector('.donations').appendChild(donationEl);
+  }
+  donations.forEach((donation) => {
+    const expiryDate = new Date(donation.expiryDate).toLocaleDateString(
+      'en-GB'
+    );
+    const donationTemplate = `
+        <div class="box my-3 donation">
+          <div class="columns is-vcentered">
+              <div class="column is-narrow is-flex is-justify-content-center">
+                  <div class="image is-32x32"><img class="is-rounded" src="https://eu.ui-avatars.com/api/?name=${
+                    business.establishmentName
+                  }&background=random" /></div>
+              </div>
+              <div class="column has-text-centered-mobile">
+                  <p class="title is-6 my-1">Donation contents</p>
+                  <p class="is-size-6 my-1">${donation.tags[0]
+                    .split(',')
+                    .join(', ')}</p>
+              </div>
+              <div class="column is-narrow has-text-centered-mobile devider-l pl-5 has-text-centered">
+                  <p class="title is-6 my-1">Weight</p>
+                  <p class="is-size-6 my-1">${donation.weight.toString()}kg</p>
+              </div>
+              <div class="column is-narrow has-text-centered-mobile devider-r pr-5">
+                  <p class="title is-6 my-1">Expiry date</p>
+                  <p class="is-size-6 my-1">${expiryDate}</p>
+              </div>
+              <div class="column is-narrow is-flex is-justify-content-center pl-4"><a class="is-link is-hidden-mobile" href="/donations/donation/${
+                donation.id
+              }">View</a><a class="button is-link is-hidden-tablet" href="#">View Donation</a></div>
+          </div>
+        </div>
+      `;
+    const donationEl = document
+      .createRange()
+      .createContextualFragment(donationTemplate);
+    modal.querySelector('.donations').appendChild(donationEl);
+  });
   // renders the opening times for the day
   function openingTimesWeekday(day, openingHours) {
+    const checkIfToday = day === getWeekday() ? 'has-text-weight-semibold' : '';
     return `
         <div class="columns is-mobile" day="${day}">
           <div class="column is-one-quarter-fullhd is-one-third-desktop is-one-quarter-tablet">
-              <p class="subtitle is-6 has-text-grey">${day}</p>
+              <p class="subtitle is-6 has-text-grey ${checkIfToday}">${day}</p>
           </div>
           <div class="column">
-              <p class="subtitle is-6 has-text-grey">${
-                openingHours !== null ? openingHours : 'closed'
-              }</p>
+              <p class="subtitle is-6 has-text-grey ${checkIfToday}">${
+      openingHours !== null ? openingHours : 'closed'
+    }</p>
           </div>
         </div>
       `;
@@ -53,9 +100,22 @@ export function businessInfoModal(business, modal, open) {
   document.documentElement.classList.add('is-clipped');
 }
 
-export function getWeekday(element) {
+export async function getDonationsByBusiness(businessId) {
+  // fetch request frabs all businesses
+  const res = await fetch(`/api/donations/business?id=${businessId}`);
+  if (!res.ok) {
+    const errorMessage = res.text();
+    throw new Error(errorMessage);
+  }
+
+  const donations = await res.json();
+  return donations;
+}
+
+export function getWeekday() {
   const weekday = new Intl.DateTimeFormat('en-US', {
     weekday: 'long',
   }).format(new Date().getDay());
+  weekday.toString();
   return weekday;
 }

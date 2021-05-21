@@ -86,19 +86,20 @@ router.post(
 );
 // show the edit establishment form and handle data submissions
 router.get(
-  '/edit-establishment/:id',
+  '/establishment/edit/:id',
   authController.isLoggedIn,
   accountController.editEstablishmentForm
 )
 // TODO: NEED TO HANDLE WAY TO DISPLAY ALL DONATIONS BELONGING TO BUSINESS AND CLAIMED BY FRIDGE
 
 /** API ENDPOINTS */
-router.get('/api/donations/all', donationController.getAllDonations);
-router.get('/api/donations/:id/single', donationController.getSingleDonation);
-router.get('/api/donations/:id/owner', donationController.getAssociatedDonations);
-router.get('/api/business/all', accountController.getAllBusinesses);
-router.get('/api/business/:id/single', accountController.getSingleBusiness);
-router.get('/api/fridge/all', accountController.getAllFridges);
-router.get('/api/fridge/:id/single', accountController.getSingleFridge);
+router.get('/api/donations/all', donationController.getAllDonations); // query every donation in the database
+router.get('/api/donations/:id/single', donationController.getSingleDonation); // get single donation based on the ID
+router.get('/api/donations/:id/owner', donationController.getAssociatedDonations); // get donations that have an association with the signed in user (either donor or claimer)
+router.get('/api/business/all', accountController.getAllBusinesses); // query every business in the database
+router.get('/api/business/:id/single', accountController.getSingleBusiness); // get a single business details based on the business user id
+router.get('/api/fridge/all', accountController.getAllFridges); // query every fridge in the database
+router.get('/api/fridge/:id/single', accountController.getSingleFridge); // get a single fridge details based on a fridge user id
+router.get('/api/donations/business', donationController.getDonationsByBusiness); // get donations belonging to the queried business id
 
 module.exports = router;

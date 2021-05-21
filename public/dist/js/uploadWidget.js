@@ -9,7 +9,7 @@ function showUploadWidget(folderName) {
     {
       cloudName: 'pantree',
       apiKey: '189571722787184',
-      uploadPreset: 'preset1',
+      uploadPreset: 'pantree',
       sources: ['local', 'camera', 'url'],
       multiple: false,
       maxFiles: 1,
@@ -49,6 +49,8 @@ function showUploadWidget(folderName) {
     },
     (err, res) => {
       if (!err && res && res.event === 'success') {
+        // TODO: CODE TO ADD URL VALUE (FROM JSON OBJECT) TO HIDDEN INPUT AS PART OF FORM SHOULD GO HERE
+        // name="photo" << hidden field that needs adding to form view
         console.log(res.info);
       }
     }

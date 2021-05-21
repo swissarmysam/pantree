@@ -12,23 +12,26 @@ const Donation = mongoose.model('Donation');
 const Fridge = mongoose.model('Fridge');
 const Business = mongoose.model('Business');
 
+// TODO: MOVE THIS CODE TO THE LOGIN HANDLER -> ONLY ON ACCOUNTS WHERE SETUP EXISTS
 /** Set account cookie data */
 exports.setProfileCookies = async (req, res, next) => {
   const count = await Business.count({ account: req.user._id });
+  const oneDayInSeconds = 24 * 60 * 60;
 
   if (count > 0) {
     const account = await Business.findOne({ account: { $eq: req.user._id } });
-    res.cookie('account', account, { maxAge: 86400000 }); // 24 hour cookie
-    res.cookie('establishmentType', 'Business', { maxAge: 86400000 });
+    res.cookie('account', account, { maxAge: oneDayInSeconds }); // 24 hour cookie
+    res.cookie('establishmentType', 'Business', { maxAge: oneDayInSeconds });
   } else {
     const account = await Fridge.findOne({ account: { $eq: req.user._id } });
-    res.cookie('account', account, { maxAge: 86400000 }); // 24 hour cookie
+    res.cookie('account', account, { maxAge: oneDayInSeconds }); // 24 hour cookie
     const donations = getNearbyDonations(req.user._id);
-    res.cookie('donations', donations, { maxAge: 864000000 });
-    res.cookie('establishmentType', 'Fridge', { maxAge: 86400000 });
+    res.cookie('donations', donations, { maxAge: oneDayInSeconds });
+    res.cookie('establishmentType', 'Fridge', { maxAge: oneDayInSeconds });
   }
   next();
 };
+// CODE ENDS HERE
 
 /** Display donations page and pass account ID */
 exports.dashboard = async (req, res) => {
@@ -261,9 +264,18 @@ exports.getSingleDonation = async (req, res) => {
 };
 
 // TODO: NEED TO HANDLE WAY TO DISPLAY ALL DONATIONS BELONGING TO BUSINESS AND CLAIMED BY FRIDGE
+/** */
 exports.getAssociatedDonations = async (req, res) => {
   const donations = await Donation.find({
     $or: [{ donor: req.user._id }, { claimer: req.user._id }],
+  });
+  res.json(donations);
+};
+
+/**  */
+exports.getDonationsByBusiness = async (req, res) => {
+  const donations = await Donation.find({
+    donor: req.query.id,
   });
   res.json(donations);
 };

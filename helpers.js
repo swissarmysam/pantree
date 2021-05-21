@@ -33,7 +33,7 @@ exports.coordinatorMenu = [
   ],
   [
     { slug: '/donations/manage', title: 'Claimed donations', icon: 'box' },
-    { slug: '/edit-establishment', title: 'Fridge info', icon: 'edit' },
+    { slug: '/establishment/edit', title: 'Fridge info', icon: 'edit' },
   ]
 ];
 
@@ -42,7 +42,7 @@ exports.businessMenu = [
   [
     { slug: '/donations/donation/add', title: 'Add donation', icon: 'add-circle' },
     { slug: '/donations/manage', title: 'Manage donations', icon: 'box' },
-    { slug: '/edit-establishment', title: 'Business info', icon: 'edit' },
+    { slug: '/establishment/edit', title: 'Business info', icon: 'edit' },
   ],
 ];
 

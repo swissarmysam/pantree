@@ -37,7 +37,8 @@ exports.validateRegister = (req, res, next) => {
   req
     .checkBody('password', 'Minimum password length is 8 characters')
     .notEmpty()
-    .isLength({ min: 8 });
+    // .isStrongPassword({ minLength: 8, minLowecase: 1, minUppercase: 1, minNumbers: 1 })
+    .isLength({ min: 8 }); // remove this and enable strong password above on prod
   // check that confirmed password field has a length ...
   req
     .checkBody('password-confirm', 'Confirmed password cannot be blank!')
@@ -160,7 +161,7 @@ exports.editEstablishmentForm = (req, res) => {
 /** API endpoint for all businesses/fridges */
 exports.getAllBusinesses = async (req, res) => {
   const businesses = await Business.find().select(
-    'establishmentName location openingHours'
+    'account establishmentName location openingHours'
   );
   res.json(businesses);
 };

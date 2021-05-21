@@ -1,6 +1,9 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-undef */
-import { businessInfoModal } from './businessInfoModal.js';
+import {
+  businessInfoModal,
+  getDonationsByBusiness,
+} from './businessInfoModal.js';
 
 const modal = document.querySelector('.modal');
 // findBusinesses function
@@ -23,17 +26,19 @@ async function findBusinesses(map) {
     // create a coordinates array for each business
     const [businessLat, businessLng] = business.location.coordinates;
     const position = { lat: businessLat, lng: businessLng };
-    // if check open is false change marker
-
     // add marker to map
     const marker = new google.maps.Marker({
       map,
       position,
-      icon: icons.businessOpen,
+      icon: icons.business,
     });
-    // assign the business to marker.place
+    // assign the donations to marker
+    getDonationsByBusiness(business.account).then((donations) => {
+      if (donations.length !== 0) marker.setIcon(icons.businessDonation);
+      marker.donations = donations;
+    });
+    // assign the business to marker.business
     marker.business = business;
-    marker.todayOpeningHours = true;
     return marker;
   });
 
@@ -41,7 +46,7 @@ async function findBusinesses(map) {
   markers.forEach((marker) =>
     marker.addListener('click', function () {
       // call business preview, which renders a model view of the business
-      businessInfoModal(this.business, modal, this.todayOpeningHours);
+      businessInfoModal(this.business, this.donations, modal);
     })
   );
 }
@@ -50,6 +55,7 @@ async function findBusinesses(map) {
 function handleModalClose(e) {
   modal.style.display = 'none';
   modal.querySelector('.working-hours').remove();
+  modal.querySelector('.donation').remove();
   document.documentElement.classList.remove('is-clipped');
   // remove all children of modal body
 }
@@ -59,8 +65,8 @@ const iconBase =
   'https://developers.google.com/maps/documentation/javascript/examples/full/images/';
 const icons = {
   fridge: `${iconBase}parking_lot_maps.png`,
-  businessOpen: `${iconBase}info-i_maps.png`,
-  businessClosed: `${iconBase}info-i_maps.png`,
+  business: `${iconBase}info-i_maps.png`,
+  businessDonation: `${iconBase}library_maps.png`,
 };
 
 // google maps intialisation
@@ -72,9 +78,14 @@ function makeMap(mapContainer) {
   };
   const map = new google.maps.Map(mapContainer, {
     center: fridgeLocation,
-    zoom: 14,
+    zoom: 13,
     mapTypeControl: false,
+    fullscreenControl: false,
     streetViewControl: false,
+    zoomControl: true,
+    zoomControlOptions: {
+      position: google.maps.ControlPosition.RIGHT_TOP,
+    },
   });
   // create fridge marker
   const fridgeMarker = new google.maps.Marker({

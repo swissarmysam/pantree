@@ -8,10 +8,10 @@
 const passport = require('passport'); // authentication handler
 const crypto = require('crypto'); // generate secure token for password reset
 const mongoose = require('mongoose'); // database wrapper
-const mail = require('../handlers/mail'); // generate email template to send
 
 const Account = mongoose.model('Account'); // load database collection
 const promisify = require('es6-promisify'); // turn callback into promise
+const mail = require('../handlers/mail'); // generate email template to send
 
 /** Log in the user - uses passport authentication */
 exports.login = (req, res, next) => {
