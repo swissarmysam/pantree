@@ -49,9 +49,9 @@ function showUploadWidget(folderName) {
     },
     (err, res) => {
       if (!err && res && res.event === 'success') {
-        // TODO: CODE TO ADD URL VALUE (FROM JSON OBJECT) TO HIDDEN INPUT AS PART OF FORM SHOULD GO HERE
-        // name="photo" << hidden field that needs adding to form view
         console.log(res.info);
+        document.querySelector('input[name=photo]').value = res.info.url;
+        // TO-DO: notify user upload was sucessful
       }
     }
   );

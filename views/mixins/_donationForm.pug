@@ -26,6 +26,7 @@ mixin donationForm()
                                     span.icon.is-small
                                         ion-icon(name="camera-outline")
                                     span Add Image
+                                input(type="hidden" name="photo").is-hidden
                         .field
                             .control
                                 textarea.textarea(placeholder="Include the quantities of items in donation, as well as any information you think might be helpful." name='description' required)
