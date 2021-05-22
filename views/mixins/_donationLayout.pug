@@ -1,0 +1,42 @@
+mixin donationLayout()
+    .columns.is-centered.is-vcentered.is-full-height
+        .column.is-full-touch.is-three-quarters-desktop.is-three-fifths-widescreen
+            .card
+                .card-content
+                    form.container.is-max-desktop(action=`/donations/donation/${donation[0]._id}` method="POST")
+                        h3.title.is-3 #{donation[0].contact.name}'s Donation
+                        hr
+                        .image.is-16by9.mb-4
+                            img(src=donation[0].photo)
+                        label.label Donation contents
+                            .tags.are-medium.mt-2
+                                span.tag.is-primary.is-light Canned food
+                                span.tag.is-primary.is-light Pasta
+                        .notification
+                            p.is-size-5 #{donation[0].description}
+                        // TO-DO add weight & expiry date level
+                        hr
+                        h4.title.is-4 Contact details
+                        label.label Name
+                        span.icon-text
+                            span.icon
+                                ion-icon(src="/icons/user.svg")
+                            span.subtitle.is-5.has-text-grey #{donation[0].contact.name}
+                        label.label Email
+                        span.icon-text
+                            span.icon
+                                ion-icon(src="/icons/mail.svg")
+                            span.subtitle.is-5.has-text-grey #{donation[0].contact.email}
+                        if (donation[0].contact.phone)
+                            label.label Phone
+                            span.icon-text
+                                span.icon
+                                    ion-icon(src="/icons/phone.svg")
+                                span.subtitle.is-5.has-text-grey #{donation[0].contact.phone}
+                        hr
+                        .field
+                            .control
+                                if (donation[0].claimed === false)
+                                    button.button.is-medium.is-fullwidth.is-primary.submit(type="submit") Claim
+                                else
+                                    button.button.is-medium.is-fullwidth.is-primary.submit(type="button" disabled) Claimed

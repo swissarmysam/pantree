@@ -34,6 +34,7 @@ async function findBusinesses(map) {
     });
     // assign the donations to marker
     getDonationsByBusiness(business.account).then((donations) => {
+      console.log(donations);
       if (donations.length !== 0) marker.setIcon(icons.businessDonation);
       marker.donations = donations;
     });
@@ -55,7 +56,7 @@ async function findBusinesses(map) {
 function handleModalClose(e) {
   modal.style.display = 'none';
   modal.querySelector('.working-hours').remove();
-  modal.querySelector('.donation').remove();
+  modal.querySelectorAll('.donation').forEach((element) => element.remove());
   document.documentElement.classList.remove('is-clipped');
   // remove all children of modal body
 }

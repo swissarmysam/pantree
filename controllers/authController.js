@@ -44,17 +44,18 @@ exports.login = (req, res, next) => {
         // if the user has not completed profile setup
         res.redirect(`/setup/${req.user._id}`); // redirect to the setup form to collect details
       } else {
+        // set cookies at login.
         const count = await Business.count({ account: user._id });
-        const oneDayInSeconds = 24 * 60 * 60;
-      
+        const oneDayInMS = 24 * 60 * 60 * 1000; // 24 hours
+
         if (count > 0) {
           const account = await Business.findOne({ account: { $eq: user._id } });
-          res.cookie('account', account, { maxAge: oneDayInSeconds }); // 24 hour cookie
-          res.cookie('establishmentType', 'Business', { maxAge: oneDayInSeconds });
+          res.cookie('account', account, { maxAge: oneDayInMS }); // 24 hour cookie
+          res.cookie('establishmentType', 'Business', { maxAge: oneDayInMS });
         } else {
           const account = await Fridge.findOne({ account: { $eq: user._id } });
-          res.cookie('account', account, { maxAge: oneDayInSeconds }); // 24 hour cookie
-          res.cookie('establishmentType', 'Fridge', { maxAge: oneDayInSeconds });
+          res.cookie('account', account, { maxAge: oneDayInMS }); // 24 hour cookie
+          res.cookie('establishmentType', 'Fridge', { maxAge: oneDayInMS });
         }
         res.redirect(`/donations/${req.user._id}`); // otherwise redirect to the dashboard
       }

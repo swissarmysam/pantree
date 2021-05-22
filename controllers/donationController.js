@@ -39,7 +39,10 @@ exports.validateDonationForm = (req, res, next) => {
   req
     .checkBody('description', 'Please describe the contents of the donation')
     .notEmpty();
-  req.checkBody('expiryDate', 'Please enter a date').notEmpty();
+  req.checkBody('photo')
+    .isURL()
+    .contains('cloudinary.com');
+  req.checkBody('expiryDate', 'Please enter a date in the future').notEmpty().isAfter();
   req.sanitizeBody('expiryDate').toDate();
   req
     .checkBody('weight', 'Please enter a weight as a decimal')
@@ -53,11 +56,10 @@ exports.validateDonationForm = (req, res, next) => {
     remove_extension: false,
     gmail_remove_subaddress: false,
   });
-  // TODO: NEED TO FIX MOBILE PHONE VALIDATION
-  // req
-  //   .checkBody('contact[phoneNumber]', 'Please enter a valid mobile number')
-  //   .isMobilePhone();
-
+  req
+    .checkBody('contact[phoneNumber]', 'Please enter a valid mobile number')
+    .isLength({ min: 10, max: 14 })
+    .isNumeric();
   // flash all validation errors on the register page
   const errors = req.validationErrors();
   if (errors) {
@@ -129,14 +131,14 @@ exports.getDonation = async (req, res) => {
   const donation = await Donation.find({
     _id: req.params.donation_id,
   });
-  res.render('donation', { title: 'Donation Details', donation });
+  res.render('singleDonation', { title: 'Donation Details', donation, account: req.cookies.account });
 };
 
 /** */
 exports.claimDonation = async (req, res) => {
   const updates = {
     claimer: req.user._id,
-    claimed: false,
+    claimed: true,
   };
   const claimDonation = await Donation.findOneAndUpdate(
     {
@@ -156,8 +158,35 @@ exports.claimDonation = async (req, res) => {
     'success',
     `You've claimed the donation. Don't forget to collect it!`
   );
-  res.redirect('back'); // reload the page
+  res.redirect(`/donations/${req.user._id}`); // this will redirect to claimed donations
 };
+
+/** */
+exports.cancelDonationClaim = async (req, res) => {
+  const updates = {
+    claimer: null,
+    claimed: false,
+  };
+  const claimDonation = await Donation.findOneAndUpdate(
+    {
+      _id: req.params.donation_id,
+    },
+    {
+      $set: updates,
+    },
+    {
+      new: true,
+      runValidators: true,
+      context: 'query',
+    }
+  ).exec();
+  // display a success message
+  req.flash(
+    'success',
+    `The donation was successfully cancelled.`
+  );
+  return res.send(200);
+}
 
 /** */
 exports.removeDonation = async (req, res) => {
@@ -169,7 +198,7 @@ exports.removeDonation = async (req, res) => {
 };
 
 /**  */
-exports.markDonationAsCollect = async (req, res) => {
+exports.markDonationAsCollected = async (req, res) => {
   const update = {
     collected: true,
   };
@@ -187,6 +216,8 @@ exports.markDonationAsCollect = async (req, res) => {
       context: 'query',
     }
   ).exec();
+  req.flash('success', 'The donation is marked as collected');
+  res.redirect('back');
 };
 
 /** */
@@ -258,3 +289,13 @@ exports.getDonationsByBusiness = async (req, res) => {
   });
   res.json(donations);
 };
+
+/** */
+exports.checkClaimStatus = async (req, res) => {
+  // get all donations which are unclaimed
+  const claimStatus = await Donation.find({
+    $and: [{ donor: req.query.business }, { claimed: false }]
+  }).select('_id');
+  // return an object with donation ids
+  res.json(claimStatus);
+}
