@@ -1,0 +1,13 @@
+mixin presskitCard(poster)
+  .column.is-half-tablet.is-one-quarter-widescreen
+    .card
+      .card-image
+        figure.image
+          img(src=`/posters/${poster.no}.png` alt=`${poster.title} thumbnail`)
+      .card-content
+        p.title.is-5 #{poster.title}
+        - var tags = poster.tags
+        each tag in tags
+          span.tag.is-primary.is-light.mr-1= tag
+      footer.card-footer
+        a.card-footer-item(target='_blank' href=`/posters/${poster.no}.pdf`) Download

@@ -34,6 +34,7 @@ exports.coordinatorMenu = [
   [
     { slug: '/donations/manage', title: 'Claimed donations', icon: 'box' },
     { slug: '/establishment/edit', title: 'Fridge info', icon: 'edit' },
+    { slug: '/account/edit', title: 'Edit Account', icon: 'edit'}
   ]
 ];
 
@@ -43,6 +44,7 @@ exports.businessMenu = [
     { slug: '/donations/donation/add', title: 'Add donation', icon: 'add-circle' },
     { slug: '/donations/manage', title: 'Manage donations', icon: 'box' },
     { slug: '/establishment/edit', title: 'Business info', icon: 'edit' },
+    { slug: '/account/edit', title: 'Edit Account', icon: 'edit'}
   ],
 ];
 
@@ -62,3 +64,56 @@ exports.foodFacts = [
     source: 'WRAP UK',
   },
 ];
+
+exports.presskitPosters = [
+  {
+    no: 1,
+    title: 'Poster 1',
+    tags: ['join', 'info'],
+  },
+  {
+    no: 2,
+    title: 'Poster 2',
+    tags: ['goals', 'community', 'educate'],
+  },
+  {
+    no: 3,
+    title: 'Poster 3',
+    tags: ['join', 'surplus', 'community'],
+  },
+  {
+    no: 4,
+    title: 'Poster 4',
+    tags: ['activities', 'info'],
+  },
+  {
+    no: 5,
+    title: 'Poster 5',
+    tags: ['waste', 'tip', 'tomatoes', 'advice'],
+  },
+  {
+    no: 6,
+    title: 'Poster 6',
+    tags: ['waste', 'tip', 'carrot', 'advice'],
+  },
+  {
+    no: 7,
+    title: 'Poster 7',
+    tags: ['waste', 'tip', 'lemons', 'advice'],
+  },
+  {
+    no: 8,
+    title: 'Poster 8',
+    tags: ['waste', 'tip', 'bread', 'advice'],
+  },
+  {
+    no: 9,
+    title: 'Poster 9',
+    tags: ['waste', 'tip', 'compost', 'advice'],
+  },
+  {
+    no: 10,
+    title: 'Poster 10',
+    tags: ['info', 'fridge'],
+  },
+]

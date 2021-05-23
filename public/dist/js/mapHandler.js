@@ -79,7 +79,7 @@ function makeMap(mapContainer) {
   };
   const map = new google.maps.Map(mapContainer, {
     center: fridgeLocation,
-    zoom: 13,
+    zoom: 13.2,
     mapTypeControl: false,
     fullscreenControl: false,
     streetViewControl: false,

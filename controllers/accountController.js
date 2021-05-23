@@ -79,9 +79,10 @@ exports.register = async (req, res, next) => {
 };
 
 /** Display account pug view */
-exports.account = (req, res) => {
+exports.editAccount = (req, res) => {
   res.render('account', {
     title: 'Edit Account',
+    account: req.cookies.account
   });
 };
 
@@ -107,7 +108,7 @@ exports.updateAccount = async (req, res) => {
       context: 'query',
     }
   );
-  req.flash('success', 'Profile has been updated.'); // display a success message
+  req.flash('success', 'Account details have been updated.'); // display a success message
   res.redirect('back'); // reload the page
 };
 
@@ -149,7 +150,7 @@ const updateProfileComplete = async (account) => {
 };
 
 /** Display the edit establishment form */
-exports.editEstablishmentForm = (req, res) => {
+exports.editEstablishment = (req, res) => {
   res.render('editEstablishment', {
     title: 'Edit Establishment',
     id: req.params._id,
@@ -157,6 +158,34 @@ exports.editEstablishmentForm = (req, res) => {
     establishmentType: req.cookies.establishmentType,
   });
 };
+
+exports.updateEstablishment = async (req, res) => {
+
+  const type = req.body.establishmentType;
+
+   // data to update
+   const updates = {
+    establishmentName: req.body.name,
+    openingHours: req.body.openingHours,
+  };
+
+  // find record in collection from session id and update based on req.body input
+  const account = await type.findOneAndUpdate(
+    {
+      _id: req.user._id,
+    },
+    {
+      $set: updates,
+    },
+    {
+      new: true,
+      runValidators: true,
+      context: 'query',
+    }
+  );
+  req.flash('success', 'Establishment details have been updated.'); // display a success message
+  res.redirect('back'); // reload the page
+}
 
 /** API endpoint for all businesses/fridges */
 exports.getAllBusinesses = async (req, res) => {

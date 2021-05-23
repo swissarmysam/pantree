@@ -24,18 +24,18 @@ export function businessInfoModal(business, donations, modal) {
     modal.querySelector('.donations').appendChild(donationEl);
   } else {
     // check if donations are still available
-    fetch(`/api/donations/status?business=${business.account}`)
-    .then(async response => {
-      const data = await response.json();
-      console.log(data);
-      const allDonations = donations;
-      allDonations.forEach(donation => {
-        for(let i = 0; i < data.length; i++) {
-          if(donation.id === data[i].id) {
-            const expiryDate = new Date(donation.expiryDate).toLocaleDateString(
-              'en-GB'
-            );
-            const donationTemplate = `
+    fetch(`/api/donations/status?business=${business.account}`).then(
+      async (response) => {
+        const data = await response.json();
+        console.log(data);
+        const allDonations = donations;
+        allDonations.forEach((donation) => {
+          for (let i = 0; i < data.length; i++) {
+            if (donation.id === data[i].id) {
+              const expiryDate = new Date(
+                donation.expiryDate
+              ).toLocaleDateString('en-GB');
+              const donationTemplate = `
                 <div class="box my-3 donation">
                   <div class="columns is-vcentered">
                       <div class="column is-narrow is-flex is-justify-content-center">
@@ -51,11 +51,11 @@ export function businessInfoModal(business, donations, modal) {
                       </div>
                       <div class="column is-narrow has-text-centered-mobile devider-l pl-5 has-text-centered">
                           <p class="title is-6 my-1">Weight</p>
-                          <p class="is-size-6 my-1">${donation.weight.toString()}kg</p>
+                          <p class="is-size-6 my-1">${donation.weight.toString()} kg</p>
                       </div>
                       <div class="column is-narrow has-text-centered-mobile devider-r pr-5">
                           <p class="title is-6 my-1">Expiry date</p>
-                          <p class="is-size-6 my-1">${expiryDate}</p>
+                          <p class="is-size-6 my-1 has-text-centered">${expiryDate}</p>
                       </div>
                       <div class="column is-narrow is-flex is-justify-content-center pl-4"><a class="is-link is-hidden-mobile" href="/donations/donation/${
                         donation.id
@@ -63,14 +63,15 @@ export function businessInfoModal(business, donations, modal) {
                   </div>
                 </div>
               `;
-            const donationEl = document
-              .createRange()
-              .createContextualFragment(donationTemplate);
-            modal.querySelector('.donations').appendChild(donationEl);
+              const donationEl = document
+                .createRange()
+                .createContextualFragment(donationTemplate);
+              modal.querySelector('.donations').appendChild(donationEl);
+            }
           }
-        }
-      })
-    })
+        });
+      }
+    );
   }
   // renders the opening times for the day
   function openingTimesWeekday(day, openingHours) {
@@ -121,15 +122,15 @@ export async function getDonationsByBusiness(businessId) {
   }
 
   const allDonations = await res.json();
-  const availableDonations = new Array();
-  allDonations.forEach(donation => {
-    if(donation.claimed === false) availableDonations.push(donation);
+  const availableDonations = [];
+  allDonations.forEach((donation) => {
+    if (donation.claimed === false) availableDonations.push(donation);
   });
   return availableDonations;
 }
 
 export function getWeekday() {
-  const weekday = new Date().toLocaleString("default", { weekday: "long" })
+  const weekday = new Date().toLocaleString('default', { weekday: 'long' });
   weekday.toString();
   return weekday;
 }
