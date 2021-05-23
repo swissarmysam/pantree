@@ -14,6 +14,7 @@ const sharedController = require('../controllers/sharedController');
 const authController = require('../controllers/authController');
 const accountController = require('../controllers/accountController');
 const donationController = require('../controllers/donationController');
+const presskitController = require('../controllers/presskitController');
 
 /* GENERAL ROUTES */
 router.get('/', authController.notLoggedIn, sharedController.homePage); // load public home page if no user is signed in
@@ -21,8 +22,8 @@ router.get('/', authController.notLoggedIn, sharedController.homePage); // load 
 /* ACCOUNT AND AUTH ROUTES */
 router.get('/login', authController.loginForm); // display the login form page
 router.post('/login', authController.login); // handle login authentication with passport
-router.get('/register', accountController.registerForm); // display the registration form (initial username/password collection)
 
+router.get('/register', accountController.registerForm); // display the registration form (initial username/password collection)
 /** Validate user registration, save details to Account and then redirect to login - this will handle profile setup */
 router.post(
   '/register',
@@ -31,12 +32,13 @@ router.post(
   authController.login
 );
 
+router.get('/logout', authController.logout); // end the session
+
 router.get('/setup/:id', accountController.setupForm); // display the setup form to collect profile details
 router.post('/setup', accountController.setup); // handle the saving of profile details and update profile status so it doesn't show again
 
-router.get('/logout', authController.logout); // end the session
 
-router.get('/account', authController.isLoggedIn, accountController.account);
+router.get('/account', authController.isLoggedIn, accountController.editAccount);
 router.post('/account', accountController.updateAccount);
 router.get('/account/forgot', authController.forgotPassword);
 router.post('/account/forgot', authController.forgot);
@@ -79,7 +81,7 @@ router.post(
 router.post(
   'donations/donation/:donation_id/collect',
   donationController.markDonationAsCollected
-)
+);
 // show the donation form and handle data submissions
 router.get(
   '/donations/donation/add/:id',
@@ -93,10 +95,14 @@ router.post(
 );
 // show the edit establishment form and handle data submissions
 router.get(
-  '/establishment/edit/:id',
+  '/establishment/edit',
   authController.isLoggedIn,
-  accountController.editEstablishmentForm
+  accountController.editEstablishment
 )
+router.post('/establishment/edit', accountController.updateEstablishment);
+
+/** FRIDGE ROUTES */
+router.get('/presskit/:id', presskitController.presskit)
 
 /** API ENDPOINTS */
 router.get('/api/donations/all', donationController.getAllDonations); // query every donation in the database
