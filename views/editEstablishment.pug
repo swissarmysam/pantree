@@ -1,9 +1,13 @@
 extend dashboard
 
 include mixins/_navbarDashboard.pug
+include mixins/_editEstablishmentForm.pug
 
 block header
     +navbarDashboard()
 
 block prepend content
   - var view = '/establishment/edit'
+block append content
+  .section
+    +editEstablishmentForm()

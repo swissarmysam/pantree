@@ -1,0 +1,15 @@
+mixin tableRowFridge(donation, page)
+    tr(class="donation-row" data-page=page)
+        td.is-image-cell
+            .image
+                img.is-rounded(src=`https://eu.ui-avatars.com/api/?name=${'John Doe'}&background=random`)
+        td(data-label='Name') Rebecca Bauch
+        td(data-label='Donation contents') Daugherty-Daniel
+        td(data-label='Weight') South Cory
+        td(data-label='Distance') 1.7 km
+        td(data-label='Expiry date')
+            small.has-text-grey.is-abbr-like(title='Oct 25, 2020') Oct 25, 2020
+        td.is-actions-cell
+            .buttons.is-right
+                button.button.is-small.is-link(type='button') View
+                button.button.is-small.is-danger(type='button') Cancel

@@ -1,58 +1,49 @@
-mixin donationTable(donations = {}, pages = 0)
+include _tableRowFridge.pug
+include _tableRowBusiness.pug
+
+mixin donationTable(tableTitle, donations = {})
+  - var page;
   .card.has-table.has-mobile-sort-spaced
           header.card-header
-            p.card-header-title Available donations
+            p.card-header-title.is-size-5 #{tableTitle}
           .card-content
             .b-table.has-pagination
               .table-wrapper.has-mobile-cards
                 table.table.is-fullwidth.is-hoverable.is-fullwidth
-                  thead
-                    tr
-                      th
-                      th Business
-                      th Donation contents
-                      th Weight
-                      th Distance
-                      th Expiry date
-                      th
-                  tbody
-                    tr
-                      td.is-image-cell
-                        .image
-                          img.is-rounded(src='https://avatars.dicebear.com/v2/initials/rebecca-bauch.svg')
-                      td(data-label='Name') Rebecca Bauch
-                      td(data-label='Donation contents') Daugherty-Daniel
-                      td(data-label='Weight') South Cory
-                      td(data-label='Distance') 1.7 km
-                      td(data-label='Expiry date')
-                        small.has-text-grey.is-abbr-like(title='Oct 25, 2020') Oct 25, 2020
-                      td.is-actions-cell
-                        .buttons.is-right
-                          button.button.is-small.is-success(type='button') View
-                            //span.icon O
-                    tr
-                    tr
-                      td.is-image-cell
-                        .image
-                          img.is-rounded(src='https://avatars.dicebear.com/v2/initials/rebecca-bauch.svg')
-                      td(data-label='Name') Rebecca Bauch
-                      td(data-label='Donation contents') Daugherty-Daniel
-                      td(data-label='Weight') South Cory
-                      td(data-label='Distance') 1.7 km
-                      td(data-label='Expiry date')
-                        small.has-text-grey.is-abbr-like(title='Oct 25, 2020') Oct 25, 2020
-                      td.is-actions-cell
-                        .buttons.is-right
-                          button.button.is-small.is-link(type='button') View
-                          button.button.is-small.is-danger(type='button') Cancel
-              .notification
+                  if establishmentType === 'Fridge'
+                    thead
+                      tr
+                        th
+                        th Business
+                        th Donation contents
+                        th Weight
+                        th Distance
+                        th Expiry date
+                        th
+                    tbody
+                      each donation,index in donations
+                        - if (Number.isInteger(index / 5)) page = index / 5
+                        +tableRowFridge(donation, page)
+                  else
+                    thead
+                        tr
+                          th
+                          th Claimed by
+                          th Donation contents
+                          th Weight
+                          th Expiry date
+                          th
+                    tbody
+                      each donation,index in donations
+                        - if (Number.isInteger(index / 5)) page = index / 5
+                        +tableRowBusiness(donation, page)
+              .notification.is-light
                 .level
                   .level-left
                     .level-item
                       .buttons.has-addons
-                        button.button.is-active(type='button') 1
-                        button.button(type='button') 2
-                        button.button(type='button') 3
-                  .level-right
-                    .level-item
-                      small Page 1 of 3
+                        - var n = 0;
+                        while n < page
+                          if n === 0
+                            button.button.switch-page.is-active(type='button') #{(n++) + 1}
+                          button.button.switch-page(type='button') #{(n++) + 1}
