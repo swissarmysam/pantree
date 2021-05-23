@@ -32,6 +32,12 @@ table.table {
       vertical-align: middle;
     }
   }
+  tr.donation-row {
+    display: none;
+    &[data-page="0"] {
+      display: table-row;
+    }
+  }
 }
 
 .b-table {

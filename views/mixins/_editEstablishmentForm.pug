@@ -1,0 +1,33 @@
+include _workingHoursInput
+
+mixin editEstablishmentForm()
+    .columns.is-centered.is-vcentered.is-full-height
+        .column.is-full-touch.is-three-quarters-desktop.is-three-fifths-widescreen
+            .card
+                .card-content
+                    form.container.is-max-desktop.donation-form(action=`` method="POST")
+                        .columns.is-vcentered.is-mobile
+                            .column
+                                h4.title.is-4 Display name
+                            .column.is-narrow
+                                button.button.is-link(type="button")
+                                    span Edit
+                                    span.icon.is-small
+                                        ion-icon(src="/icons/edit.svg")
+                        .field
+                            .control
+                                input.input.is-medium(type="text" value=account.establishmentName name='establishment-name' required disabled)
+                        hr
+                        h4.title.is-4 Opening times
+                        .field.form-section(section-name="Set opening times" section="openingTimes")
+                            +workingHoursInput('Monday', account.openingHours.mon.hours)
+                            +workingHoursInput('Tuesday', account.openingHours.mon.hours)
+                            +workingHoursInput('Wednesday', account.openingHours.mon.hours)
+                            +workingHoursInput('Thursday', account.openingHours.mon.hours)
+                            +workingHoursInput('Friday', account.openingHours.mon.hours)
+                            +workingHoursInput('Saturday', account.openingHours.mon.hours)
+                            +workingHoursInput('Sunday', account.openingHours.mon.hours)
+                        hr
+                        .field
+                            .control
+                                button.button.is-medium.is-fullwidth.is-primary.submit(type="submit" disabled) Update

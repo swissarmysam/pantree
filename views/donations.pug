@@ -39,11 +39,14 @@ block append content
             footer.modal-card-foot.has-background-white
               button.button.is-primary Get directions
               button.button.is-primary.is-light.closeBtn Close
-      +donationTable()
-
+      if establishmentType === 'Fridge'
+        +donationTable('Available donations', [0,1,2,3,4,5,6])
+      else
+        +donationTable('Your available donations')
 
 block prepend scripts
     script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places`)
     script(type="module" src="/dist/js/mapHandler.js")
+    script(src="/dist/js/tablePagination.js")
 
 

@@ -39,10 +39,11 @@ exports.validateDonationForm = (req, res, next) => {
   req
     .checkBody('description', 'Please describe the contents of the donation')
     .notEmpty();
-  req.checkBody('photo')
-    .isURL()
-    .contains('cloudinary.com');
-  req.checkBody('expiryDate', 'Please enter a date in the future').notEmpty().isAfter();
+  req.checkBody('photo').isURL().contains('cloudinary.com');
+  req
+    .checkBody('expiryDate', 'Please enter a date in the future')
+    .notEmpty()
+    .isAfter();
   req.sanitizeBody('expiryDate').toDate();
   req
     .checkBody('weight', 'Please enter a weight as a decimal')
@@ -131,7 +132,11 @@ exports.getDonation = async (req, res) => {
   const donation = await Donation.find({
     _id: req.params.donation_id,
   });
-  res.render('singleDonation', { title: 'Donation Details', donation, account: req.cookies.account });
+  res.render('singleDonation', {
+    title: 'Donation Details',
+    donation,
+    account: req.cookies.account,
+  });
 };
 
 /** */
@@ -181,12 +186,9 @@ exports.cancelDonationClaim = async (req, res) => {
     }
   ).exec();
   // display a success message
-  req.flash(
-    'success',
-    `The donation was successfully cancelled.`
-  );
+  req.flash('success', `The donation was successfully cancelled.`);
   return res.send(200);
-}
+};
 
 /** */
 exports.removeDonation = async (req, res) => {
@@ -294,8 +296,8 @@ exports.getDonationsByBusiness = async (req, res) => {
 exports.checkClaimStatus = async (req, res) => {
   // get all donations which are unclaimed
   const claimStatus = await Donation.find({
-    $and: [{ donor: req.query.business }, { claimed: false }]
+    $and: [{ donor: req.query.business }, { claimed: false }],
   }).select('_id');
   // return an object with donation ids
   res.json(claimStatus);
-}
+};

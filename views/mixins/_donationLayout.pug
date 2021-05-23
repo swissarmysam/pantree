@@ -6,8 +6,9 @@ mixin donationLayout()
                     form.container.is-max-desktop(action=`/donations/donation/${donation[0]._id}` method="POST")
                         h3.title.is-3 #{donation[0].contact.name}'s Donation
                         hr
-                        .image.is-16by9.mb-4
-                            img(src=donation[0].photo)
+                        if (donation[0].photo)
+                            .image.is-16by9.mb-4
+                                img(src=donation[0].photo)
                         label.label Donation contents
                             .tags.are-medium.mt-2
                                 span.tag.is-primary.is-light Canned food
