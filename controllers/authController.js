@@ -39,7 +39,6 @@ exports.login = (req, res, next) => {
         next(err);
         return;
       }
-      console.log(user);
       if (!req.user.profileCompleted) {
         // if the user has not completed profile setup
         res.redirect(`/setup/${req.user._id}`); // redirect to the setup form to collect details
