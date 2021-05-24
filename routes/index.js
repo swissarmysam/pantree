@@ -93,12 +93,17 @@ router.post(
   donationController.validateDonationForm,
   donationController.addDonation
 );
+
+// router.get('/donations/manage', donationsController.manageDonations);
+// router.get('/donations/claimed', donationsController.claimedDonations);
+
+/** ESTABLISHMENT ROUTES */
 // show the edit establishment form and handle data submissions
 router.get(
   '/establishment/edit/:id',
   authController.isLoggedIn,
   accountController.editEstablishment
-)
+);
 router.post('/establishment/edit', accountController.updateEstablishment);
 
 /** FRIDGE ROUTES */

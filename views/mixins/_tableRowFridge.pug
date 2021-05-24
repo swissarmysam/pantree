@@ -3,13 +3,13 @@ mixin tableRowFridge(donation, page)
         td.is-image-cell
             .image
                 img.is-rounded(src=`https://eu.ui-avatars.com/api/?name=${'John Doe'}&background=random`)
-        td(data-label='Name') donation
-        td(data-label='Donation contents') Daugherty-Daniel
-        td(data-label='Weight') South Cory
-        td(data-label='Distance') 1.7 km
+        td(data-label='Name') #{donation.establishmentName}
+        td(data-label='Donation contents') #{donation.tags}
+        td(data-label='Weight') #{donation.weight} kg
         td(data-label='Expiry date')
-            small.has-text-grey.is-abbr-like(title='Oct 25, 2020') Oct 25, 2020
+            small.has-text-grey.is-abbr-like(title='Oct 25, 2020') #{new Date(donation.expiryDate).toLocaleDateString('en-GB')}
         td.is-actions-cell
             .buttons.is-right
                 button.button.is-small.is-link(type='button') View
-                button.button.is-small.is-danger(type='button') Cancel
+                if donation.claimed !== false
+                    button.button.is-small.is-danger(type='button') Cancel

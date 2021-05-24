@@ -41,9 +41,8 @@ block append content
               button.button.is-primary.getDirectionsBtn(data-lat="" data-lng="") Get directions
               button.button.is-primary.is-light.closeBtn Close
       if establishmentType === 'Fridge'
-        - console.log('nearby PUG', nearbyDonations)
         .mb-4
-          +donationTable('Available donations', nearbyDonations)
+          +donationTable('Available nearby donations', nearbyDonations)
       else
         +donationTable('Your available donations')
 

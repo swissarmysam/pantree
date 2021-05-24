@@ -18,9 +18,7 @@ exports.dashboard = async (req, res) => {
 
   if(req.cookies.establishmentType === 'Fridge') {
     nearbyDonations = await getNearbyDonations(req.user._id);
-  } 
-
-  console.log('near don route', nearbyDonations);
+  }
 
   res.render('donations', {
     title: 'Donations',
@@ -57,14 +55,24 @@ const getNearbyDonations = async (user) => {
       },
     },
   };
-  const nearbyBusinesses = await Business.find(q2).select('account');
+  const nearbyBusinesses = await Business.find(q2).select('account establishmentName');
   const nearbyBusinessIds = nearbyBusinesses.map(business => business.account);
+  const nearbyBusinessNames = nearbyBusinesses.map(business => business.establishmentName);
 
   // get all donations which belong to those businesses and are NOT claimed
   const q3 = {
     $and: [{ donor: { $in: nearbyBusinessIds } }, { claimed: false }]
   };
   const donations = await Donation.find(q3);
+
+  donations.forEach(donation => {
+    for(let i = 0; i < nearbyBusinessIds.length; i++) {
+      if (donation.donor === nearbyBusinessIds[i]) {
+        donation.establishmentName = nearbyBusinessNames[i];
+        console.log(donation.donor, donation.establishmentName);
+      }
+    }
+  });
 
   // pass object to page
   return donations;
@@ -267,6 +275,22 @@ exports.markDonationAsCollected = async (req, res) => {
   ).exec();
   req.flash('success', 'The donation is marked as collected');
   res.redirect('back');
+};
+
+/** */
+exports.manageDonations = async (req, res) => {
+
+  res.render('manageDonations', {
+    title: 'Manage Donations',
+  });
+};
+
+/** */
+exports.claimedDonations = async (req, res) => {
+
+  res.render('claimedDonations', {
+    title: 'Claimed Donations',
+  });
 };
 
 /** API endpoints */

@@ -8,6 +8,12 @@ import {
 const modal = document.querySelector('.modal');
 const directionsRenderer = new google.maps.DirectionsRenderer();
 const directionsService = new google.maps.DirectionsService();
+// map markers
+const icons = {
+  fridge: '/fridgeMarkerBlue.svg',
+  business: '/boxMarkerRed.svg',
+  businessDonation: '/boxMarkerGreen.svg',
+};
 // findBusinesses function
 async function findBusinesses(map) {
   // fetch request frabs all businesses
@@ -33,6 +39,7 @@ async function findBusinesses(map) {
       map,
       position,
       icon: icons.business,
+      scale: 0.15,
     });
     // assign the donations to marker
     getDonationsByBusiness(business.account).then((donations) => {
@@ -81,15 +88,6 @@ function getDirections(origin, destination) {
     }
   );
 }
-
-// map markers
-const iconBase =
-  'https://developers.google.com/maps/documentation/javascript/examples/full/images/';
-const icons = {
-  fridge: `${iconBase}parking_lot_maps.png`,
-  business: `${iconBase}info-i_maps.png`,
-  businessDonation: `${iconBase}library_maps.png`,
-};
 
 // google maps intialisation
 function makeMap(mapContainer) {
