@@ -15,6 +15,7 @@ block append content
         +overviewTile('Available', '6.9 kg', 'fruit-apple')
       if establishmentType === 'Fridge'
         #donations-map(data-lat=account.location.coordinates[0] data-lng=account.location.coordinates[1])
+        #directions-panel.box
         .modal.has-align-items-center
           .modal-background
           .modal-card
@@ -40,8 +41,9 @@ block append content
               button.button.is-primary.getDirectionsBtn(data-lat="" data-lng="") Get directions
               button.button.is-primary.is-light.closeBtn Close
       if establishmentType === 'Fridge'
-        - console.log('nearby', nearbyDonations)
-        +donationTable('Available donations', nearbyDonations)
+        - console.log('nearby PUG', nearbyDonations)
+        .mb-4
+          +donationTable('Available donations', nearbyDonations)
       else
         +donationTable('Your available donations')
 

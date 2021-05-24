@@ -112,6 +112,6 @@ exports.presskitPosters = [
   {
     no: 10,
     title: 'Poster 10',
-    tags: ['info', 'fridge'],
+    tags: ['info', 'fridge', 'goals', 'educate'],
   },
 ]

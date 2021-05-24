@@ -9909,6 +9909,17 @@ ion-icon.xx-large {
   width: 100%;
   height: 50%; }
 
+#directions-panel {
+  display: none;
+  width: 100%;
+  height: 50%;
+  overflow-y: scroll; }
+
+.adp table {
+  font-family: "Poppins", sans-serif !important; }
+  .adp table.adp-directions {
+    width: 100% !important; }
+
 .tags-input {
   align-content: flex-start;
   display: flex;

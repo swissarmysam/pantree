@@ -6,6 +6,8 @@ import {
 } from './businessInfoModal.js';
 
 const modal = document.querySelector('.modal');
+const directionsRenderer = new google.maps.DirectionsRenderer();
+const directionsService = new google.maps.DirectionsService();
 // findBusinesses function
 async function findBusinesses(map) {
   // fetch request frabs all businesses
@@ -62,16 +64,19 @@ function handleModalClose(e) {
 
 // shows directions to the selected destination
 function getDirections(origin, destination) {
-  const directionsService = new google.maps.DirectionsService();
   directionsService.route(
     {
       origin,
       destination,
       travelMode: 'DRIVING',
     },
-    (result, status) => {
+    (response, status) => {
       if (status == 'OK') {
-        console.log(result);
+        const panel = document.querySelector("#directions-panel");
+        directionsRenderer.setDirections(response);
+        directionsRenderer.setPanel(panel);
+        panel.style.display = 'block';
+
       }
     }
   );
@@ -111,13 +116,14 @@ function makeMap(mapContainer) {
     icon: icons.fridge,
   });
   findBusinesses(map);
+  directionsRenderer.setMap(map);
   // add getDirections event listener
-  const directionsBtn = document.querySelector('.getDirectionsBtn');
   document.querySelector('.getDirectionsBtn').addEventListener('click', (e) => {
     getDirections(fridgeLocation, {
       lat: parseFloat(e.currentTarget.dataset.lat),
       lng: parseFloat(e.currentTarget.dataset.lng),
     });
+    handleModalClose();
   });
 }
 
