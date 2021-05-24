@@ -10,9 +10,9 @@ const directionsRenderer = new google.maps.DirectionsRenderer();
 const directionsService = new google.maps.DirectionsService();
 // map markers
 const icons = {
-  fridge: '/fridgeMarkerBlue.svg',
-  business: '/boxMarkerRed.svg',
-  businessDonation: '/boxMarkerGreen.svg',
+  fridge: '/fridgeMarkerBlue.png',
+  business: '/boxMarkerRed.png',
+  businessDonation: '/boxMarkerGreen.png',
 };
 // findBusinesses function
 async function findBusinesses(map) {
@@ -39,7 +39,6 @@ async function findBusinesses(map) {
       map,
       position,
       icon: icons.business,
-      scale: 0.15,
     });
     // assign the donations to marker
     getDonationsByBusiness(business.account).then((donations) => {
