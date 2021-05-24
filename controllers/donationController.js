@@ -65,12 +65,13 @@ const getNearbyDonations = async (user) => {
   };
   const donations = await Donation.find(q3);
 
+  // attach establishment name to the donation object
   donations.forEach(donation => {
+    let donor = donation.donor;
     for(let i = 0; i < nearbyBusinessIds.length; i++) {
-      if (donation.donor === nearbyBusinessIds[i]) {
+      if (donor.toString() === nearbyBusinessIds[i].toString()) {
         donation.establishmentName = nearbyBusinessNames[i];
-        console.log(donation.donor, donation.establishmentName);
-      }
+      } 
     }
   });
 
@@ -87,7 +88,6 @@ exports.donationForm = (req, res) => {
 
 /** */
 exports.validateDonationForm = (req, res, next) => {
-  // console.log(req);
   req.sanitizeBody('tags');
   req.checkBody('tags', 'Some tags are required').notEmpty();
   req.sanitizeBody('description');
