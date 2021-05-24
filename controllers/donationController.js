@@ -14,13 +14,60 @@ const Business = mongoose.model('Business');
 
 /** Display donations page and pass account ID */
 exports.dashboard = async (req, res) => {
+  let nearbyDonations;
+
+  if(req.cookies.establishmentType === 'Fridge') {
+    nearbyDonations = await getNearbyDonations(req.user._id);
+  } 
+
+  console.log('near don route', nearbyDonations);
+
   res.render('donations', {
     title: 'Donations',
+    nearbyDonations,
     id: req.params._id,
     account: req.cookies.account,
     establishmentType: req.cookies.establishmentType,
     donations: req.cookies.donations,
   });
+};
+
+/** */
+const getNearbyDonations = async (user) => {
+  // get fridge coordinates from signed in user
+  const q = {
+    account: mongoose.Types.ObjectId(user),
+  };
+
+  const fridge = await Fridge.findOne(q).select('location').exec();
+  const coordinates = [
+    fridge.location.coordinates[0],
+    fridge.location.coordinates[1],
+  ].map(parseFloat);
+
+  // search for businesses within 20km radius of fridge
+  const q2 = {
+    location: {
+      $near: {
+        $geometry: {
+          type: 'Point',
+          coordinates,
+        },
+        $maxDistance: 20000, // 20km
+      },
+    },
+  };
+  const nearbyBusinesses = await Business.find(q2).select('account');
+  const nearbyBusinessIds = nearbyBusinesses.map(business => business.account);
+
+  // get all donations which belong to those businesses and are NOT claimed
+  const q3 = {
+    $and: [{ donor: { $in: nearbyBusinessIds } }, { claimed: false }]
+  };
+  const donations = await Donation.find(q3);
+
+  // pass object to page
+  return donations;
 };
 
 exports.donationForm = (req, res) => {
@@ -87,51 +134,45 @@ exports.addDonation = async (req, res) => {
   res.redirect(`/donations/${req.body.donor}`);
 };
 
-/** */
-exports.getDonations = async (req, res) => {
-  const page = req.params.page || 1;
-  const limit = 10;
-  const skip = page * limit - limit;
+// /** */
+// exports.getDonations = async (req, res) => {
+//   const page = req.params.page || 1;
+//   const limit = 10;
+//   const skip = page * limit - limit;
 
-  // Query collection for a list of all donations sorted by expiring soonest first
-  const donationsPromise = Donation.find()
-    .skip(skip)
-    .limit(limit)
-    .sort({ expiryDate: 1 });
+//   // Query collection for a list of all donations sorted by expiring soonest first
+//   const donationsPromise = Donation.find()
+//     .skip(skip)
+//     .limit(limit)
+//     .sort({ expiryDate: 1 });
 
-  // count records in collection to work out how many pages
-  const countPromise = Donation.count();
+//   // count records in collection to work out how many pages
+//   const countPromise = Donation.count();
 
-  // resolve all promises
-  const [donations, count] = await Promise.all([
-    donationsPromise,
-    countPromise,
-  ]);
+//   // resolve all promises
+//   const [donations, count] = await Promise.all([
+//     donationsPromise,
+//     countPromise,
+//   ]);
 
-  // get total number of pages
-  const pages = Math.ceil(count / limit);
+//   // get total number of pages
+//   const pages = Math.ceil(count / limit);
 
-  // get nearby donations
-  const nearbyDonations = getNearbyDonations(req.user._id);
+//   // // if user tries to hit page that does not exist then redirect to last page
+//   // if (!donations.length && skip) {
+//   //   req.flash('info', `Oops! That page doesn't exist so here is page ${pages}`);
+//   //   res.redirect(`/donations/page/${pages}`);
+//   //   return;
+//   // }
 
-  console.log('nearby', nearbyDonations);
-
-  // // if user tries to hit page that does not exist then redirect to last page
-  // if (!donations.length && skip) {
-  //   req.flash('info', `Oops! That page doesn't exist so here is page ${pages}`);
-  //   res.redirect(`/donations/page/${pages}`);
-  //   return;
-  // }
-
-  res.render('donations', {
-    title: 'Donations',
-    nearbyDonations,
-    donations,
-    page,
-    pages,
-    count,
-  });
-};
+//   res.render('donations', {
+//     title: 'Donations',
+//     donations,
+//     page,
+//     pages,
+//     count,
+//   });
+// };
 
 /** */
 exports.getDonation = async (req, res) => {
@@ -226,48 +267,6 @@ exports.markDonationAsCollected = async (req, res) => {
   ).exec();
   req.flash('success', 'The donation is marked as collected');
   res.redirect('back');
-};
-
-/** */
-const getNearbyDonations = async (user) => {
-  // get fridge coordinates from signed in user
-  const q = {
-    account: user,
-  };
-  const fridge = await Fridge.find(q).select('location');
-  const coordinates = [
-    fridge.location.coordinates[0],
-    fridge.location.coordinates[1],
-  ].map(parseFloat);
-
-  console.log('nearby co', fridge);
-
-  // search for businesses within 20km radius of fridge
-  const q2 = {
-    location: {
-      $near: {
-        $geometry: {
-          type: 'Point',
-          coordinates,
-        },
-        $maxDistance: 20000, // 20km
-      },
-    },
-  };
-  const nearbyBusinesses = await Business.find(q2).select('account');
-
-  console.log('nearby bus', nearbyBusinesses);
-
-  // get all donations which belong to those businesses and are NOT claimed
-  const q3 = {
-    $and: [{ donor: nearbyBusinesses }, { claimed: false }]
-  };
-  const donations = await Donation.find(q3);
-
-  console.log('query donations nearby', donations);
-
-  // pass object to page
-  res.json(donations);
 };
 
 /** API endpoints */
