@@ -8,21 +8,22 @@ block prepend mainMenu
   +indexMenu()
 
 block content
-  section.hero.is-medium
+  section.hero
     .hero-body.is-flex.is-align-items-center
       .container.is-widescreen
           .columns.is-vcentered.is-align-items-center
+            .column.is-6-desktop.is-7-fullhd.is-hidden-tablet.mt-5
+              img.hero-illustration(src="heroIllustrationMobile.svg")
             .column
-              p.title.is-2
+              p.title.is-size-3-mobile.is-size-2-tablet
                 | Reducing food waste!
-              p.subtitle.is-5
+              p.subtitle.is-size-6-mobile.is-size-5-tablet
                 | Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                | sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                | sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                | At vero eos et accusam et justo duo dolores
+                | sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.
               button.button.is-primary.is-large.is-hidden-touch Discover more
-              button.button.is-primary.is-medium.is-hidden-desktop Discover more
-            .column.is-three-fifths-fullhd.is-half-desktop
+              .is-flex.is-justify-content-center.is-hidden-desktop
+                button.button.is-primary.is-medium Discover more
+            .column.is-6-desktop.is-7-fullhd.is-hidden-mobile
               img.hero-illustration(src="heroIllustration.svg")
   +sectionTitle('Our goals')
   .section.has-text-centered
@@ -52,7 +53,7 @@ block content
             | Food waste is a growing problem due to the shelf life being so short because of food standards.
             | However, most of the time the food items are still fresh and ready to eat. By using pantree,
             | we aim to offer a new life for this wasted food by giving it to community fridges.
-          a.button.is-primary.is-medium.mt-5 Join us today!
+          a.button.is-primary.is-medium.mt-5.is-hidden-mobile(href="/register") Join us today!
         .column.is-6.is-offset-1
           .box.is-vcentered.mb-6
             .columns
@@ -74,6 +75,8 @@ block content
                   | Pantree allows local businesses to find and donate food items to community fridges.
                   | Businesses will have an easy to use system to manage donations via weight and send
                   | items on their way for a second chance.
+        .is-flex.is-justify-content-center.is-hidden-desktop.mt-6
+          a.button.is-primary.is-medium.mt-5.is-hidden-tablet(href="/register") Join us today!
   section.section
     .container.is-widescreen
       figure.image.is-16by9
@@ -88,15 +91,23 @@ block content
       br
       | Follow us on Twitter, Facebook and Instagram.
     .buttons.is-flex.is-justify-content-center
-      a.button.is-large.is-round.is-primary.is-light.mx-5.my-3(href="#")
+      a.button.is-large.is-round.is-primary.is-light.mx-5.my-3(href="https://twitter.com/wearepantree")
         span.icon
           ion-icon(size="large" name="logo-twitter")
-      a.button.is-large.is-round.is-primary.is-light.mx-5.my-3(href="#")
+      a.button.is-large.is-round.is-primary.is-light.mx-5.my-3(href="https://www.facebook.com/wearepantree/")
         span.icon
           ion-icon(size="large" name="logo-facebook")
-      a.button.is-large.is-round.is-primary.is-light.mx-5.my-3(href="#")
+      a.button.is-large.is-round.is-primary.is-light.mx-5.my-3(href="https://www.instagram.com/wearepantree/")
         span.icon
           ion-icon(size="large" name="logo-instagram")
+  section.section.is-small.has-background-white.has-text-centered
+    p Copyright © 2021 Pantree UK. All rights reserved.
+    a.icon.has-text-primary.mx-3.mt-2
+      ion-icon(size="large" name="logo-twitter")
+    a.icon.has-text-primary.mx-3.mt-2
+      ion-icon(size="large" name="logo-facebook")
+    a.icon.has-text-primary.mx-3.mt-2
+      ion-icon(size="large" name="logo-instagram")
 
 
 

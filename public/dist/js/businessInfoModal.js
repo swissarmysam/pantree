@@ -105,9 +105,10 @@ export function businessInfoModal(business, donations, modal) {
     .createRange()
     .createContextualFragment(hoursTemplate);
   modal.querySelector('.modal-card-body').appendChild(workingHours);
-  // checkIfOpen(modal.querySelector('.working-hours'));
-  // if the current time is not within working hours apply closed styling
-  // fetch the donations associated with the business id
+  // select the get directions button and assign it the current business coordinates
+  const directionsBtn = modal.querySelector('.getDirectionsBtn');
+  directionsBtn.dataset.lat = business.location.coordinates[0];
+  directionsBtn.dataset.lng = business.location.coordinates[1];
   modal.style.display = 'flex';
   modal.style.position = 'fixed';
   document.documentElement.classList.add('is-clipped');
@@ -129,7 +130,7 @@ export async function getDonationsByBusiness(businessId) {
   return availableDonations;
 }
 
-export function getWeekday() {
+function getWeekday() {
   const weekday = new Date().toLocaleString('default', { weekday: 'long' });
   weekday.toString();
   return weekday;

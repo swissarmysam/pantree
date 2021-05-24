@@ -3,11 +3,15 @@ mixin navbar ()
     nav.navbar.is-fixed-top(role='navigation', aria-label='main navigation')
         .navbar-brand
             a.nav__link.nav__link--logo.navbar-item(href="/")
-                +logo(151, 32, '#9882e4') 
-        .navbar-menu
-            .navbar-end 
+                +logo(151, 32, '#9882e4')
+        a.navbar-burger(role='button' aria-label='menu' aria-expanded='false' data-target='mainMenu')
+            span(aria-hidden='true')
+            span(aria-hidden='true')
+            span(aria-hidden='true')
+        #mainMenu.navbar-menu
+            .navbar-end
                 block mainMenu
-                    .navbar-item 
+                    .navbar-item.is-flex.is-justify-content-center
                         .buttons
                             a.button.is-primary(href="/register" ) Sign Up
                             a.button.is-primary.is-light(href="/login" ) Sign In

@@ -95,7 +95,7 @@ router.post(
 );
 // show the edit establishment form and handle data submissions
 router.get(
-  '/establishment/edit',
+  '/establishment/edit/:id',
   authController.isLoggedIn,
   accountController.editEstablishment
 )

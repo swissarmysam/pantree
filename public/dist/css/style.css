@@ -7964,9 +7964,14 @@ section.section.is-title-bar {
 
 .hero {
   min-width: 100vw;
-  min-height: 100vh;
+  min-height: 105vh;
   background-image: url("../../heroBackground.svg");
   background-size: cover; }
+
+@media screen and (max-width: 768px) {
+  .hero {
+    min-height: 100vh;
+    background-image: none; } }
 
 .goal .card-content img {
   margin-left: auto;
@@ -8016,6 +8021,11 @@ table.table td .image {
 table.table td.is-progress-col {
   min-width: 5rem;
   vertical-align: middle; }
+
+table.table tr.donation-row {
+  display: none; }
+  table.table tr.donation-row[data-page="0"] {
+    display: table-row; }
 
 .b-table {
   /* This stylizes buefy's pagination */ }

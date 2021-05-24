@@ -6,7 +6,11 @@ mixin navbarUserLogged ()
         .navbar-brand
             .navbar-item
                 +logo(151, 32, '#ffffff')
-        .navbar-menu
+        a.navbar-burger(role='button' aria-label='menu' aria-expanded='false' data-target='mainMenu')
+            span(aria-hidden='true')
+            span(aria-hidden='true')
+            span(aria-hidden='true')
+        #mainMenu.navbar-menu
             .navbar-end
                 +userDropdown()
 

@@ -6,5 +6,9 @@
 
 /** Display presskit pug file page */
 exports.presskit = (req, res) => {
-  res.render('presskit', { title: 'Presskit', account: req.cookies.account });
+  res.render('presskit', {
+    title: 'Presskit',
+    account: req.cookies.account,
+    establishmentType: req.cookies.establishmentType,
+  });
 };

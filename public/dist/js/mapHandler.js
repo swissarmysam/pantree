@@ -58,7 +58,23 @@ function handleModalClose(e) {
   modal.querySelector('.working-hours').remove();
   modal.querySelectorAll('.donation').forEach((element) => element.remove());
   document.documentElement.classList.remove('is-clipped');
-  // remove all children of modal body
+}
+
+// shows directions to the selected destination
+function getDirections(origin, destination) {
+  const directionsService = new google.maps.DirectionsService();
+  directionsService.route(
+    {
+      origin,
+      destination,
+      travelMode: 'DRIVING',
+    },
+    (result, status) => {
+      if (status == 'OK') {
+        console.log(result);
+      }
+    }
+  );
 }
 
 // map markers
@@ -95,6 +111,14 @@ function makeMap(mapContainer) {
     icon: icons.fridge,
   });
   findBusinesses(map);
+  // add getDirections event listener
+  const directionsBtn = document.querySelector('.getDirectionsBtn');
+  document.querySelector('.getDirectionsBtn').addEventListener('click', (e) => {
+    getDirections(fridgeLocation, {
+      lat: parseFloat(e.currentTarget.dataset.lat),
+      lng: parseFloat(e.currentTarget.dataset.lng),
+    });
+  });
 }
 
 makeMap(document.querySelector('#donations-map'));

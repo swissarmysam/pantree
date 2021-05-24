@@ -37,7 +37,7 @@ block append content
                   ion-icon(src=`/icons/clock.svg`)
                 span Opening hours
             footer.modal-card-foot.has-background-white
-              button.button.is-primary Get directions
+              button.button.is-primary.getDirectionsBtn(data-lat="" data-lng="") Get directions
               button.button.is-primary.is-light.closeBtn Close
       if establishmentType === 'Fridge'
         +donationTable('Available donations', [0,1,2,3,4,5,6])
