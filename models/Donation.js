@@ -37,6 +37,9 @@ const donationSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    collectedDate: {
+      type: Date,
+    },
     expired: {
       type: Boolean,
       default: false,

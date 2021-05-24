@@ -40,7 +40,8 @@ block append content
               button.button.is-primary.getDirectionsBtn(data-lat="" data-lng="") Get directions
               button.button.is-primary.is-light.closeBtn Close
       if establishmentType === 'Fridge'
-        +donationTable('Available donations', [0,1,2,3,4,5,6])
+        - console.log('nearby', nearbyDonations)
+        +donationTable('Available donations', nearbyDonations)
       else
         +donationTable('Your available donations')
 

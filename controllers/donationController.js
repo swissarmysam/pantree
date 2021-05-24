@@ -111,15 +111,21 @@ exports.getDonations = async (req, res) => {
   // get total number of pages
   const pages = Math.ceil(count / limit);
 
-  // if user tries to hit page that does not exist then redirect to last page
-  if (!donations.length && skip) {
-    req.flash('info', `Oops! That page doesn't exist so here is page ${pages}`);
-    res.redirect(`/donations/page/${pages}`);
-    return;
-  }
+  // get nearby donations
+  const nearbyDonations = getNearbyDonations(req.user._id);
+
+  console.log('nearby', nearbyDonations);
+
+  // // if user tries to hit page that does not exist then redirect to last page
+  // if (!donations.length && skip) {
+  //   req.flash('info', `Oops! That page doesn't exist so here is page ${pages}`);
+  //   res.redirect(`/donations/page/${pages}`);
+  //   return;
+  // }
 
   res.render('donations', {
     title: 'Donations',
+    nearbyDonations,
     donations,
     page,
     pages,
@@ -228,11 +234,13 @@ const getNearbyDonations = async (user) => {
   const q = {
     account: user,
   };
-  const fridge = await Fridge.findOne(q).select('location');
+  const fridge = await Fridge.find(q).select('location');
   const coordinates = [
     fridge.location.coordinates[0],
     fridge.location.coordinates[1],
   ].map(parseFloat);
+
+  console.log('nearby co', fridge);
 
   // search for businesses within 20km radius of fridge
   const q2 = {
@@ -248,15 +256,18 @@ const getNearbyDonations = async (user) => {
   };
   const nearbyBusinesses = await Business.find(q2).select('account');
 
+  console.log('nearby bus', nearbyBusinesses);
+
   // get all donations which belong to those businesses and are NOT claimed
-  // UNCOMMENT @HRISTO
-  // const q2 = {
-  //   $and: [{ donor: nearbyBusinesses.account }, { claimed: false }]
-  // };
-  // const donations = await Donation.find(q3);
+  const q3 = {
+    $and: [{ donor: nearbyBusinesses }, { claimed: false }]
+  };
+  const donations = await Donation.find(q3);
+
+  console.log('query donations nearby', donations);
 
   // pass object to page
-  // res.json(donations);
+  res.json(donations);
 };
 
 /** API endpoints */
@@ -301,3 +312,13 @@ exports.checkClaimStatus = async (req, res) => {
   // return an object with donation ids
   res.json(claimStatus);
 };
+
+/**  */
+exports.getDonationInfo = async (req, res) => {
+  const info = {
+    collected: 0,
+    claimed: 0,
+    available: 0,
+  };
+  // res.json(info);
+}

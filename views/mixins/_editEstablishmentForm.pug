@@ -5,12 +5,12 @@ mixin editEstablishmentForm()
         .column.is-full-touch.is-three-quarters-desktop.is-three-fifths-widescreen
             .card
                 .card-content
-                    form.container.is-max-desktop.donation-form(action=`` method="POST")
+                    form.container.is-max-desktop.edit-form(action="/establishment/edit" method="POST")
                         .columns.is-vcentered.is-mobile
                             .column
                                 h4.title.is-4 Display name
                             .column.is-narrow
-                                button.button.is-link(type="button")
+                                button.button.is-link.enable-edit(type="button")
                                     span Edit
                                     span.icon.is-small
                                         ion-icon(src="/icons/edit.svg")

@@ -114,6 +114,6 @@ router.get('/api/business/:id/single', accountController.getSingleBusiness); // 
 router.get('/api/fridge/all', accountController.getAllFridges); // query every fridge in the database
 router.get('/api/fridge/:id/single', accountController.getSingleFridge); // get a single fridge details based on a fridge user id
 router.get('/api/donations/business', donationController.getDonationsByBusiness); // get donations belonging to the queried business id
-
+// router.get('/api/donations/info', donationController.getDonationInfo);
 
 module.exports = router;

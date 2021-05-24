@@ -161,7 +161,7 @@ exports.editEstablishment = (req, res) => {
 
 exports.updateEstablishment = async (req, res) => {
 
-  const type = req.body.establishmentType;
+  const type = req.cookies.establishmentType;
 
    // data to update
    const updates = {
@@ -169,20 +169,37 @@ exports.updateEstablishment = async (req, res) => {
     openingHours: req.body.openingHours,
   };
 
-  // find record in collection from session id and update based on req.body input
-  const account = await type.findOneAndUpdate(
-    {
-      _id: req.user._id,
-    },
-    {
-      $set: updates,
-    },
-    {
-      new: true,
-      runValidators: true,
-      context: 'query',
-    }
-  );
+  if(type === 'Business') {
+    // find record in collection from session id and update based on req.body input
+    const account = await Business.findOneAndUpdate(
+      {
+        _id: req.user._id,
+      },
+      {
+        $set: updates,
+      },
+      {
+        new: true,
+        runValidators: true,
+        context: 'query',
+      }
+    );
+  } else {
+    // find record in collection from session id and update based on req.body input
+    const account = await Fridge.findOneAndUpdate(
+      {
+        _id: req.user._id,
+      },
+      {
+        $set: updates,
+      },
+      {
+        new: true,
+        runValidators: true,
+        context: 'query',
+      }
+    );
+  }
   req.flash('success', 'Establishment details have been updated.'); // display a success message
   res.redirect('back'); // reload the page
 }

@@ -82,7 +82,7 @@ exports.presskitPosters = [
   {
     no: 4,
     title: 'Poster 4',
-    tags: ['activities', 'info'],
+    tags: ['activities', 'info', 'community'],
   },
   {
     no: 5,
