@@ -2,12 +2,14 @@ mixin tableRowFridge(donation, page)
     tr(class="donation-row" data-page=page)
         td.is-image-cell
             .image
-                img.is-rounded(src=`https://eu.ui-avatars.com/api/?name=${'John Doe'}&background=random`)
+                img.is-rounded(src=`https://eu.ui-avatars.com/api/?name=${donation.establishmentName}&background=random`)
         td(data-label='Name') #{donation.establishmentName}
         td(data-label='Donation contents') #{donation.tags}
         td(data-label='Weight') #{donation.weight} kg
+        td(data-label='Added on')
+            small.has-text-grey #{new Date(donation.addedDate).toLocaleDateString('en-GB')}
         td(data-label='Expiry date')
-            small.has-text-grey.is-abbr-like(title='Oct 25, 2020') #{new Date(donation.expiryDate).toLocaleDateString('en-GB')}
+            small.has-text-grey #{new Date(donation.expiryDate).toLocaleDateString('en-GB')}
         td.is-actions-cell
             .buttons.is-right
                 button.button.is-small.is-link(type='button') View
