@@ -37,6 +37,27 @@ exports.dashboard = async (req, res) => {
   });
 };
 
+/** handler to set cookie from setup */
+exports.setCookiesFromSetup = async (req, res) => {
+    // set cookies if redirected from setup
+    if(req.cookies.account === undefined) {
+      console.log('setting cookie');
+       const count = await Business.count({ account: req.user._id });
+       const oneDayInMS = 24 * 60 * 60 * 1000; // 24 hours
+  
+       if (count > 0) {
+         const account = await Business.findOne({ account: { $eq: req.user._id } });
+         res.cookie('account', account, { maxAge: oneDayInMS }); // 24 hour cookie
+         res.cookie('establishmentType', 'Business', { maxAge: oneDayInMS });
+       } else {
+         const account = await Fridge.findOne({ account: { $eq: req.user._id } });
+         res.cookie('account', account, { maxAge: oneDayInMS }); // 24 hour cookie
+         res.cookie('establishmentType', 'Fridge', { maxAge: oneDayInMS });
+       }
+    }
+  res.redirect(`/donations/${req.user._id}`);
+}
+
 /** */
 const getNearbyDonations = async (user) => {
   // get fridge coordinates from signed in user
