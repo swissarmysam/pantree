@@ -299,6 +299,6 @@ function redirectToDashboard(
     false
   );
   button.addEventListener('click', () => {
-    location.href = `/donations/${getUrlParam()}`;
+    location.href = `/setup/set/${getUrlParam()}`;
   });
 }

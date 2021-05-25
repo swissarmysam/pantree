@@ -36,7 +36,7 @@ router.get('/logout', authController.logout); // end the session
 
 router.get('/setup/:id', accountController.setupForm); // display the setup form to collect profile details
 router.post('/setup', accountController.setup); // handle the saving of profile details and update profile status so it doesn't show again
-
+router.get('/setup/set/:id', donationController.setCookiesFromSetup); // handler to set cookies after setup
 
 router.get('/account', authController.isLoggedIn, accountController.editAccount);
 router.post('/account', accountController.updateAccount);
