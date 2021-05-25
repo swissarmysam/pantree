@@ -16,17 +16,17 @@ mixin editEstablishmentForm()
                                         ion-icon(src="/icons/edit.svg")
                         .field
                             .control
-                                input.input.is-medium(type="text" value=account.establishmentName name='establishment-name' required disabled)
+                                input.input.is-medium(type="text" value=account.establishmentName name='establishmentName' required disabled)
                         hr
                         h4.title.is-4 Opening times
                         .field.form-section(section-name="Set opening times" section="openingTimes")
-                            +workingHoursInput('Monday', account.openingHours.mon.hours)
-                            +workingHoursInput('Tuesday', account.openingHours.mon.hours)
-                            +workingHoursInput('Wednesday', account.openingHours.mon.hours)
-                            +workingHoursInput('Thursday', account.openingHours.mon.hours)
-                            +workingHoursInput('Friday', account.openingHours.mon.hours)
-                            +workingHoursInput('Saturday', account.openingHours.mon.hours)
-                            +workingHoursInput('Sunday', account.openingHours.mon.hours)
+                            +workingHoursInput('Monday', account.openingHours.mon.hours, false)
+                            +workingHoursInput('Tuesday', account.openingHours.tues.hours, false)
+                            +workingHoursInput('Wednesday', account.openingHours.weds.hours, false)
+                            +workingHoursInput('Thursday', account.openingHours.thurs.hours, false)
+                            +workingHoursInput('Friday', account.openingHours.fri.hours, false)
+                            +workingHoursInput('Saturday', account.openingHours.sat.hours, false)
+                            +workingHoursInput('Sunday', account.openingHours.sun.hours, false)
                         hr
                         .field
                             .control

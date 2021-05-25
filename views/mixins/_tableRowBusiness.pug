@@ -2,13 +2,18 @@ mixin tableRowBusiness(donation, page)
     tr(class="donation-row" data-page=page)
         td.is-image-cell
             .image
-                img.is-rounded(src=`https://eu.ui-avatars.com/api/?name=${'John Doe'}&background=random`)
-        td(data-label='Claimed by') Rebecca Bauch
-        td(data-label='Donation contents') Daugherty-Daniel
-        td(data-label='Weight') South Cory
+                img.is-rounded(src=`https://eu.ui-avatars.com/api/?name=${donation.establishmentName}&background=random`)
+        td(data-label='Claimed by') #{donation.establishmentName}
+        td(data-label='Donation contents') #{donation.tags}
+        td(data-label='Weight') #{donation.weight} kg
+        td(data-label='Added on')
+            small.has-text-grey #{new Date(donation.addedDate).toLocaleDateString('en-GB')}
         td(data-label='Expiry date')
-            small.has-text-grey Oct 25, 2020
+            small.has-text-grey #{new Date(donation.expiryDate).toLocaleDateString('en-GB')}
         td.is-actions-cell
             .buttons.is-right
-                button.button.is-small.is-link(type='button') Collected
-                button.button.is-small.is-danger(type='button') Cancel
+                a.button.is-small.is-link(href=`/donations/donation/${donation.id}`) View
+                if donation.collected === true
+                    button.button.is-small.is-link(type='button') Collected
+                if donation.claimed === true
+                    button.button.is-small.is-danger(type='button') Cancel

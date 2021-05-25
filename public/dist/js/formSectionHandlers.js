@@ -29,18 +29,6 @@ function getUrlParam() {
   return urlArr[4];
 }
 
-const switchBtns = document.querySelectorAll('label.pt-0');
-switchBtns.forEach((btn) => {
-  btn.addEventListener('click', (e) => {
-    e.currentTarget.parentNode
-      .querySelectorAll('input[type=time]')
-      .forEach((input) => {
-        input.disabled = input.disabled !== true;
-        input.value = '';
-      });
-  });
-});
-
 function setActiveEstablishment(e) {
   document.querySelectorAll('.establishment').forEach((establishment) => {
     establishment.classList.remove('is-light', 'is-primary');
@@ -271,8 +259,8 @@ function submitSetupInfo(section, formSections, button, backBtn, sectionIndex) {
       if (input.querySelector('.switch').checked === true) {
         formData.openingHours[weekMap[index]].open = true;
         formData.openingHours[weekMap[index]].hours = `${
-          input.querySelector('[name=start-time]').value
-        }-${input.querySelector('[name=finish-time]').value}`;
+          input.querySelector('[time-interval=start]').value
+        }-${input.querySelector('[time-interval=finish]').value}`;
       }
     });
     const request = await fetch(`/setup`, {

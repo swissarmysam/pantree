@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
  * Account Controller code
  * Methods for registration and setup details
@@ -82,7 +84,7 @@ exports.register = async (req, res, next) => {
 exports.editAccount = (req, res) => {
   res.render('account', {
     title: 'Edit Account',
-    account: req.cookies.account
+    account: req.cookies.account,
   });
 };
 
@@ -160,16 +162,49 @@ exports.editEstablishment = (req, res) => {
 };
 
 exports.updateEstablishment = async (req, res) => {
-
   const type = req.cookies.establishmentType;
 
-   // data to update
-   const updates = {
-    establishmentName: req.body.name,
-    openingHours: req.body.openingHours,
+  // build object from establishment form to pass to opening hours
+  // const open = {
+  //   mon: {
+  //     open: req.body.switchMonday,
+  //     hours: `${req.body[start-time]}-${req.body[finish-time]}`,
+  //   },
+  //   tues: {
+  //     open: req.body.switchTuesday,
+  //     hours: `${req.body[start-time]}-${req.body[finish-time]}`,
+  //   },
+  //   weds: {
+  //     open: req.body.switchWednesday,
+  //     hours: `${req.body[start-time]}-${req.body[finish-time]}`,
+  //   },
+  //   thurs: {
+  //     open: req.body.switchThursday,
+  //     hours: `${req.body[start-time]}-${req.body[finish-time]}`,
+  //   },
+  //   fri: {
+  //     open: req.body.switchFriday,
+  //     hours: `${req.body[start-time]}-${req.body[finish-time]}`,
+  //   },
+  //   sat: {
+  //     open: req.body.switchSaturday,
+  //     hours: `${req.body[start-time]}-${req.body[finish-time]}`,
+  //   },
+  //   sun: {
+  //     open: req.body.switchSunday,
+  //     hours: `${req.body[start-time]}-${req.body[finish-time]}`,
+  //   },
+  // };
+
+  // data to update
+  const updates = {
+    establishmentName: req.body.establishmentName,
+    openingHours: open,
   };
 
-  if(type === 'Business') {
+  console.log(updates);
+
+  if (type === 'Business') {
     // find record in collection from session id and update based on req.body input
     const account = await Business.findOneAndUpdate(
       {
@@ -202,7 +237,7 @@ exports.updateEstablishment = async (req, res) => {
   }
   req.flash('success', 'Establishment details have been updated.'); // display a success message
   res.redirect('back'); // reload the page
-}
+};
 
 /** API endpoint for all businesses/fridges */
 exports.getAllBusinesses = async (req, res) => {

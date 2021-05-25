@@ -98,6 +98,9 @@ aside.aside {
 }
 
 @include touch {
+  .side-message {
+    width: 0 !important;
+  }
   .section,
   nav.navbar {
     @include transition(margin-left);

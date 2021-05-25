@@ -1,3 +1,3 @@
-mixin sectionTitle(title)
-    section.section.has-text-centered
+mixin sectionTitle(title, sectionName)
+    section.section.has-text-centered.page-section(data-section=sectionName)
         h1.title #{title}

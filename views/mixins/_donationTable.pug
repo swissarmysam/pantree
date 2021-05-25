@@ -1,7 +1,7 @@
 include _tableRowFridge.pug
 include _tableRowBusiness.pug
 
-mixin donationTable(tableTitle, donations = {})
+mixin donationTable(tableTitle, donations = {}, conditionClaimed = false, conditionCollected = false)
   - var page;
   .card.has-table.has-mobile-sort-spaced
           header.card-header
@@ -23,7 +23,8 @@ mixin donationTable(tableTitle, donations = {})
                     tbody
                       each donation,index in donations
                         - if (Number.isInteger(index / 5)) page = index / 5
-                        +tableRowFridge(donation, page)
+                        if donation.claimed === conditionClaimed && donation.collected === conditionCollected
+                          +tableRowFridge(donation, page)
                   else
                     thead
                         tr
@@ -37,7 +38,8 @@ mixin donationTable(tableTitle, donations = {})
                     tbody
                       each donation,index in donations
                         - if (Number.isInteger(index / 5)) page = index / 5
-                        +tableRowBusiness(donation, page)
+                        if donation.claimed === conditionClaimed && donation.collected === conditionCollected
+                          +tableRowBusiness(donation, page)
               .notification.is-light
                 .level
                   .level-left

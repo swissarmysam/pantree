@@ -8,7 +8,7 @@ block prepend doc-header
 block content
   aside.aside.is-placed-left.is-expanded
     .aside-tools
-      a.aside-tools-label(href="/donations")
+      a.aside-tools-label(href=`/donations/${user.id}`)
           +logo(151, 32, '#ffffff')
     .menu.is-menu-main
       p.menu-label General

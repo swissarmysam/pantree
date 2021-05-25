@@ -10,12 +10,24 @@ block prepend content
 block append content
     section.section.is-main-section
       .tile.is-ancestor
-        +overviewTile('Collected', '2 of 6', 'shopping-bag')
-        +overviewTile('Claimed', '5.2 kg', 'box')
-        +overviewTile('Available', '6.9 kg', 'fruit-apple')
+        +overviewTile('Collected', `${ info.collected[0] === undefined ? 0 : info.collected[0].collected } out of ${ info.claimed[0] === undefined ? 0 : info.claimed[0].claimed }`, 'shopping-bag')
+        +overviewTile('Claimed', `${ info.claimed[0] === undefined ? 0 : info.claimed[0].claimed }`, 'box')
+        if establishmentType === 'Fridge'
+          +overviewTile('Available', nearbyDonations.length, 'fruit-apple')
+        else
+          +overviewTile('Available', '0', 'fruit-apple')
       if establishmentType === 'Fridge'
         #donations-map(data-lat=account.location.coordinates[0] data-lng=account.location.coordinates[1])
-        #directions-panel.box
+          button close
+        .card.directions
+          header.card-header
+            p.card-header-title Directions
+            a.card-header-icon.is-hidden-fullscreen(href='#collapsible-card' data-action='collapse' aria-label='more options')
+              span.icon
+                ion-icon(name='chevron-down-outline' aria-hidden='true')
+          #collapsible-card.is-collapsible
+            .card-content
+              #directions-panel
         .modal.has-align-items-center
           .modal-background
           .modal-card
@@ -40,14 +52,14 @@ block append content
             footer.modal-card-foot.has-background-white
               button.button.is-primary.getDirectionsBtn(data-lat="" data-lng="") Get directions
               button.button.is-primary.is-light.closeBtn Close
-      if establishmentType === 'Fridge'
         .mb-4
-          +donationTable('Available nearby donations', nearbyDonations)
+          +donationTable('Available donations - Nearby', nearbyDonations)
       else
-        +donationTable('Your available donations')
+        +donationTable('Your listed donations')
 
 block prepend scripts
     script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places`)
+    script(src="https://cdn.jsdelivr.net/npm/@creativebulma/bulma-collapsible@1.0.4/dist/js/bulma-collapsible.min.js")
     script(type="module" src="/dist/js/mapHandler.js")
     script(src="/dist/js/tablePagination.js")
 

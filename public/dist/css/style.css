@@ -7925,6 +7925,8 @@ aside.aside {
     margin-bottom: 0.75rem; }
 
 @media screen and (max-width: 1023px) {
+  .side-message {
+    width: 0 !important; }
   .section,
   nav.navbar {
     transition: margin-left 250ms ease-in-out 50ms; }
@@ -9909,11 +9911,14 @@ ion-icon.xx-large {
   width: 100%;
   height: 50%; }
 
-#directions-panel {
-  display: none;
-  width: 100%;
-  height: 50%;
-  overflow-y: scroll; }
+.directions {
+  display: none; }
+  .directions .is-collapsible {
+    display: none; }
+    .directions .is-collapsible.is-active {
+      display: initial; }
+    .directions .is-collapsible #directions-panel {
+      width: 100%; }
 
 .adp table {
   font-family: "Poppins", sans-serif !important; }

@@ -8,6 +8,13 @@ import {
 const modal = document.querySelector('.modal');
 const directionsRenderer = new google.maps.DirectionsRenderer();
 const directionsService = new google.maps.DirectionsService();
+
+const collapsibleElement = document.querySelector('#collapsible-card');
+const bulmaCollapsibleElement = new bulmaCollapsible(collapsibleElement);
+// Access to the bulmaCollapsible instance from DOM
+if (collapsibleElement) {
+  const collapsibleInstance = collapsibleElement.bulmaCollapsible();
+}
 // map markers
 const icons = {
   fridge: '/fridgeMarkerBlue.png',
@@ -78,11 +85,10 @@ function getDirections(origin, destination) {
     },
     (response, status) => {
       if (status == 'OK') {
-        const panel = document.querySelector("#directions-panel");
+        const panel = document.querySelector('#directions-panel');
         directionsRenderer.setDirections(response);
         directionsRenderer.setPanel(panel);
-        panel.style.display = 'block';
-
+        document.querySelector('.directions').style.display = 'block';
       }
     }
   );
@@ -114,6 +120,7 @@ function makeMap(mapContainer) {
   });
   findBusinesses(map);
   directionsRenderer.setMap(map);
+  directionsRenderer.setOptions({ suppressMarkers: true });
   // add getDirections event listener
   document.querySelector('.getDirectionsBtn').addEventListener('click', (e) => {
     getDirections(fridgeLocation, {

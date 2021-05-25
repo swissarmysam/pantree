@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
  * Dashboard Controller code
  * Methods for donation transactions and map rendering
@@ -16,12 +18,17 @@ const Business = mongoose.model('Business');
 exports.dashboard = async (req, res) => {
   let nearbyDonations;
 
-  if(req.cookies.establishmentType === 'Fridge') {
+  if (req.cookies.establishmentType === 'Fridge') {
     nearbyDonations = await getNearbyDonations(req.user._id);
   }
 
+  const info = await getDonationInfo(req.user._id);
+
+  console.log('info be', info);
+
   res.render('donations', {
     title: 'Donations',
+    info,
     nearbyDonations,
     id: req.params._id,
     account: req.cookies.account,
@@ -55,23 +62,29 @@ const getNearbyDonations = async (user) => {
       },
     },
   };
-  const nearbyBusinesses = await Business.find(q2).select('account establishmentName');
-  const nearbyBusinessIds = nearbyBusinesses.map(business => business.account);
-  const nearbyBusinessNames = nearbyBusinesses.map(business => business.establishmentName);
+  const nearbyBusinesses = await Business.find(q2).select(
+    'account establishmentName'
+  );
+  const nearbyBusinessIds = nearbyBusinesses.map(
+    (business) => business.account
+  );
+  const nearbyBusinessNames = nearbyBusinesses.map(
+    (business) => business.establishmentName
+  );
 
   // get all donations which belong to those businesses and are NOT claimed
   const q3 = {
-    $and: [{ donor: { $in: nearbyBusinessIds } }, { claimed: false }]
+    $and: [{ donor: { $in: nearbyBusinessIds } }, { claimed: false }],
   };
   const donations = await Donation.find(q3);
 
   // attach establishment name to the donation object
-  donations.forEach(donation => {
-    let donor = donation.donor;
-    for(let i = 0; i < nearbyBusinessIds.length; i++) {
+  donations.forEach((donation) => {
+    const { donor } = donation;
+    for (let i = 0; i < nearbyBusinessIds.length; i++) {
       if (donor.toString() === nearbyBusinessIds[i].toString()) {
         donation.establishmentName = nearbyBusinessNames[i];
-      } 
+      }
     }
   });
 
@@ -191,6 +204,7 @@ exports.getDonation = async (req, res) => {
     title: 'Donation Details',
     donation,
     account: req.cookies.account,
+    establishmentType: req.cookies.establishmentType,
   });
 };
 
@@ -279,17 +293,15 @@ exports.markDonationAsCollected = async (req, res) => {
 
 /** */
 exports.manageDonations = async (req, res) => {
+  const donations = await Donation.find({
+    $or: [{ donor: req.user._id }, { claimer: req.user._id }],
+  });
 
   res.render('manageDonations', {
     title: 'Manage Donations',
-  });
-};
-
-/** */
-exports.claimedDonations = async (req, res) => {
-
-  res.render('claimedDonations', {
-    title: 'Claimed Donations',
+    donations,
+    account: req.cookies.account,
+    establishmentType: req.cookies.establishmentType
   });
 };
 
@@ -309,7 +321,6 @@ exports.getSingleDonation = async (req, res) => {
   res.json(donation);
 };
 
-// TODO: NEED TO HANDLE WAY TO DISPLAY ALL DONATIONS BELONGING TO BUSINESS AND CLAIMED BY FRIDGE
 /** */
 exports.getAssociatedDonations = async (req, res) => {
   const donations = await Donation.find({
@@ -337,11 +348,36 @@ exports.checkClaimStatus = async (req, res) => {
 };
 
 /**  */
-exports.getDonationInfo = async (req, res) => {
+const getDonationInfo = async (u) => {
+  const user = mongoose.Types.ObjectId(u);
+  const collected = await Donation.aggregate([
+    {
+      $match: {
+        $and: [{ collected: true }, { $or: [{ claimer: user }, { donor: user }] }]
+      }
+    },
+    {
+      $count: 'collected'
+    }
+  ]);
+
+  const claimed = await Donation.aggregate([
+    {
+      $match: {
+        $and: [{ claimed: true }, { $or: [{ claimer: user }, { donor: user }] }]
+      }
+    },
+    {
+      $count: 'claimed'
+    }
+  ]);
+
   const info = {
-    collected: 0,
-    claimed: 0,
-    available: 0,
+    collected,
+    claimed,
   };
-  // res.json(info);
-}
+
+  // available is counted from front-end
+
+   return info;
+};

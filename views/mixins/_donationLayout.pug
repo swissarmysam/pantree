@@ -3,7 +3,7 @@ mixin donationLayout()
         .column.is-full-touch.is-three-quarters-desktop.is-three-fifths-widescreen
             .card
                 .card-content
-                    form.container.is-max-desktop(action=`/donations/donation/${donation[0]._id}` method="POST")
+                    form.container.is-max-desktop(action=`/donations/donation/${donation[0]._id}/claim` method="POST")
                         h3.title.is-3 #{donation[0].contact.name}'s Donation
                         hr
                         if (donation[0].photo)

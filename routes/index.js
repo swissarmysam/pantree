@@ -64,7 +64,7 @@ router.get(
 );
 // claim a donation
 router.post(
-  '/donations/donation/:donation_id',
+  '/donations/donation/:donation_id/claim',
   donationController.claimDonation
 );
 // cancel a donation
@@ -94,8 +94,8 @@ router.post(
   donationController.addDonation
 );
 
-// router.get('/donations/manage', donationsController.manageDonations);
-// router.get('/donations/claimed', donationsController.claimedDonations);
+router.get('/donations/manage/:id', donationController.manageDonations);
+router.get('/donations/claimed/:id', donationController.manageDonations);
 
 /** ESTABLISHMENT ROUTES */
 // show the edit establishment form and handle data submissions
@@ -119,6 +119,5 @@ router.get('/api/business/:id/single', accountController.getSingleBusiness); // 
 router.get('/api/fridge/all', accountController.getAllFridges); // query every fridge in the database
 router.get('/api/fridge/:id/single', accountController.getSingleFridge); // get a single fridge details based on a fridge user id
 router.get('/api/donations/business', donationController.getDonationsByBusiness); // get donations belonging to the queried business id
-// router.get('/api/donations/info', donationController.getDonationInfo);
 
 module.exports = router;

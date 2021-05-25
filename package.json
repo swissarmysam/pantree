@@ -45,6 +45,7 @@
     "validator": "^7.0.0"
   },
   "devDependencies": {
+    "@creativebulma/bulma-collapsible": "^1.0.4",
     "cypress": "^7.0.1",
     "node-sass": "^5.0.0",
     "nodemon": "^2.0.7",
