@@ -12,8 +12,9 @@ mixin tableRowBusiness(donation, page)
             small.has-text-grey #{new Date(donation.expiryDate).toLocaleDateString('en-GB')}
         td.is-actions-cell
             .buttons.is-right
-                a.button.is-small.is-link(href=`/donations/donation/${donation.id}`) View
-                if donation.collected === true
+                if donation.claimed === false
+                    a.button.is-small.is-link(href=`/donations/donation/${donation.id}`) View
+                if donation.collected === false && donation.claimed === true
                     button.button.is-small.is-link(type='button') Collected
                 if donation.claimed === true
                     button.button.is-small.is-danger(type='button') Cancel

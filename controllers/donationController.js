@@ -44,7 +44,7 @@ exports.setCookiesFromSetup = async (req, res) => {
       console.log('setting cookie');
        const count = await Business.count({ account: req.user._id });
        const oneDayInMS = 24 * 60 * 60 * 1000; // 24 hours
-  
+
        if (count > 0) {
          const account = await Business.findOne({ account: { $eq: req.user._id } });
          res.cookie('account', account, { maxAge: oneDayInMS }); // 24 hour cookie
@@ -176,46 +176,6 @@ exports.addDonation = async (req, res) => {
   res.redirect(`/donations/${req.body.donor}`);
 };
 
-// /** */
-// exports.getDonations = async (req, res) => {
-//   const page = req.params.page || 1;
-//   const limit = 10;
-//   const skip = page * limit - limit;
-
-//   // Query collection for a list of all donations sorted by expiring soonest first
-//   const donationsPromise = Donation.find()
-//     .skip(skip)
-//     .limit(limit)
-//     .sort({ expiryDate: 1 });
-
-//   // count records in collection to work out how many pages
-//   const countPromise = Donation.count();
-
-//   // resolve all promises
-//   const [donations, count] = await Promise.all([
-//     donationsPromise,
-//     countPromise,
-//   ]);
-
-//   // get total number of pages
-//   const pages = Math.ceil(count / limit);
-
-//   // // if user tries to hit page that does not exist then redirect to last page
-//   // if (!donations.length && skip) {
-//   //   req.flash('info', `Oops! That page doesn't exist so here is page ${pages}`);
-//   //   res.redirect(`/donations/page/${pages}`);
-//   //   return;
-//   // }
-
-//   res.render('donations', {
-//     title: 'Donations',
-//     donations,
-//     page,
-//     pages,
-//     count,
-//   });
-// };
-
 /** */
 exports.getDonation = async (req, res) => {
   const donation = await Donation.find({
@@ -318,6 +278,25 @@ exports.manageDonations = async (req, res) => {
     $or: [{ donor: req.user._id }, { claimer: req.user._id }],
   });
 
+  const user = req.user._id;
+  let associated = [];
+  const allDonations = await Donation.find();
+  for(let i = 0; i < allDonations.length; i++) {
+    const { donor, claimer } = allDonations[i];
+    let details = {};
+    if(donor !== undefined && donor.toString() === user.toString()) {
+      details.establishmentName = await Business.findOne({ account: donor }).select('establishmentName');
+      // details.donation = await Donation.findOne({ donor: donor });
+      // details.claimerName = await Fridge.findOne({ account: details.donation.claimer }).select('establishmentName');
+      associated.push(details);
+    } else if (claimer !== undefined && claimer.toString() === user.toString()) {
+      details.establishmentName = await Fridge.findOne({ account: claimer }).select('establishmentName');
+      // details.donation = await Donation.findOne({ claimer: claimer });
+      associated.push(details);
+    }
+  }
+  console.log('manage object', associated);
+
   res.render('manageDonations', {
     title: 'Manage Donations',
     donations,
@@ -378,7 +357,7 @@ const getDonationInfo = async (u) => {
       }
     },
     {
-      $count: 'collected'
+      $count: 'no'
     }
   ]);
 
@@ -389,16 +368,27 @@ const getDonationInfo = async (u) => {
       }
     },
     {
-      $count: 'claimed'
+      $count: 'no'
     }
   ]);
+
+  const available = await Donation.aggregate([
+    {
+      $match: {
+        $and: [{ claimed: false }, { collected: false }, { donor: user }]
+      }
+    },
+    {
+      $count: 'no'
+    }
+  ])
+
 
   const info = {
     collected,
     claimed,
+    available // available for fridge user is counted from front-end
   };
-
-  // available is counted from front-end
 
    return info;
 };

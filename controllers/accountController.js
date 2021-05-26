@@ -163,38 +163,38 @@ exports.editEstablishment = (req, res) => {
 
 exports.updateEstablishment = async (req, res) => {
   const type = req.cookies.establishmentType;
-
+  console.log(req.body);
   // build object from establishment form to pass to opening hours
-  // const open = {
-  //   mon: {
-  //     open: req.body.switchMonday,
-  //     hours: `${req.body[start-time]}-${req.body[finish-time]}`,
-  //   },
-  //   tues: {
-  //     open: req.body.switchTuesday,
-  //     hours: `${req.body[start-time]}-${req.body[finish-time]}`,
-  //   },
-  //   weds: {
-  //     open: req.body.switchWednesday,
-  //     hours: `${req.body[start-time]}-${req.body[finish-time]}`,
-  //   },
-  //   thurs: {
-  //     open: req.body.switchThursday,
-  //     hours: `${req.body[start-time]}-${req.body[finish-time]}`,
-  //   },
-  //   fri: {
-  //     open: req.body.switchFriday,
-  //     hours: `${req.body[start-time]}-${req.body[finish-time]}`,
-  //   },
-  //   sat: {
-  //     open: req.body.switchSaturday,
-  //     hours: `${req.body[start-time]}-${req.body[finish-time]}`,
-  //   },
-  //   sun: {
-  //     open: req.body.switchSunday,
-  //     hours: `${req.body[start-time]}-${req.body[finish-time]}`,
-  //   },
-  // };
+  const open = {
+    mon: {
+      open: req.body.switchMonday === 'on' ? true : false,
+      hours: req.body.startMonday !== undefined ? `${req.body.startMonday}-${req.body.finishMonday}` : 'closed',
+    },
+    tues: {
+      open: req.body.switchTuesday === 'on' ? true : false,
+      hours: req.body.startTuesday !== undefined ? `${req.body.startTuesday}-${req.body.finishTuesday}` : 'closed',
+    },
+    weds: {
+      open: req.body.switchWednesday === 'on' ? true : false,
+      hours: req.body.startWednesday !== undefined ? `${req.body.startWednesday}-${req.body.finishWednesday}` : 'closed',
+    },
+    thurs: {
+      open: req.body.switchThursday === 'on' ? true : false,
+      hours: req.body.startThursday !== undefined ? `${req.body.startThursday}-${req.body.finishThursday}` : 'closed',
+    },
+    fri: {
+      open: req.body.switchFriday === 'on' ? true : false,
+      hours: req.body.startFriday !== undefined ? `${req.body.startFriday}-${req.body.finishFriday}` : 'closed',
+    },
+    sat: {
+      open: req.body.switchSaturday === 'on' ? true : false,
+      hours: req.body.startSaturday !== undefined ? `${req.body.startSaturday}-${req.body.finishSaturday}` : 'closed',
+    },
+    sun: {
+      open: req.body.switchSunday === 'on' ? true : false,
+      hours: req.body.startSunday !== undefined ? `${req.body.startSunday}-${req.body.finishSunday}` : 'closed',
+    },
+  };
 
   // data to update
   const updates = {
@@ -206,9 +206,9 @@ exports.updateEstablishment = async (req, res) => {
 
   if (type === 'Business') {
     // find record in collection from session id and update based on req.body input
-    const account = await Business.findOneAndUpdate(
+    const update = await Business.findOneAndUpdate(
       {
-        _id: req.user._id,
+        account: req.user._id,
       },
       {
         $set: updates,
@@ -218,12 +218,15 @@ exports.updateEstablishment = async (req, res) => {
         runValidators: true,
         context: 'query',
       }
-    );
+    ).exec();
+
+    const account = await Business.findOne({ account: { $eq: req.user._id } });
+    res.cookie('account', account, { maxAge: 24 * 60 * 60 * 1000 }); // 24 hour cookie
   } else {
     // find record in collection from session id and update based on req.body input
-    const account = await Fridge.findOneAndUpdate(
+    const update = await Fridge.findOneAndUpdate(
       {
-        _id: req.user._id,
+        account: req.user._id,
       },
       {
         $set: updates,
@@ -233,7 +236,10 @@ exports.updateEstablishment = async (req, res) => {
         runValidators: true,
         context: 'query',
       }
-    );
+    ).exec();
+
+    const account = await Fridge.findOne({ account: { $eq: req.user._id } });
+    res.cookie('account', account, { maxAge: 24 * 60 * 60 * 1000 }); // 24 hour cookie
   }
   req.flash('success', 'Establishment details have been updated.'); // display a success message
   res.redirect('back'); // reload the page

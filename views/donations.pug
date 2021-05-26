@@ -10,12 +10,12 @@ block prepend content
 block append content
     section.section.is-main-section
       .tile.is-ancestor
-        +overviewTile('Collected', `${ info.collected[0] === undefined ? 0 : info.collected[0].collected } out of ${ info.claimed[0] === undefined ? 0 : info.claimed[0].claimed }`, 'shopping-bag')
-        +overviewTile('Claimed', `${ info.claimed[0] === undefined ? 0 : info.claimed[0].claimed }`, 'box')
+        +overviewTile('Collected', `${ info.collected[0] === undefined ? 0 : info.collected[0].no } out of ${ info.claimed[0] === undefined ? 0 : info.claimed[0].no }`, 'shopping-bag')
+        +overviewTile('Claimed', `${ info.claimed[0] === undefined ? 0 : info.claimed[0].no }`, 'box')
         if establishmentType === 'Fridge'
           +overviewTile('Available', nearbyDonations.length, 'fruit-apple')
         else
-          +overviewTile('Available', '0', 'fruit-apple')
+          +overviewTile('Available', `${ info.available[0] === undefined ? 0 : info.available[0].no }`, 'fruit-apple')
       if establishmentType === 'Fridge'
         #donations-map(data-lat=account.location.coordinates[0] data-lng=account.location.coordinates[1])
           button close
@@ -28,6 +28,8 @@ block append content
           #collapsible-card.is-collapsible
             .card-content
               #directions-panel
+            .card-footer
+              a.card-footer-item.has-text-danger(href="#") Cancel directions
         .modal.has-align-items-center
           .modal-background
           .modal-card

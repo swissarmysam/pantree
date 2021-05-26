@@ -94,8 +94,8 @@ router.post(
   donationController.addDonation
 );
 
-router.get('/donations/manage/:id', donationController.manageDonations);
-router.get('/donations/claimed/:id', donationController.manageDonations);
+router.get('/donations/manage/:id', authController.isLoggedIn, donationController.manageDonations);
+router.get('/donations/claimed/:id', authController.isLoggedIn, donationController.manageDonations);
 
 /** ESTABLISHMENT ROUTES */
 // show the edit establishment form and handle data submissions
