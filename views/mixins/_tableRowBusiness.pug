@@ -1,5 +1,5 @@
 mixin tableRowBusiness(donation, page)
-    tr(class="donation-row" data-page=page)
+    tr(class="donation-row" data-page=page data-id=donation.id)
         td.is-image-cell
             .image
                 img.is-rounded(src=`https://eu.ui-avatars.com/api/?name=${donation.establishmentName}&background=random`)
@@ -15,6 +15,5 @@ mixin tableRowBusiness(donation, page)
                 if donation.claimed === false
                     a.button.is-small.is-link(href=`/donations/donation/${donation.id}`) View
                 if donation.collected === false && donation.claimed === true
-                    button.button.is-small.is-link(type='button') Collected
-                if donation.claimed === true
-                    button.button.is-small.is-danger(type='button') Cancel
+                    button.button.is-small.is-link.collectBtn(type='button') Collected
+                    button.button.is-small.is-danger.cancelBtn(type='button') Cancel

@@ -257,7 +257,7 @@ exports.markDonationAsCollected = async (req, res) => {
 
   const claimDonation = await Donation.findOneAndUpdate(
     {
-      _id: req.params.donation_id,
+      _id: mongoose.Types.ObjectId(req.body.id),
     },
     {
       $set: update,
@@ -269,7 +269,7 @@ exports.markDonationAsCollected = async (req, res) => {
     }
   ).exec();
   req.flash('success', 'The donation is marked as collected');
-  res.redirect('back');
+  res.sendStatus(200);
 };
 
 /** */

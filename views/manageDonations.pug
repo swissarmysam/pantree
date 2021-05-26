@@ -14,4 +14,6 @@ block append content
             +donationTable('Available donations', donations)
         +donationTable('Claimed donations', donations, true)
         +donationTable('Collected donations', donations, true, true)
-
+block append scripts
+  script(src="/dist/js/tablePagination.js")
+  script(src="/dist/js/donationTableHandler.js")

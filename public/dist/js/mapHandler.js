@@ -76,7 +76,7 @@ function handleModalClose(e) {
 }
 
 // shows directions to the selected destination
-function getDirections(origin, destination) {
+function getDirections(origin, destination, map) {
   directionsService.route(
     {
       origin,
@@ -84,8 +84,10 @@ function getDirections(origin, destination) {
       travelMode: 'DRIVING',
     },
     (response, status) => {
-      if (status == 'OK') {
+      if (status === 'OK') {
         const panel = document.querySelector('#directions-panel');
+        directionsRenderer.setMap(map);
+        directionsRenderer.setOptions({ suppressMarkers: true });
         directionsRenderer.setDirections(response);
         directionsRenderer.setPanel(panel);
         document.querySelector('.directions').style.display = 'block';
@@ -119,15 +121,22 @@ function makeMap(mapContainer) {
     icon: icons.fridge,
   });
   findBusinesses(map);
-  directionsRenderer.setMap(map);
-  directionsRenderer.setOptions({ suppressMarkers: true });
   // add getDirections event listener
   document.querySelector('.getDirectionsBtn').addEventListener('click', (e) => {
-    getDirections(fridgeLocation, {
-      lat: parseFloat(e.currentTarget.dataset.lat),
-      lng: parseFloat(e.currentTarget.dataset.lng),
-    });
+    getDirections(
+      fridgeLocation,
+      {
+        lat: parseFloat(e.currentTarget.dataset.lat),
+        lng: parseFloat(e.currentTarget.dataset.lng),
+      },
+      map
+    );
     handleModalClose();
+  });
+  // cancel directions
+  document.querySelector('.cancel-directions').addEventListener('click', () => {
+    directionsRenderer.setMap(null);
+    document.querySelector('.directions').style.display = 'none';
   });
 }
 

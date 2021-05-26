@@ -79,7 +79,7 @@ router.post(
 );
 // mark donation as collected
 router.post(
-  'donations/donation/:donation_id/collect',
+  '/donations/donation/:donation_id/collect',
   donationController.markDonationAsCollected
 );
 // show the donation form and handle data submissions
