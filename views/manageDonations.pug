@@ -14,6 +14,18 @@ block append content
             +donationTable('Available donations', donations)
         +donationTable('Claimed donations', donations, true)
         +donationTable('Collected donations', donations, true, true)
+    .modal.has-align-items-center
+      .modal-background
+      .modal-card
+        header.modal-card-head.has-background-danger
+          p.modal-card-title.is-size-3.has-text-weight-bold.has-text-white Confirm action
+          button.delete.closeBtn(aria-label="close")
+        section.modal-card-body.pb-0
+            article.message.is-danger.is-medium
+              .message-body
+        footer.modal-card-foot.has-background-white
+          button.button.is-danger.confirmBtn Confirm
+          button.button.closeBtn Close
 block append scripts
   script(src="/dist/js/tablePagination.js")
   script(src="/dist/js/donationTableHandler.js")

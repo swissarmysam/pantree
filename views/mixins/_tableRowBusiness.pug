@@ -2,9 +2,12 @@ mixin tableRowBusiness(donation, page, index)
     tr(class="donation-row" data-page=page data-id=donation.id)
         td.is-image-cell
             .image
-                if associated[index] !== null
-                    img.is-rounded(src=`https://eu.ui-avatars.com/api/?name=${associated[index]._doc.establishmentName}&background=random`)
-        td(data-label='Claimed by') #{associated[index] !== null ?  associated[index]._doc.establishmentName : 'no one'}
+                if associated !==undefined && associated[index] !== null
+                    img.is-rounded(src=`https://eu.ui-avatars.com/api/?name=${
+                        associated[index]._doc.establishmentName
+                        }&background=random`)
+        td(data-label='Claimed by')
+          |  #{associated !==undefined && associated[index] !== null ?  associated[index]._doc.establishmentName : 'Nobody (Still available)'}
         td(data-label='Donation contents') #{donation.tags}
         td(data-label='Weight') #{donation.weight} kg
         td(data-label='Added on')
@@ -17,4 +20,5 @@ mixin tableRowBusiness(donation, page, index)
                     a.button.is-small.is-link(href=`/donations/donation/${donation.id}`) View
                 if donation.collected === false && donation.claimed === true
                     button.button.is-small.is-link.collectBtn(type='button') Collected
-                    button.button.is-small.is-danger.cancelBtn(type='button') Cancel
+                if donation.collected === false
+                    button.button.is-small.is-danger.deleteBtn(type='button') Delete

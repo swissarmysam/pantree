@@ -10,7 +10,7 @@ block prepend content
 block append content
     section.section.is-main-section
       .tile.is-ancestor
-        +overviewTile('Collected', `${ info.collected[0] === undefined ? 0 : info.collected[0].no } out of ${ info.claimed[0] === undefined ? 0 : info.claimed[0].no }`, 'shopping-bag')
+        +overviewTile('Collected', `${ info.collected[0] === undefined ? 0 : info.collected[0].no } /${ info.claimed[0] === undefined ? 0 : info.claimed[0].no }`, 'shopping-bag')
         +overviewTile('Claimed', `${ info.claimed[0] === undefined ? 0 : info.claimed[0].no }`, 'box')
         if establishmentType === 'Fridge'
           +overviewTile('Available', nearbyDonations.length, 'fruit-apple')
@@ -57,7 +57,7 @@ block append content
         .mb-4
           +donationTable('Available donations - Nearby', nearbyDonations)
       else
-        +donationTable('Your listed donations')
+        +donationTable('Your available donations', donations)
 
 block prepend scripts
     script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places`)

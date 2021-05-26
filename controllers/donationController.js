@@ -216,18 +216,19 @@ exports.claimDonation = async (req, res) => {
     'success',
     `You've claimed the donation. Don't forget to collect it!`
   );
-  res.redirect(`/donations/${req.user._id}`); // this will redirect to claimed donations
+  res.redirect(`/donations/manage/${req.user._id}`); // this will redirect to claimed donations
 };
 
 /** */
 exports.cancelDonationClaim = async (req, res) => {
+  console.log(req.body);
   const updates = {
     claimer: null,
     claimed: false,
   };
   const claimDonation = await Donation.findOneAndUpdate(
     {
-      _id: req.params.donation_id,
+      _id: mongoose.Types.ObjectId(req.body.id),
     },
     {
       $set: updates,
@@ -238,18 +239,15 @@ exports.cancelDonationClaim = async (req, res) => {
       context: 'query',
     }
   ).exec();
-  // display a success message
-  req.flash('success', `The donation was successfully cancelled.`);
-  return res.send(200);
+  res.sendStatus(200);
 };
 
 /** */
 exports.removeDonation = async (req, res) => {
-  const deletePromise = await Donation.findOneAndDelete({
-    _id: req.params.donation_id,
+  const deletePromise = await Donation.deleteOne({
+    _id: mongoose.Types.ObjectId(req.body.id),
   });
-  req.flash('success', 'Donation has been removed.');
-  res.redirect(`/donations/${req.user._id}`);
+  res.sendStatus(200);
 };
 
 /**  */
@@ -271,7 +269,6 @@ exports.markDonationAsCollected = async (req, res) => {
       context: 'query',
     }
   ).exec();
-  req.flash('success', 'The donation is marked as collected');
   res.sendStatus(200);
 };
 
