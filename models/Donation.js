@@ -33,6 +33,9 @@ const donationSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    claimedDate: {
+      type: Date,
+    },
     collected: {
       type: Boolean,
       default: false,

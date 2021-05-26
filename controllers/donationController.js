@@ -18,14 +18,17 @@ const Business = mongoose.model('Business');
 /** Display donations page and pass account ID */
 exports.dashboard = async (req, res) => {
   let nearbyDonations;
+  let donations;
 
   if (req.cookies.establishmentType === 'Fridge') {
     nearbyDonations = await getNearbyDonations(req.user._id);
+  } else {
+    donations = await Donation.find({ donor: req.user._id });
   }
 
   const info = await getDonationInfo(req.user._id);
 
-  // console.log('info be', info);
+  console.log('info be', donations);
 
   res.render('donations', {
     title: 'Donations',
@@ -34,7 +37,7 @@ exports.dashboard = async (req, res) => {
     id: req.params._id,
     account: req.cookies.account,
     establishmentType: req.cookies.establishmentType,
-    donations: req.cookies.donations,
+    donations,
   });
 };
 
@@ -274,44 +277,32 @@ exports.markDonationAsCollected = async (req, res) => {
 
 /** */
 exports.manageDonations = async (req, res) => {
+  const donations = await Donation.find({
+    $or: [{ donor: req.user._id }, { claimer: req.user._id }],
+  });
 
-  // get donations which are associated with user
   const user = req.user._id;
   let associated = [];
-  // iterate over all donations and create a new object with required details
-  const allDonations = await Donation.find();
-  for(let i = 0; i < allDonations.length; i++) {
-    const { donor, claimer } = allDonations[i];
+  for(let i = 0; i < donations.length; i++) {
+    const { donor, claimer } = donations[i];
     let details = {};
-    if(donor !== undefined && donor.toString() === user.toString()) { // if a donor exists and matches the donor property then it belongs to user
-      // create new props in object
-      details.establishmentName = await Business.findOne({ account: donor }).select('establishmentName');
-      details.available = await Donation.findOne({ $and: [ { donor: donor }, { claimed: false }, { collected: false } ]});
-      details.collected = await Donation.findOne({ $and: [ { donor: donor }, { collected: true }]});
-      details.claimed = await Donation.findOne({ $and: [ { donor: donor }, { claimed: true }]});
-      if(details.claimed.claimer !== null) {
-        details.claimer = await Fridge.findOne({ account: details.claimed.claimer }).select('establishmentName');
-      } else if (details.collected.claimer !== null) {
-        details.claimer = await Fridge.findOne({ account: details.collected.claimer }).select('establishmentName');
-      }
-      associated.push(details);
-    } else if (claimer !== undefined && claimer.toString() === user.toString()) { // if a claimer exists and matches the donor property then it belongs to user
-      // create new props in object
+    if(donor !== undefined && donor.toString() === user.toString()) {
+      console.log(claimer);
       details.establishmentName = await Fridge.findOne({ account: claimer }).select('establishmentName');
-      details.claimed = await Donation.findOne({ $and: [ { claimer: claimer }, { claimed: true }]});
-      details.collected = await Donation.findOne({ $and: [ { claimer: claimer }, { collected: true }] });
-      if(details.claimed.donor !== null) {
-        details.donor = await Business.findOne({ account: details.claimed.donor }).select('establishmentName');
-      } else if (details.collected.donor !== null) {
-        details.donor = await Business.findOne({ account: details.collected.donor }).select('establishmentName');
-      }
-      associated.push(details);
+
+      associated.push(details.establishmentName);
+    } else if (claimer !== undefined && claimer.toString() === user.toString()) {
+      details.establishmentName = await Business.findOne({ account: donor }).select('establishmentName');
+      // details.donation = await Donation.findOne({ claimer: claimer });
+      associated.push(details.establishmentName);
     }
   }
+  console.log('manage object', associated);
 
   res.render('manageDonations', {
     title: 'Manage Donations',
-    donations: associated,
+    donations,
+    associated,
     account: req.cookies.account,
     establishmentType: req.cookies.establishmentType
   });

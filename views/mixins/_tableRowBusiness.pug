@@ -1,9 +1,10 @@
-mixin tableRowBusiness(donation, page)
+mixin tableRowBusiness(donation, page, index)
     tr(class="donation-row" data-page=page data-id=donation.id)
         td.is-image-cell
             .image
-                img.is-rounded(src=`https://eu.ui-avatars.com/api/?name=${donation.establishmentName}&background=random`)
-        td(data-label='Claimed by') #{donation.establishmentName}
+                if associated[index] !== null
+                    img.is-rounded(src=`https://eu.ui-avatars.com/api/?name=${associated[index]._doc.establishmentName}&background=random`)
+        td(data-label='Claimed by') #{associated[index] !== null ?  associated[index]._doc.establishmentName : 'no one'}
         td(data-label='Donation contents') #{donation.tags}
         td(data-label='Weight') #{donation.weight} kg
         td(data-label='Added on')

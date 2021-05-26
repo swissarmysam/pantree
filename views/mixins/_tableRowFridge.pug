@@ -1,9 +1,9 @@
-mixin tableRowFridge(donation, page)
-    tr(class="donation-row" data-page=page)
+mixin tableRowFridge(donation, page, index)
+    tr(class="donation-row" data-page=page data-id=donation.id)
         td.is-image-cell
             .image
-                img.is-rounded(src=`https://eu.ui-avatars.com/api/?name=${donation.establishmentName}&background=random`)
-        td(data-label='Name') #{donation.establishmentName}
+                img.is-rounded(src=`https://eu.ui-avatars.com/api/?name=${associated !== undefined ?  associated[index]._doc.establishmentName : donation.establishmentName}&background=random`)
+        td(data-label='Name') #{associated !== undefined ?  associated[index]._doc.establishmentName : donation.establishmentName}
         td(data-label='Donation contents') #{donation.tags}
         td(data-label='Weight') #{donation.weight} kg
         td(data-label='Added on')

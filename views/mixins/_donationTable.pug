@@ -24,7 +24,7 @@ mixin donationTable(tableTitle, donations = {}, conditionClaimed = false, condit
                       each donation,index in donations
                         - if (Number.isInteger(index / 5)) page = index / 5
                         if donation.claimed === conditionClaimed && donation.collected === conditionCollected
-                          +tableRowFridge(donation, page)
+                          +tableRowFridge(donation, page, index)
                   else
                     thead
                         tr
@@ -39,7 +39,7 @@ mixin donationTable(tableTitle, donations = {}, conditionClaimed = false, condit
                       each donation,index in donations
                         - if (Number.isInteger(index / 5)) page = index / 5
                         if donation.claimed === conditionClaimed && donation.collected === conditionCollected
-                          +tableRowBusiness(donation, page)
+                          +tableRowBusiness(donation, page, index)
               .notification.is-light
                 .level
                   .level-left
