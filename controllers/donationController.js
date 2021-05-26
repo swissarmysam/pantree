@@ -7,6 +7,7 @@
  */
 
 /** Import required packages */
+const e = require('express');
 const mongoose = require('mongoose'); // database wrapper
 
 /** Grab database collections */
@@ -24,7 +25,7 @@ exports.dashboard = async (req, res) => {
 
   const info = await getDonationInfo(req.user._id);
 
-  console.log('info be', info);
+  // console.log('info be', info);
 
   res.render('donations', {
     title: 'Donations',
@@ -41,7 +42,6 @@ exports.dashboard = async (req, res) => {
 exports.setCookiesFromSetup = async (req, res) => {
     // set cookies if redirected from setup
     if(req.cookies.account === undefined) {
-      console.log('setting cookie');
        const count = await Business.count({ account: req.user._id });
        const oneDayInMS = 24 * 60 * 60 * 1000; // 24 hours
 
@@ -274,32 +274,44 @@ exports.markDonationAsCollected = async (req, res) => {
 
 /** */
 exports.manageDonations = async (req, res) => {
-  const donations = await Donation.find({
-    $or: [{ donor: req.user._id }, { claimer: req.user._id }],
-  });
 
+  // get donations which are associated with user
   const user = req.user._id;
   let associated = [];
+  // iterate over all donations and create a new object with required details
   const allDonations = await Donation.find();
   for(let i = 0; i < allDonations.length; i++) {
     const { donor, claimer } = allDonations[i];
     let details = {};
-    if(donor !== undefined && donor.toString() === user.toString()) {
+    if(donor !== undefined && donor.toString() === user.toString()) { // if a donor exists and matches the donor property then it belongs to user
+      // create new props in object
       details.establishmentName = await Business.findOne({ account: donor }).select('establishmentName');
-      // details.donation = await Donation.findOne({ donor: donor });
-      // details.claimerName = await Fridge.findOne({ account: details.donation.claimer }).select('establishmentName');
+      details.available = await Donation.findOne({ $and: [ { donor: donor }, { claimed: false }, { collected: false } ]});
+      details.collected = await Donation.findOne({ $and: [ { donor: donor }, { collected: true }]});
+      details.claimed = await Donation.findOne({ $and: [ { donor: donor }, { claimed: true }]});
+      if(details.claimed.claimer !== null) {
+        details.claimer = await Fridge.findOne({ account: details.claimed.claimer }).select('establishmentName');
+      } else if (details.collected.claimer !== null) {
+        details.claimer = await Fridge.findOne({ account: details.collected.claimer }).select('establishmentName');
+      }
       associated.push(details);
-    } else if (claimer !== undefined && claimer.toString() === user.toString()) {
+    } else if (claimer !== undefined && claimer.toString() === user.toString()) { // if a claimer exists and matches the donor property then it belongs to user
+      // create new props in object
       details.establishmentName = await Fridge.findOne({ account: claimer }).select('establishmentName');
-      // details.donation = await Donation.findOne({ claimer: claimer });
+      details.claimed = await Donation.findOne({ $and: [ { claimer: claimer }, { claimed: true }]});
+      details.collected = await Donation.findOne({ $and: [ { claimer: claimer }, { collected: true }] });
+      if(details.claimed.donor !== null) {
+        details.donor = await Business.findOne({ account: details.claimed.donor }).select('establishmentName');
+      } else if (details.collected.donor !== null) {
+        details.donor = await Business.findOne({ account: details.collected.donor }).select('establishmentName');
+      }
       associated.push(details);
     }
   }
-  console.log('manage object', associated);
 
   res.render('manageDonations', {
     title: 'Manage Donations',
-    donations,
+    donations: associated,
     account: req.cookies.account,
     establishmentType: req.cookies.establishmentType
   });
