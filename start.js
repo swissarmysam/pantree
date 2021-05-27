@@ -23,6 +23,9 @@ require('./models/Donation');
 require('./models/Business');
 require('./models/Fridge');
 
+// start cron jobs
+const jobs = require('./handlers/scheduledJobs');
+
 // start the server
 const app = require('./app');
 
