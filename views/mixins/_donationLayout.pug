@@ -8,14 +8,21 @@ mixin donationLayout()
                         hr
                         if (donation[0].photo)
                             .image.is-16by9.mb-4
-                                img(src=donation[0].photo)
+                                img.preview(src=donation[0].photo)
                         label.label Donation contents
                             .tags.are-medium.mt-2
-                                span.tag.is-primary.is-light Canned food
-                                span.tag.is-primary.is-light Pasta
+                                each tag in donation[0].tags.toString().split(',')
+                                    span.tag.is-primary.is-light #{tag}
                         .notification
                             p.is-size-5 #{donation[0].description}
-                        // TO-DO add weight & expiry date level
+                        .box
+                            .columns.is-vcentered.has-text-centered
+                                .column.devider-r
+                                    h4.title.is-4.mb-5 Weight
+                                    p.subtitle.is-4 #{donation[0].weight} kg
+                                .column
+                                    h4.title.is-4.mb-5 Expiry date
+                                    p.subtitle.is-4 #{new Date(donation[0].expiryDate).toLocaleDateString('en-GB')}
                         hr
                         h4.title.is-4 Contact details
                         label.label Name
@@ -23,21 +30,21 @@ mixin donationLayout()
                             span.icon
                                 ion-icon(src="/icons/user.svg")
                             span.subtitle.is-5.has-text-grey #{donation[0].contact.name}
-                        label.label Email
+                        label.label.mt-1 Email
                         span.icon-text
                             span.icon
                                 ion-icon(src="/icons/mail.svg")
                             span.subtitle.is-5.has-text-grey #{donation[0].contact.email}
-                        if (donation[0].contact.phone)
-                            label.label Phone
+                        if (donation[0].contact.phoneNumber)
+                            label.label.mt-1 Phone
                             span.icon-text
                                 span.icon
                                     ion-icon(src="/icons/phone.svg")
-                                span.subtitle.is-5.has-text-grey #{donation[0].contact.phone}
+                                span.subtitle.is-5.has-text-grey #{donation[0].contact.phoneNumber}
                         hr
                         .field
                             .control
-                                if (donation[0].claimed === false)
+                                if donation[0].claimed === false && establishmentType === 'Fridge'
                                     button.button.is-medium.is-fullwidth.is-primary.submit(type="submit") Claim
-                                else
+                                else if donation[0].claimed === true
                                     button.button.is-medium.is-fullwidth.is-primary.submit(type="button" disabled) Claimed

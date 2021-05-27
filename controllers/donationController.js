@@ -28,8 +28,6 @@ exports.dashboard = async (req, res) => {
 
   const info = await getDonationInfo(req.user._id);
 
-  console.log('info be', donations);
-
   res.render('donations', {
     title: 'Donations',
     info,
@@ -131,7 +129,9 @@ exports.validateDonationForm = (req, res, next) => {
   req
     .checkBody('description', 'Please describe the contents of the donation')
     .notEmpty();
-  req.checkBody('photo').isURL().contains('cloudinary.com');
+  if (req.body.photo) {
+    req.checkBody('photo').isURL().contains('cloudinary.com');
+  }
   req
     .checkBody('expiryDate', 'Please enter a date in the future')
     .notEmpty()
@@ -149,10 +149,12 @@ exports.validateDonationForm = (req, res, next) => {
     remove_extension: false,
     gmail_remove_subaddress: false,
   });
-  req
+  if (req.body.contact.phoneNumber) {
+    req
     .checkBody('contact[phoneNumber]', 'Please enter a valid mobile number')
     .isLength({ min: 10, max: 14 })
     .isNumeric();
+  }
   // flash all validation errors on the register page
   const errors = req.validationErrors();
   if (errors) {
@@ -285,7 +287,7 @@ exports.manageDonations = async (req, res) => {
     let details = {};
     if(donor !== undefined && donor.toString() === user.toString()) {
       console.log(claimer);
-      details.establishmentName = await Fridge.findOne({ account: claimer }).select('establishmentName');
+      details.establishmentName = await Fridge.findOne({ account: claimer }).select(['establishmentName']);
 
       associated.push(details.establishmentName);
     } else if (claimer !== undefined && claimer.toString() === user.toString()) {

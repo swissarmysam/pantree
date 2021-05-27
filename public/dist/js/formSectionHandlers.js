@@ -128,7 +128,8 @@ function selectInfo(section, formSections, button, backBtn, sectionIndex) {
           establishment.BusinessType,
           `${establishment.AddressLine1}, ${establishment.AddressLine2}, ${establishment.AddressLine3}, ${establishment.AddressLine4}`
             .split(' ,')
-            .join(''),
+            .join('')
+            .replace(/^,/, ''),
           establishment.PostCode
         );
       });
@@ -250,7 +251,7 @@ function submitSetupInfo(section, formSections, button, backBtn, sectionIndex) {
       // eslint-disable-next-line prettier/prettier
       formData.location.address = `${establishment.AddressLine1}, ${
         establishment.AddressLine2
-      }, ${establishment.AddressLine3}, ${establishment.AddressLine4}`.split(' ,').join('');
+      }, ${establishment.AddressLine3}, ${establishment.AddressLine4}`.split(' ,').join('').replace(/^,/, '');
       formData.location.postcode = establishment.PostCode;
       formData.localAuthority.council = establishment.LocalAuthorityName;
     });

@@ -71,3 +71,9 @@ img.illustration {
   min-height: 30vh;
   max-height: 320px;
 }
+.image.is-16by9 {
+  background-color: #dbdbdb;
+  img.preview {
+    object-fit: contain;
+  }
+}

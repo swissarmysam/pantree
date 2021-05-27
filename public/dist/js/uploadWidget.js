@@ -51,7 +51,7 @@ function showUploadWidget(folderName) {
       if (!err && res && res.event === 'success') {
         console.log(res.info);
         document.querySelector('input[name=photo]').value = res.info.url;
-        // TO-DO: notify user upload was sucessful
+        document.querySelector('.preview').src = res.info.url;
       }
     }
   );

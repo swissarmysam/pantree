@@ -8189,6 +8189,11 @@ img.illustration {
   min-height: 30vh;
   max-height: 320px; }
 
+.image.is-16by9 {
+  background-color: #dbdbdb; }
+  .image.is-16by9 img.preview {
+    object-fit: contain; }
+
 section.section.is-main-section {
   padding-top: 1.5rem; }
 

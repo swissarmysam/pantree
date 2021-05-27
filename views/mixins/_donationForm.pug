@@ -13,13 +13,8 @@ mixin donationForm()
                     form.container.is-max-desktop.donation-form(action=`/donations/donation/add/${user.id}` method="POST")
                         h3.title.is-3.form-title Donation
                         hr
-                        label.label Donation contents
-                        p.help give a general overview of items in donation, e.g tommatoes, onions
-                        .field.has-addons
-                            p.control.is-expanded
-                                input.input.donation-overview(type="tags" placeholder="add item" data-max-chars="15" name='tags')
-                            p.control
-                                a.button.is-medium.is-primary.is-link.add-tag Add
+                        .image.is-16by9.mb-4
+                            img.preview(src="/placeholderGrey.png")
                         .field
                             .control
                                 button.button.is-medium.is-fullwidth.is-link(id='donationUploadBtn')
@@ -27,6 +22,13 @@ mixin donationForm()
                                         ion-icon(name="camera-outline")
                                     span Add Image
                                 input(type="hidden" name="photo").is-hidden
+                        label.label Donation contents
+                        p.help give a general overview of items in donation, e.g tommatoes, onions
+                        .field.has-addons
+                            p.control.is-expanded
+                                input.input.donation-overview(type="tags" placeholder="add item" data-max-chars="15" name='tags')
+                            p.control
+                                a.button.is-medium.is-primary.is-link.add-tag Add
                         .field
                             .control
                                 textarea.textarea(placeholder="Include the quantities of items in donation, as well as any information you think might be helpful." name='description' required)
@@ -66,4 +68,4 @@ mixin donationForm()
                         hr
                         .field
                             .control
-                                button.button.is-medium.is-fullwidth.is-primary.submit(id='submitBtn' type="submit") Submit
+                                button.button.is-medium.is-fullwidth.is-primary.submit(id='submitBtn' type="submit") Create Donation

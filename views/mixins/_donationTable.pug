@@ -3,6 +3,7 @@ include _tableRowBusiness.pug
 
 mixin donationTable(tableTitle, donations = {}, conditionClaimed = false, conditionCollected = false)
   - var page;
+  - var rows = 0;
   .card.has-table.has-mobile-sort-spaced
           header.card-header
             p.card-header-title.is-size-5 #{tableTitle}
@@ -25,6 +26,8 @@ mixin donationTable(tableTitle, donations = {}, conditionClaimed = false, condit
                         - if (Number.isInteger(index / 5)) page = index / 5
                         if donation.claimed === conditionClaimed && donation.collected === conditionCollected
                           +tableRowFridge(donation, page, index)
+                          - rows++
+
                   else
                     thead
                         tr
@@ -40,13 +43,19 @@ mixin donationTable(tableTitle, donations = {}, conditionClaimed = false, condit
                         - if (Number.isInteger(index / 5)) page = index / 5
                         if donation.claimed === conditionClaimed && donation.collected === conditionCollected
                           +tableRowBusiness(donation, page, index)
-              .notification.is-light
-                .level
-                  .level-left
-                    .level-item
-                      .buttons.has-addons
-                        - var n = 0;
-                        while n < page
-                          if n === 0
-                            button.button.switch-page.is-active(type='button') #{(n++) + 1}
-                          button.button.switch-page(type='button') #{(n++) + 1}
+                          - rows++
+              if rows === 0
+                footer.card-footer.has-background-white-bis
+                  .card-footer-item
+                    h3.is-6 No results found
+              else
+                .notification.is-light
+                  .level
+                    .level-left
+                      .level-item
+                        .buttons.has-addons
+                          - var n = 0;
+                          while n < page
+                            if n === 0
+                              button.button.switch-page.is-active(type='button') #{(n++) + 1}
+                            button.button.switch-page(type='button') #{(n++) + 1}
