@@ -61,6 +61,13 @@
 .devider-r {
   border-right: 1px solid $grey-lighter;
 }
+@include mobile {
+  .devider-l,
+  .devider-r {
+    border-right: none;
+    border-left: none;
+  }
+}
 .button {
   justify-content: center;
 }

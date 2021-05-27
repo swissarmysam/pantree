@@ -8199,11 +8199,7 @@ section.section.is-main-section {
 
 @media screen and (max-width: 768px) {
   .modal-card {
-    width: 100vw; }
-    .modal-card .devider-l,
-    .modal-card .devider-r {
-      border-right: none;
-      border-left: none; } }
+    width: 100vw; } }
 
 @media screen and (min-width: 769px), print {
   .modal-card {
@@ -10826,6 +10822,12 @@ aside .side-message {
 
 .devider-r {
   border-right: 1px solid #dbdbdb; }
+
+@media screen and (max-width: 768px) {
+  .devider-l,
+  .devider-r {
+    border-right: none;
+    border-left: none; } }
 
 .button {
   justify-content: center; }

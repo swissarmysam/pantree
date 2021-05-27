@@ -8,7 +8,7 @@ mixin tableRowBusiness(donation, page, index)
                         }&background=random`)
         td(data-label='Claimed by')
           |  #{associated !==undefined && associated[index] !== null ?  associated[index]._doc.establishmentName : 'Nobody (Still available)'}
-        td(data-label='Donation contents') #{donation.tags}
+        td(data-label='Donation contents') #{donation.tags.toString().split(',').join(', ')}
         td(data-label='Weight') #{donation.weight} kg
         td(data-label='Added on')
             small.has-text-grey #{new Date(donation.addedDate).toLocaleDateString('en-GB')}

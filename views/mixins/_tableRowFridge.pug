@@ -4,7 +4,7 @@ mixin tableRowFridge(donation, page, index)
             .image
                 img.is-rounded(src=`https://eu.ui-avatars.com/api/?name=${associated !== undefined ?  associated[index]._doc.establishmentName : donation.establishmentName}&background=random`)
         td(data-label='Name') #{associated !== undefined ?  associated[index]._doc.establishmentName : donation.establishmentName}
-        td(data-label='Donation contents') #{donation.tags}
+        td(data-label='Donation contents') #{donation.tags.toString().split(',').join(', ')}
         td(data-label='Weight') #{donation.weight} kg
         td(data-label='Added on')
             small.has-text-grey #{new Date(donation.addedDate).toLocaleDateString('en-GB')}
