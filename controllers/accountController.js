@@ -168,31 +168,31 @@ exports.updateEstablishment = async (req, res) => {
   const open = {
     mon: {
       open: req.body.switchMonday === 'on' ? true : false,
-      hours: req.body.startMonday !== undefined ? `${req.body.startMonday}-${req.body.finishMonday}` : 'closed',
+      hours: req.body.startMonday !== undefined ? `${req.body.startMonday}-${req.body.finishMonday}` : null,
     },
     tues: {
       open: req.body.switchTuesday === 'on' ? true : false,
-      hours: req.body.startTuesday !== undefined ? `${req.body.startTuesday}-${req.body.finishTuesday}` : 'closed',
+      hours: req.body.startTuesday !== undefined ? `${req.body.startTuesday}-${req.body.finishTuesday}` : null,
     },
     weds: {
       open: req.body.switchWednesday === 'on' ? true : false,
-      hours: req.body.startWednesday !== undefined ? `${req.body.startWednesday}-${req.body.finishWednesday}` : 'closed',
+      hours: req.body.startWednesday !== undefined ? `${req.body.startWednesday}-${req.body.finishWednesday}` : null,
     },
     thurs: {
       open: req.body.switchThursday === 'on' ? true : false,
-      hours: req.body.startThursday !== undefined ? `${req.body.startThursday}-${req.body.finishThursday}` : 'closed',
+      hours: req.body.startThursday !== undefined ? `${req.body.startThursday}-${req.body.finishThursday}` : null,
     },
     fri: {
       open: req.body.switchFriday === 'on' ? true : false,
-      hours: req.body.startFriday !== undefined ? `${req.body.startFriday}-${req.body.finishFriday}` : 'closed',
+      hours: req.body.startFriday !== undefined ? `${req.body.startFriday}-${req.body.finishFriday}` : null,
     },
     sat: {
       open: req.body.switchSaturday === 'on' ? true : false,
-      hours: req.body.startSaturday !== undefined ? `${req.body.startSaturday}-${req.body.finishSaturday}` : 'closed',
+      hours: req.body.startSaturday !== undefined ? `${req.body.startSaturday}-${req.body.finishSaturday}` : null,
     },
     sun: {
       open: req.body.switchSunday === 'on' ? true : false,
-      hours: req.body.startSunday !== undefined ? `${req.body.startSunday}-${req.body.finishSunday}` : 'closed',
+      hours: req.body.startSunday !== undefined ? `${req.body.startSunday}-${req.body.finishSunday}` : null,
     },
   };
 
