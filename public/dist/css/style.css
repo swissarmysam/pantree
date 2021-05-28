@@ -8194,6 +8194,12 @@ img.illustration {
   .image.is-16by9 img.preview {
     object-fit: contain; }
 
+@media screen and (max-width: 768px) {
+  .working-hours {
+    display: block !important; }
+    .working-hours label[for="startTime"] {
+      width: 100% !important; } }
+
 section.section.is-main-section {
   padding-top: 1.5rem; }
 

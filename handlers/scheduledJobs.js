@@ -10,8 +10,8 @@ const setExpiredJob = schedule.scheduleJob('45 * * * *', async () => {
   // if donation expiry date has passed and it is not claimed/collected
   // updated expired status to true
   const checkDonationExpiry = await Donation.updateMany(
-    { $and: [ { expiryDate: { $lt: Date.now() }}, { claimed: false }, { collected: false }] },
-    { $set: { expired: true } },
+    { $and: [ { expiryDate: { $lt: new Date(Date.now()) }}, { collected: false }] }, // if expiry has passed and not collected
+    { $set: { expired: true } }, // expire the donation to stop rendering
     { upsert: false }
   )
   .then(result => {
@@ -23,10 +23,10 @@ const setExpiredJob = schedule.scheduleJob('45 * * * *', async () => {
 
 /** Set donations that have not been collected back to unclaimed - runs at 30 past the hour */
 const resetCollectionJob = schedule.scheduleJob('30 * * * *', async () => {
-  let fromDate = new Date(Date.now() - 60 * 60 * 24 * 1000); // 24 hours ago
+  let fromDate = new Date(Date.now() - 60 * 60 * 72 * 1000); // 72 hours ago
   const checkUncollectedStatus = await Donation.updateMany(
-    { $and: [ { claimedDate: {$gte: fromDate } }, { collected: false }, { claimed: true } ] },
-    { $set: [ { claimed: false }, { claimer: null } ] },
+    { $and: [ { claimedDate: {$gte: fromDate } }, { collected: false }, { claimed: true } ] }, // if claimed date is more than 72 hours without collection
+    { $set: [ { claimed: false }, { claimer: null } ] }, // reset the claim
     { upsert: false }
   )
   .then(result => {
@@ -40,8 +40,8 @@ const resetCollectionJob = schedule.scheduleJob('30 * * * *', async () => {
 const setCollectedToExpiredJob = schedule.scheduleJob('*/15 * * * *', async () => {
   let fromDate = new Date(Date.now() - 60 * 60 * 24 * 1000); // 24 hours ago
   const checkDonationExpiry = await Donation.updateMany(
-    { $and: [ { expiryDate: {$gte: fromDate } }, { claimed: true }, { collected: true } ] },
-    { $set: { expired: true } },
+    { $and: [ { collectedDate: {$gte: fromDate } }, { claimed: true }, { collected: true } ] }, // if collected more than 24 hours ago and claimed/collected
+    { $set: { expired: true } }, // set expired to stop rendering
     { upsert: false }
   )
   .then(result => {

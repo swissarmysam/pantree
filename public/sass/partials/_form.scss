@@ -77,3 +77,11 @@ img.illustration {
     object-fit: contain;
   }
 }
+@include mobile {
+  .working-hours {
+    display: block !important;
+    label[for="startTime"] {
+      width: 100% !important;
+    }
+  }
+}

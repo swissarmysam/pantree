@@ -199,6 +199,7 @@ exports.claimDonation = async (req, res) => {
   const updates = {
     claimer: req.user._id,
     claimed: true,
+    clamedDate: new Date(),
   };
   const claimDonation = await Donation.findOneAndUpdate(
     {
@@ -256,6 +257,7 @@ exports.removeDonation = async (req, res) => {
 exports.markDonationAsCollected = async (req, res) => {
   const update = {
     collected: true,
+    collectedDate: new Date(),
   };
 
   const claimDonation = await Donation.findOneAndUpdate(

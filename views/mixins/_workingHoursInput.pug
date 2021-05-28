@@ -1,10 +1,12 @@
-mixin workingHoursInput(day, open = null, enabled = true)
+mixin workingHoursInput(day, open = 'closed', enabled = true)
     - var workingHours = ['',''];
-    - if(open !== null) workingHours = open.split('-');
+    - if(open !== 'closed') workingHours = open.split('-');
+    -console.log(open)
     .field.is-grouped.is-horizontal.is-align-items-center.working-hours
-        label.has-text-weight-semibold(for='day') #{day}
-        input.switch.is-rounded.pt-0(type='checkbox' id=`switch${day}` name=`switch${day}` checked=open!==null disabled=enabled!==true)
+        label.has-text-weight-semibold.mr-4(for='day') #{day}
+        input.switch.is-rounded.pt-0(type='checkbox' id=`switch${day}` name=`switch${day}` checked=open!=='closed' disabled=enabled!==true)
         label.pt-0(for=`switch${day}`) .
+        br.is-hidden-tablet
         label.mx-3(for='startTime') From
         input.input(type="time" value=workingHours[0] placeholder="--:--" name=`start${day}` time-interval="start" disabled)
         label.mx-3(for='finish-time') To
