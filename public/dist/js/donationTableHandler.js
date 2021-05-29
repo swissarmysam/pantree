@@ -1,5 +1,13 @@
 const modal = document.querySelector('.modal');
-
+// checks if table has any rows
+function checkIfTableEmpty() {
+  document.querySelectorAll('.has-table').forEach((table) => {
+    if (table.querySelector('.donation-row')) {
+      table.querySelector('.no-results').remove();
+    }
+  });
+}
+// handler function, marks donation as collected
 function markCollected(e) {
   const row = e.currentTarget.parentNode.parentNode.parentNode;
   fetch(`/donations/donation/${row.dataset.id}/collect`, {
@@ -19,10 +27,11 @@ function markCollected(e) {
       );
       row.querySelector('.buttons').remove();
       table.querySelector('tbody').appendChild(row);
+      checkIfTableEmpty();
     }
   });
 }
-
+// handler function, deletes a donation from the collection
 function markDeleted(e) {
   // open confirm modal
   const row = e.currentTarget.parentNode.parentNode.parentNode;
@@ -51,12 +60,13 @@ function markDeleted(e) {
       } else if (res.ok) {
         // if response is ok then remove table row
         row.remove();
+        checkIfTableEmpty();
       }
     });
   }
   modal.querySelector('.confirmBtn').addEventListener('click', confirmDelete);
 }
-
+// handler function, marks donation as cancelled
 function markCanceled(e) {
   // open confirm modal
   const row = e.currentTarget.parentNode.parentNode.parentNode;
@@ -85,6 +95,7 @@ function markCanceled(e) {
       } else if (res.ok) {
         // if response is ok then remove table row from claimed
         row.remove();
+        checkIfTableEmpty();
       }
     });
   }
@@ -96,6 +107,8 @@ function handleModalClose() {
   modal.style.display = 'none';
   document.documentElement.classList.remove('is-clipped');
 }
+
+// event listeners
 
 document.querySelectorAll('.collectBtn').forEach((button) => {
   button.addEventListener('click', markCollected);

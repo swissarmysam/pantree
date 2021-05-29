@@ -2,7 +2,7 @@ include _tableRowFridge.pug
 include _tableRowBusiness.pug
 
 mixin donationTable(tableTitle, donations = {}, conditionClaimed = false, conditionCollected = false)
-  - var page;
+  - var page = 0;
   - var rows = 0;
   .card.has-table.has-mobile-sort-spaced
           header.card-header
@@ -23,11 +23,10 @@ mixin donationTable(tableTitle, donations = {}, conditionClaimed = false, condit
                         th
                     tbody
                       each donation,index in donations
-                        - if (Number.isInteger(index / 5)) page = index / 5
                         if donation.claimed === conditionClaimed && donation.collected === conditionCollected
-                          +tableRowFridge(donation, page, index)
                           - rows++
-
+                          - if (Number.isInteger(rows / 5)) page++
+                          +tableRowFridge(donation, page, index)
                   else
                     thead
                         tr
@@ -40,12 +39,12 @@ mixin donationTable(tableTitle, donations = {}, conditionClaimed = false, condit
                           th
                     tbody
                       each donation,index in donations
-                        - if (Number.isInteger(index / 5)) page = index / 5
                         if donation.claimed === conditionClaimed && donation.collected === conditionCollected
-                          +tableRowBusiness(donation, page, index)
                           - rows++
+                          - if (Number.isInteger(rows / 5)) page++
+                          +tableRowBusiness(donation, page, index)
               if rows === 0
-                footer.card-footer.has-background-white-bis
+                footer.card-footer.has-background-white-bis.no-results
                   .card-footer-item
                     h3.is-6 No results found
               else
