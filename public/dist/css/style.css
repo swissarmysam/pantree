@@ -7979,6 +7979,9 @@ section.section.is-title-bar {
   margin-left: auto;
   margin-right: auto; }
 
+.image.is-16by9.video {
+  background-color: none !important; }
+
 .card:not(:last-child) {
   margin-bottom: 1.5rem; }
 
