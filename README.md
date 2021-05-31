@@ -10,6 +10,7 @@ The web app has been designed by researching the users needs from a donation pla
 
 - Pug
 - SASS
+- Bulma
 - JavaScript
 
 ### Backend
