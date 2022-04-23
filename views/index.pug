@@ -81,7 +81,7 @@ block content
   section.section
     .container.is-widescreen
       figure.image.is-16by9.video
-        video(class="has-ratio"  width='400px' poster="thumbnail.png" controls)
+        video(class="has-ratio"  width='400px' poster="thumbnail.jpg" controls)
           source(src='pantree-trailer-final.mp4' type='video/mp4')
           source(src='pantree-trailer-final.webm' type='video/webm')
           | Your browser does not support the video tag.
@@ -102,7 +102,7 @@ block content
         span.icon
           ion-icon(size="large" name="logo-instagram")
   section.section.is-small.has-background-white.has-text-centered
-    p Copyright © 2021 Pantree UK. All rights reserved.
+    p Copyright © #{new Date().getFullYear().toString()} Pantree UK. All rights reserved.
     a.icon.has-text-primary.mx-3.mt-2(href="https://twitter.com/wearepantree" target="_blank")
       ion-icon(size="large" name="logo-twitter")
     a.icon.has-text-primary.mx-3.mt-2(href="https://www.facebook.com/wearepantree/" target="_blank")
